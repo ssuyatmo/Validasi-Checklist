@@ -375,141 +375,65 @@
     return arr.join('\\n');
   }
 
-  // Generate WA-formatted text
-  function generateWA(){
-    const qa = document.querySelector('input[name="qatype"]:checked').value;
-    const date = document.getElementById('date').value || '-';
-    const code = document.getElementById('code').value || '-';
-    const hm = document.getElementById('hm').value || '-';
+function generateText() {
+  const qaType = document.getElementById("qaType").value;
+  const tgl = document.getElementById("tgl").value;
+  const mekanik = document.getElementById("mekanik").value;
+  const cn = document.getElementById("cn").value;
+  const hm = document.getElementById("hm").value;
+  const tyre = document.getElementById("tyre").value;
+  const tyreDetail = document.getElementById("tyreDetail").value;
+  const deviation = formatDeviation(document.getElementById("deviation").value);
 
-    // oil
-    const e = document.getElementById('engineInput').value || 'Engine oil level : -';
-    const t = document.getElementById('transInput').value || 'Transmission oil level : -';
-    const h = document.getElementById('hydInput').value || 'Hydraulic oil level : -';
+  return `*${qaType}*
 
-    // engine
-    const belt = document.getElementById('beltInput').value || 'V-belt tension : -';
-    const leak = document.getElementById('leakInput').value || 'Engine oil leakage : -';
-    const crc = document.getElementById('crcInput').value || 'Common Rail Connector : -';
-    const inj = document.getElementById('injInput').value || 'Injector Tube : -';
+📅 Tgl : ${tgl}
+👷 Mekanik : ${mekanik}
 
-    // cabin
-    const radio = document.getElementById('radioInput').value || 'FM Radio : -';
-    const fatigue = document.getElementById('fatigueInput').value || 'Fatigue Warning : -';
-    const pw = document.getElementById('pwInput').value || 'Power Window : -';
-    const power = document.getElementById('powerSupply').value || '-';
-    const crp = document.getElementById('crp').value || '-';
+🚗 CN : ${cn}
+⌛ HM : ${hm}
 
-    // frame
-    const seat = document.getElementById('seatInput').value || 'Operator seat : -';
-    const rail = document.getElementById('railInput').value || 'Hand Rail : -';
+🩸 *Oil Level* 🩸
+${getCheckResults("oilLevel", oilItems)}
 
-    // suspension
-    const fl = document.getElementById('fl').value || '-';
-    const fr = document.getElementById('fr').value || '-';
-    const rl = document.getElementById('rl').value || '-';
-    const rr = document.getElementById('rr').value || '-';
+⚙ *Engine Area* ⚙
+${getCheckResults("engineArea", engineItems)}
 
-    // tyre
-    const tyre = document.getElementById('tyreInput').value || 'Tyre : -';
+🚗 *Cabin Area* 🚗
+${getCheckResults("cabinArea", cabinItems)}
 
-    // deviation
-    const devRaw = document.getElementById('deviation').value;
-    const dev = formatDeviationRaw(devRaw);
+🚗 *Frame Area* 🚗
+${getCheckResults("frameArea", frameItems)}
 
-    // icons based on tile dataset
-    function iconFor(id){
-      // find tile that toggles given input id by scanning onclick attr
-      const tile = Array.from(document.querySelectorAll('.tile')).find(t => (t.getAttribute('onclick')||'').includes(id));
-      if(tile){
-        if(tile.dataset.state === 'good') return '✅';
-        if(tile.dataset.state === 'bad') return '❌';
-      }
-      const inp = document.getElementById(id);
-      if(inp){
-        if(/good/i.test(inp.value)) return '✅';
-        if(/bad/i.test(inp.value)) return '❌';
-      }
-      return '❌';
-    }
+💧 *Pressure Suspension (Panel)* 💧
+FL : ${document.getElementById("fl").value} MPa | FR : ${document.getElementById("fr").value} MPa | RL : ${document.getElementById("rl").value} MPa | RR : ${document.getElementById("rr").value} MPa
 
-    // Build message (clean & spaced)
-    let msg = `*${qa}*\\n\\n`;
-    msg += `📅 Tgl : ${date}\\n`;
-    msg += `👷 Mekanik : -\\n`;
-    msg += `🚗 CN : ${code}\\n`;
-    msg += `⌛ HM : ${hm}\\n\\n`;
+🛞 *Tyre Condition :*
+Tyre : ${tyre}
+${tyreDetail ? "➡️ " + tyreDetail : ""}
 
-    // Oil
-    msg += `🩸 *Oil Level* 🩸\\n`;
-    msg += `${e.replace(/\\s*:\\s*(Good|Bad)$/i,'')} : ${iconFor('engineInput')}\\n`;
-    msg += `${t.replace(/\\s*:\\s*(Good|Bad)$/i,'')} : ${iconFor('transInput')}\\n`;
-    msg += `${h.replace(/\\s*:\\s*(Good|Bad)$/i,'')} : ${iconFor('hydInput')}\\n\\n`;
+📝 *Validasi & Kelengkapan Checklist Service :*
+${getCheckResults("validasi", validasiItems)}
 
-    // Engine Area
-    msg += `⚙ *Engine Area* ⚙\\n`;
-    msg += `${belt.replace(/\\s*:\\s*(Good|Bad)$/i,'')} : ${iconFor('beltInput')}\\n`;
-    msg += `${leak.replace(/\\s*:\\s*(Good|Bad)$/i,'')} : ${iconFor('leakInput')}\\n`;
-    msg += `${crc.replace(/\\s*:\\s*(Good|Bad)$/i,'')} : ${iconFor('crcInput')}\\n`;
-    msg += `${inj.replace(/\\s*:\\s*(Good|Bad)$/i,'')} : ${iconFor('injInput')}\\n\\n`;
+${deviation}`;
+}
 
-    // Cabin
-    msg += `🚗 *Cabin Area* 🚗\\n`;
-    msg += `${radio.replace(/\\s*:\\s*(Good|Bad)$/i,'')} : ${iconFor('radioInput')}\\n`;
-    msg += `${fatigue.replace(/\\s*:\\s*(Good|Bad)$/i,'')} : ${iconFor('fatigueInput')}\\n`;
-    msg += `⚡ Power Supply : ${power} V\\n`;
-    msg += `💧 Common Rail Pressure (ON) : ${crp} MPa\\n`;
-    msg += `${pw.replace(/\\s*:\\s*(Good|Bad)$/i,'')} : ${iconFor('pwInput')}\\n\\n`;
+function sendToWA() {
+  const text = encodeURIComponent(generateText());
+  window.open(`https://wa.me/?text=${text}`, "_blank");
+}
 
-    // Frame
-    msg += `🚗 *Frame Area* 🚗\\n`;
-    msg += `${seat.replace(/\\s*:\\s*(Good|Bad)$/i,'')} : ${iconFor('seatInput')}\\n`;
-    msg += `${rail.replace(/\\s*:\\s*(Good|Bad)$/i,'')} : ${iconFor('railInput')}\\n\\n`;
+function copyText() {
+  navigator.clipboard.writeText(generateText());
+  alert("✅ Teks berhasil disalin ke clipboard!");
+}
 
-    // Pressure
-    msg += `💧 *Pressure Suspension (Panel)* 💧\\n`;
-    msg += `FL : ${fl} MPa | FR : ${fr} MPa | RL : ${rl} MPa | RR : ${rr} MPa\\n\\n`;
-
-    // Tyre
-    msg += `🛞 *Tyre Condition :*\\n`;
-    msg += `${iconFor('tyreInput')} ${tyre}\\n\\n`;
-
-    // Validasi
-    msg += `📝 *Validasi & Kelengkapan Check list Service :*\\n`;
-    msg += `${getValidasiText()}\\n\\n`;
-
-    // Deviation
-    msg += `*Deviation :*\\n`;
-    msg += (dev ? dev : 'None');
-
-    return msg;
-  }
-
-  function preview(){
-    const p = document.getElementById('preview');
-    p.textContent = generateWA();
-    // ensure visible
-    document.querySelector('.preview-card').scrollIntoView({behavior:'smooth'});
-  }
-
-  function copyText(){
-    const txt = generateWA();
-    navigator.clipboard.writeText(txt).then(()=> alert('✅ Teks berhasil disalin ke clipboard.'));
-  }
-
-  function sendWA(){
-    const txt = encodeURIComponent(generateWA());
-    window.open('https://wa.me/?text=' + txt,'_blank');
-  }
-
-  // init tiles dataset
-  document.querySelectorAll('.tile').forEach(t => {
-    if(!t.dataset.state) t.dataset.state = t.classList.contains('bad') ? 'bad' : 'good';
-  });
-
-  // init default valid button icons
-  document.querySelectorAll('#validGrid button').forEach(b=>{ b.textContent='✅'; b.style.background='#c8f7c5'; b.style.color='#0b6b2a' });
+function previewText() {
+  const preview = document.getElementById("previewBox");
+  preview.innerText = generateText();
+  preview.style.display = "block";
+}
 </script>
 
 </body>
-</html>
+</html>  
