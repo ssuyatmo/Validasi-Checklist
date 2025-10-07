@@ -171,18 +171,7 @@ button {
   <!-- VALIDATION -->
   <div class="card">
     <div class="section-title">📝 Validasi & Kelengkapan Checklist Service</div>
-<textarea id="validation" rows="10" placeholder="Job Card & Cover Checklist ✅
-Form Observasi Redo PS ✅
-Form QA 1 & QA 7 ✅
-Form PPM ✅
-Form Check List A ✅
-Form Check List B ✅
-Form Check List C ✅
-Form Backlog ✅
-Form FUI ✅
-Form Repair Order ✅
-Form Combine Maintenance ✅
-Form Service Activity Report ✅"></textarea>
+    <div id="validationList"></div>
   </div>
 
   <!-- DEVIATION -->
@@ -201,18 +190,49 @@ Form Service Activity Report ✅"></textarea>
 </div>
 
 <script>
-function toggle(btn, id){
+const validationItems = [
+  "Job Card & Cover Checklist",
+  "Form Observasi Redo PS",
+  "Form QA 1 & QA 7",
+  "Form PPM",
+  "Form Check List A",
+  "Form Check List B",
+  "Form Check List C",
+  "Form Backlog",
+  "Form FUI",
+  "Form Repair Order",
+  "Form Combine Maintenance",
+  "Form Service Activity Report"
+];
+
+const container = document.getElementById("validationList");
+validationItems.forEach(item=>{
+  const row=document.createElement("div");
+  row.className="input-row";
+  const btn=document.createElement("div");
+  btn.className="status good";
+  btn.textContent="GOOD";
+  const field=document.createElement("input");
+  field.value=item+" : ✅ GOOD";
+  btn.onclick=()=>toggle(btn,field.id);
+  field.id=item.replace(/\s+/g,"_");
+  row.appendChild(btn);
+  row.appendChild(field);
+  container.appendChild(row);
+});
+
+function toggle(btn,id){
   const field=document.getElementById(id);
-  if(btn.classList.contains('good')){
-    btn.classList.remove('good');
-    btn.classList.add('bad');
+  if(btn.classList.contains("good")){
+    btn.classList.remove("good");
+    btn.classList.add("bad");
     btn.textContent="BAD";
-    field.value=field.placeholder+" ❌ BAD";
+    field.value=field.value.split(":")[0]+" : ❌ BAD";
   }else{
-    btn.classList.remove('bad');
-    btn.classList.add('good');
+    btn.classList.remove("bad");
+    btn.classList.add("good");
     btn.textContent="GOOD";
-    field.value=field.placeholder+" ✅ GOOD";
+    field.value=field.value.split(":")[0]+" : ✅ GOOD";
   }
 }
 
@@ -226,6 +246,7 @@ function formatDate(d){
 function preview(){
   const date=formatDate(dateInput.value);
   const deviationLines=deviation.value.split("\n").filter(l=>l.trim()!=="").map(l=>"⚠️ "+l.trim()).join("\n");
+  const validText=[...container.querySelectorAll("input")].map(v=>v.value).join("\n");
   const result=
 `📋 Inspection Type : ${inspectionType.value}
 
@@ -234,12 +255,14 @@ function preview(){
 🚗 CN : ${cn.value}
 ⌛ HM : ${hm.value}
 
+
 ---
 
 🩸 Oil Level 🩸
 ${engineOil.value}
 ${transOil.value}
 ${hydOil.value}
+
 
 ---
 
@@ -249,6 +272,7 @@ ${oilLeak.value}
 ${rail.value}
 ${injector.value}
 
+
 ---
 
 🚗 Cabin Area 🚗
@@ -256,16 +280,19 @@ ${fm.value}
 ${fatigue.value}
 ${window.value}
 
+
 ---
 
 🛞 Frame Area 🛞
 ${seat.value}
 ${handrail.value}
 
+
 ---
 
 💧 Pressure Suspension (Panel) 💧
 FL : ${fl.value} | FR : ${fr.value} | RL : ${rl.value} | RR : ${rr.value}
+
 
 ---
 
@@ -273,10 +300,12 @@ FL : ${fl.value} | FR : ${fr.value} | RL : ${rl.value} | RR : ${rr.value}
 Tyre : ${tyre.value}
 ${tyreNote.value?tyreNote.value:"Jika BAD → tulis temuan di bawah ini:"}
 
+
 ---
 
 📝 Validasi & Kelengkapan Checklist Service
-${validation.value}
+${validText}
+
 
 ---
 
