@@ -16,28 +16,27 @@
       background: linear-gradient(90deg, #ffae42, #ffe97a);
       color: #333;
       text-align: center;
-      padding: 15px 10px;
+      padding: 12px 8px;
       font-weight: bold;
       font-size: 20px;
       letter-spacing: 1px;
       border-bottom: 3px solid #f0c23c;
       box-shadow: 0 2px 6px rgba(0,0,0,0.1);
-      position: sticky;
-      top: 0;
-      z-index: 10;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
     }
 
     header img {
       width: 40px;
       height: 40px;
-      vertical-align: middle;
-      margin-right: 10px;
       border-radius: 8px;
     }
 
     .container {
       padding: 15px;
-      max-width: 480px;
+      max-width: 500px;
       margin: auto;
     }
 
@@ -85,6 +84,7 @@
       padding: 8px 10px;
       cursor: pointer;
       font-size: 14px;
+      transition: 0.2s;
     }
 
     .btn-v {
@@ -101,7 +101,7 @@
 
     textarea {
       width: 100%;
-      min-height: 70px;
+      min-height: 80px;
       border-radius: 8px;
       padding: 8px;
       border: 1px solid #ccc;
@@ -139,10 +139,21 @@
     .send:hover { background: #1ebe5c; }
     .preview:hover { background: #e4a51c; }
 
+    #previewBox {
+      display: none;
+      background: white;
+      border-radius: 10px;
+      padding: 10px;
+      margin-top: 15px;
+      box-shadow: 0 3px 6px rgba(0,0,0,0.1);
+      font-family: monospace;
+      white-space: pre-wrap;
+      font-size: 14px;
+    }
+
     @media (max-width: 480px) {
       header {
         font-size: 18px;
-        padding: 10px;
       }
       .actions button {
         font-size: 13px;
@@ -160,9 +171,9 @@
   <div class="container">
     <div class="section">
       <h3>Informasi Unit</h3>
-      <label>Code Number: <input type="text" id="codeNumber"></label>
+      <label>Code Number: <input type="text" id="codeNumber" placeholder="Misal: DT4947"></label>
       <label>Date: <input type="date" id="date"></label>
-      <label>Hourmeter: <input type="number" id="hm"></label>
+      <label>Hourmeter: <input type="number" id="hm" placeholder="Masukkan HM"></label>
     </div>
 
     <div class="section">
@@ -172,13 +183,11 @@
         <button class="btn-v">✅ GOOD</button>
         <button class="btn-x">❌ BAD</button>
       </div>
-
       <label>Transmission oil level</label>
       <div class="choice">
         <button class="btn-v">✅ GOOD</button>
         <button class="btn-x">❌ BAD</button>
       </div>
-
       <label>Hydraulic oil level</label>
       <div class="choice">
         <button class="btn-v">✅ GOOD</button>
@@ -188,13 +197,15 @@
 
     <div class="section">
       <h3>Deviation</h3>
-      <textarea id="deviation" placeholder="⚠️ Tuliskan deviation, setiap baris otomatis diawali tanda ⚠️"></textarea>
+      <textarea id="deviation" placeholder="⚠️ Tuliskan deviation, tiap baris otomatis ada tanda ⚠️"></textarea>
     </div>
 
     <div class="actions">
-      <button class="preview">🧾 Preview</button>
-      <button class="send">📤 Send WA</button>
+      <button class="preview" onclick="showPreview()">🧾 Preview</button>
+      <button class="send" onclick="sendToWhatsApp()">📤 Send WA</button>
     </div>
+
+    <div id="previewBox"></div>
   </div>
 
   <script>
@@ -203,7 +214,27 @@
       const lines = deviationField.value.split('\n');
       deviationField.value = lines.map(line => line.startsWith('⚠️') ? line : '⚠️ ' + line).join('\n');
     });
-  </script>
 
+    function generateText() {
+      const code = document.getElementById('codeNumber').value;
+      const date = document.getElementById('date').value;
+      const hm = document.getElementById('hm').value;
+      const deviation = document.getElementById('deviation').value;
+
+      return `*QA-1 Pre Inspection*\n\n📅 Tgl : ${date}\n🚗 CN : ${code}\n⌛ HM : ${hm}\n\n🩸 *Oil Level* 🩸\nEngine oil level : ✅\nTransmission oil level : ✅\nHydraulic oil level : ✅\n\n*Deviation :*\n${deviation}`;
+    }
+
+    function showPreview() {
+      const text = generateText();
+      const box = document.getElementById('previewBox');
+      box.textContent = text;
+      box.style.display = 'block';
+    }
+
+    function sendToWhatsApp() {
+      const text = encodeURIComponent(generateText());
+      window.open(`https://wa.me/?text=${text}`, '_blank');
+    }
+  </script>
 </body>
-</html>                 
+</html>
