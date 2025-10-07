@@ -42,9 +42,6 @@
       gap: 10px;
       margin-top: 5px;
     }
-    .checkbox-group label {
-      font-weight: normal;
-    }
     .btn {
       display: inline-block;
       margin-top: 15px;
@@ -106,9 +103,10 @@
 
 <script>
 function formatDeviation(text) {
-  // pisahkan setiap baris & tambahkan simbol ⚠️ otomatis
+  // Pisahkan baris & tambahkan ⚠️ di depan setiap temuan
   const lines = text.split('\n').filter(l => l.trim() !== '');
-  return lines.map(l => `⚠️ ${l.trim()}`).join('\n');
+  if (lines.length === 0) return '';
+  return 'Deviation :\n' + lines.map(l => `⚠️ ${l.trim()}`).join('\n');
 }
 
 function generateText() {
@@ -129,16 +127,15 @@ function generateText() {
 ⌛ HM : ${hm}
 
 💧 *Pressure Suspension (Panel)* 💧
-FL : ${document.getElementById("fl").value}
-FR : ${document.getElementById("fr").value}
-RL : ${document.getElementById("rl").value}
-RR : ${document.getElementById("rr").value}
+FL : ${document.getElementById("fl").value} MPa
+FR : ${document.getElementById("fr").value} MPa
+RL : ${document.getElementById("rl").value} MPa
+RR : ${document.getElementById("rr").value} MPa
 
 🛞 *Tyre Condition* :
 Tyre : ${tyre}
 ${tyreDetail ? "➡️ " + tyreDetail : ""}
 
-*Deviation :*
 ${deviation}`;
 }
 
