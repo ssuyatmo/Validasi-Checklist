@@ -36,11 +36,14 @@
       border: 1px solid #ccc;
       border-radius: 8px;
     }
-    .checkbox-group {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 15px;
+    .checkbox-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+      gap: 5px 15px;
       margin-top: 5px;
+    }
+    .checkbox-grid label {
+      font-weight: normal;
     }
     .btn {
       display: inline-block;
@@ -51,9 +54,27 @@
       cursor: pointer;
       color: #fff;
       font-weight: bold;
+      box-shadow: 0 3px 6px rgba(0,0,0,0.15);
     }
     .btn-wa { background: #25D366; }
-    .btn-copy { background: #0078FF; margin-left: 10px; }
+    .btn-copy { background: #0078FF; }
+    .btn-preview { background: #FF9800; }
+    .button-group {
+      display: flex;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+    #previewBox {
+      white-space: pre-wrap;
+      background: #f8f9fa;
+      border-radius: 10px;
+      padding: 15px;
+      margin-top: 20px;
+      font-size: 14px;
+      border: 1px solid #ddd;
+      display: none;
+    }
   </style>
 </head>
 <body>
@@ -79,14 +100,14 @@
     <input id="hm">
 
     <label>🩸 Oil Level</label>
-    <div class="checkbox-group">
+    <div class="checkbox-grid">
       <label><input type="checkbox" id="oil1"> Engine Oil Level ✅</label>
       <label><input type="checkbox" id="oil2"> Transmission Oil Level ✅</label>
       <label><input type="checkbox" id="oil3"> Hydraulic Oil Level ✅</label>
     </div>
 
     <label>⚙ Engine Area</label>
-    <div class="checkbox-group">
+    <div class="checkbox-grid">
       <label><input type="checkbox" id="eng1"> Belt tension ✅</label>
       <label><input type="checkbox" id="eng2"> Engine oil leakage ✅</label>
       <label><input type="checkbox" id="eng3"> Common Rail Connector ✅</label>
@@ -94,22 +115,22 @@
     </div>
 
     <label>🚗 Cabin Area</label>
-    <div class="checkbox-group">
+    <div class="checkbox-grid">
       <label><input type="checkbox" id="cab1"> FM Radio ✅</label>
       <label><input type="checkbox" id="cab2"> Fatigue Warning ✅</label>
-      <label>Power Supply (Volt): <input id="power" style="width: 80px;"></label>
-      <label>Common Rail Pressure (MPa): <input id="crp" style="width: 80px;"></label>
+      <label>⚡ Power Supply (Volt): <input id="power" style="width: 60px;"></label>
+      <label>💧 CR Pressure (ON): <input id="crp" style="width: 60px;"></label>
       <label><input type="checkbox" id="cab3"> Power Window ✅</label>
     </div>
 
     <label>🚗 Frame Area</label>
-    <div class="checkbox-group">
+    <div class="checkbox-grid">
       <label><input type="checkbox" id="frm1"> Operator seat ✅</label>
       <label><input type="checkbox" id="frm2"> Hand Rail ✅</label>
     </div>
 
     <label>💧 Pressure Suspension (Panel)</label>
-    <div class="checkbox-group">
+    <div class="checkbox-grid">
       <input id="fl" placeholder="FL (MPa)">
       <input id="fr" placeholder="FR (MPa)">
       <input id="rl" placeholder="RL (MPa)">
@@ -124,7 +145,7 @@
     <textarea id="tyreDetail" placeholder="Isi jika kondisi Bad..."></textarea>
 
     <label>📝 Validasi & Kelengkapan Checklist Service</label>
-    <div class="checkbox-group">
+    <div class="checkbox-grid">
       <label><input type="checkbox" checked> Job Card & Cover Checklist ✅</label>
       <label><input type="checkbox" checked> Form Observasi Redo PS ✅</label>
       <label><input type="checkbox" checked> Form QA 1 & QA 7 ✅</label>
@@ -142,8 +163,13 @@
     <label>⚠️ Deviation</label>
     <textarea id="deviation" placeholder="Ketik setiap temuan lalu tekan Enter..."></textarea>
 
-    <button class="btn btn-wa" onclick="sendToWA()">📲 Kirim ke WA</button>
-    <button class="btn btn-copy" onclick="copyText()">📋 Salin</button>
+    <div class="button-group">
+      <button class="btn btn-wa" onclick="sendToWA()">📲 Kirim ke WA</button>
+      <button class="btn btn-preview" onclick="previewText()">👁️ Preview</button>
+      <button class="btn btn-copy" onclick="copyText()">📋 Salin</button>
+    </div>
+
+    <div id="previewBox"></div>
   </div>
 
 <script>
@@ -227,6 +253,12 @@ function sendToWA() {
 function copyText() {
   navigator.clipboard.writeText(generateText());
   alert("✅ Teks berhasil disalin ke clipboard!");
+}
+
+function previewText() {
+  const preview = document.getElementById("previewBox");
+  preview.innerText = generateText();
+  preview.style.display = "block";
 }
 </script>
 
