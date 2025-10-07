@@ -1,203 +1,515 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Checklist QA Unit HD785-7</title>
-  <style>
-    body {
-      font-family: 'Poppins', sans-serif;
-      background: linear-gradient(to bottom right, #a8e063, #56ab2f);
-      margin: 0;
-      padding: 0;
-      color: #333;
-    }
-    header {
-      background: linear-gradient(to right, #d4af37, #f9e79f);
-      color: #fff;
-      text-align: center;
-      padding: 15px;
-      font-size: 20px;
-      font-weight: bold;
-      border-bottom: 3px solid #fff8dc;
-      border-radius: 0 0 20px 20px;
-      box-shadow: 0 2px 6px rgba(0,0,0,0.2);
-    }
-    .container {
-      max-width: 650px;
-      margin: 20px auto;
-      background: #fff;
-      padding: 20px;
-      border-radius: 20px;
-      box-shadow: 0 5px 15px rgba(0,0,0,0.15);
-    }
-    h2 {
-      text-align: center;
-      margin-bottom: 10px;
-      color: #333;
-    }
-    .card {
-      background: #f9f9f9;
-      border-radius: 15px;
-      padding: 15px;
-      margin: 15px 0;
-      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-    }
-    .item {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin: 8px 0;
-      background: #fff;
-      border-radius: 10px;
-      padding: 8px 12px;
-      box-shadow: inset 0 1px 3px rgba(0,0,0,0.08);
-    }
-    .label {
-      font-weight: 600;
-    }
-    .status {
-      cursor: pointer;
-      font-size: 22px;
-      transition: transform 0.2s;
-    }
-    .status:hover {
-      transform: scale(1.2);
-    }
-    textarea {
-      width: 100%;
-      height: 80px;
-      border-radius: 10px;
-      padding: 10px;
-      border: 1px solid #ccc;
-      margin-top: 10px;
-    }
-    button {
-      background: #56ab2f;
-      color: white;
-      border: none;
-      border-radius: 10px;
-      padding: 12px 18px;
-      font-weight: bold;
-      margin: 8px 5px;
-      cursor: pointer;
-      transition: 0.3s;
-    }
-    button:hover {
-      background: #449d25;
-    }
-    .preview {
-      background: #eafbea;
-      padding: 15px;
-      border-radius: 10px;
-      white-space: pre-wrap;
-      margin-top: 15px;
-      font-family: monospace;
-    }
-  </style>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Inspection Report HD - QA</title>
+<style>
+  :root{
+    --bg-top:#fbfff6; --bg-bottom:#eafbe9;
+    --card:#ffffff;
+    --gold1:#ffd98a; --gold2:#ffd05a;
+    --accent:#165c34;
+    --muted:#6b6b6b;
+    --good:#1fa33a; --bad:#d32f2f;
+    --preview-bg:#e9ffea;
+  }
+  *{box-sizing:border-box}
+  body{
+    margin:0; font-family: Inter, "Segoe UI", Roboto, Arial, sans-serif;
+    background: linear-gradient(180deg,var(--bg-top),var(--bg-bottom));
+    color:#122;
+    -webkit-font-smoothing:antialiased;
+  }
+
+  /* header */
+  header{
+    background: linear-gradient(90deg,var(--gold1),var(--gold2));
+    padding:12px 14px;
+    display:flex; gap:12px; align-items:center; justify-content:center;
+    box-shadow:0 4px 14px rgba(0,0,0,0.08);
+    position:sticky; top:0; z-index:20;
+  }
+  header .logo{ width:48px; height:48px; border-radius:50%; overflow:hidden; box-shadow:0 4px 10px rgba(0,0,0,0.12) }
+  header h1{ margin:0; font-size:18px; color:#222; letter-spacing:0.6px }
+
+  /* layout */
+  .wrap{ max-width:1100px; margin:16px auto; padding:0 12px; display:grid; grid-template-columns: 1fr 420px; gap:14px; align-items:start; }
+  @media (max-width:900px){ .wrap{ grid-template-columns: 1fr; padding-bottom:30px } }
+
+  /* card */
+  .card{ background:var(--card); border-radius:12px; padding:12px; box-shadow:0 8px 20px rgba(20,40,20,0.04) }
+  .card h2{ margin:0 0 8px; font-size:16px; color:var(--accent) }
+  .muted{ color:var(--muted); font-size:13px }
+
+  /* form controls */
+  .row{ display:flex; gap:10px; align-items:center; flex-wrap:wrap }
+  .col{ flex:1 }
+  label{ display:block; font-weight:700; margin:6px 0; color:#234 }
+
+  input[type=text], input[type=date], input[type=number], textarea { width:100%; padding:10px; border-radius:8px; border:1px solid #dbeedd; background:#fff; font-size:14px; }
+  textarea{ min-height:90px; resize:vertical; }
+
+  /* tile + input */
+  .big-item{ display:flex; gap:12px; align-items:center; margin-bottom:12px }
+  .tile{
+    width:88px; height:64px; border-radius:8px; display:flex; flex-direction:column; align-items:center; justify-content:center;
+    font-weight:800; cursor:pointer; user-select:none; box-shadow: 0 8px 0 rgba(0,0,0,0.03);
+  }
+  .tile.good{ background: linear-gradient(180deg,#e9f8ea,#d7f0d5); color:var(--good); border:1px solid #cfe9d2; box-shadow:0 6px 0 rgba(31,163,72,0.06); }
+  .tile.bad{ background: linear-gradient(180deg,#fff0f0,#ffdede); color:var(--bad); border:1px solid #f7cfcf; box-shadow:0 6px 0 rgba(211,63,63,0.06); }
+  .tile .ico{ font-size:26px }
+  .tile .txt{ font-size:12px; margin-top:4px }
+
+  .item-input{ flex:1 }
+  .item-input .label{ font-weight:700; color:#145; margin-bottom:6px }
+  .item-input input{ padding:12px; border-radius:8px; border:1px solid #cfe8d8; }
+
+  /* inline for pressure */
+  .inline{ display:flex; gap:8px; flex-wrap:wrap }
+  .inline input{ flex:1; min-width:80px }
+
+  /* validasi */
+  .valid-grid{ display:grid; grid-template-columns: repeat(auto-fit, minmax(180px,1fr)); gap:8px; }
+  .valid-item{ background:#fff; padding:8px; border-radius:8px; border:1px solid #e6efe6; display:flex; justify-content:space-between; align-items:center }
+  .valid-item button{ border-radius:6px; border:none; padding:6px 8px; cursor:pointer; font-weight:700 }
+  .valid-item .yes{ background:var(--good); color:#fff }
+  .valid-item .no{ background:var(--bad); color:#fff }
+
+  /* actions */
+  .actions{ display:flex; gap:8px; margin-top:12px; }
+  .btn{ flex:1; padding:10px 12px; border-radius:8px; border:none; cursor:pointer; font-weight:900; color:#fff }
+  .btn.preview{ background:#f1a81a }
+  .btn.copy{ background:#2b7edc }
+  .btn.wa{ background:#25d366 }
+
+  /* preview */
+  .preview-card{ background:var(--preview-bg); border-radius:12px; padding:12px; box-shadow:0 8px 20px rgba(20,40,20,0.04); min-height:120px; display:flex; flex-direction:column; }
+  .preview-card .title{ font-weight:900; margin-bottom:8px }
+  .preview-text{ white-space:pre-wrap; font-family: "Segoe UI", Roboto, Arial, sans-serif; color:#123; font-size:14px; flex:1; overflow:auto; }
+
+  /* responsive tweaks */
+  @media (max-width:900px){
+    .preview-card{ order:99; margin-top:10px }
+  }
+</style>
 </head>
 <body>
-  <header>✅ Checklist QA HD785-7</header>
-  <div class="container">
-    <h2>Form Pemeriksaan</h2>
 
-    <div class="card">
-      <label>Mekanik:</label><br>
-      <input type="text" id="mekanik" placeholder="Nama Mekanik" style="width:100%;padding:8px;border-radius:8px;"><br><br>
-      <label>CN:</label>
-      <input type="text" id="cn" placeholder="Nomor CN" style="width:48%;padding:8px;border-radius:8px;">
-      <label>HM:</label>
-      <input type="text" id="hm" placeholder="Hour Meter" style="width:48%;padding:8px;border-radius:8px;">
+<header>
+  <div class="logo"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/8c/Dump_truck_icon.png/480px-Dump_truck_icon.png" alt="HD785" style="width:100%;height:100%;object-fit:cover"></div>
+  <h1>INSPECTION REPORT HD-785-7</h1>
+</header>
+
+<div class="wrap">
+  <!-- LEFT: FORM -->
+  <div class="card" id="formCard">
+    <div style="display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:8px">
+      <div>
+        <label>Pilih Jenis Inspeksi</label>
+        <div class="row">
+          <label><input type="radio" name="qatype" value="QA-1 Pre Inspection" checked> QA-1</label>
+          <label><input type="radio" name="qatype" value="QA-7 Final Inspection"> QA-7</label>
+        </div>
+      </div>
+      <div class="muted" style="text-align:right">Preview di panel kanan</div>
     </div>
 
-    <div class="card">
-      <h3>Oil Level 🔥</h3>
-      <div class="item"><span class="label">Engine Oil Level</span><span class="status" onclick="toggle(this)">❌</span></div>
-      <div class="item"><span class="label">Transmission Oil Level</span><span class="status" onclick="toggle(this)">❌</span></div>
-      <div class="item"><span class="label">Hydraulic Oil Level</span><span class="status" onclick="toggle(this)">❌</span></div>
+    <h2>Informasi Unit</h2>
+    <div class="row">
+      <div class="col">
+        <label>Code Number</label>
+        <input id="code" type="text" placeholder="DT4947">
+      </div>
+      <div class="col">
+        <label>Date</label>
+        <input id="date" type="date">
+      </div>
+      <div class="col" style="min-width:120px">
+        <label>Hourmeter</label>
+        <input id="hm" type="number" placeholder="35026">
+      </div>
     </div>
 
-    <div class="card">
-      <h3>Engine Area ⚙️</h3>
-      <div class="item"><span class="label">Belt Tension</span><span class="status" onclick="toggle(this)">❌</span></div>
-      <div class="item"><span class="label">Engine Oil Leakage</span><span class="status" onclick="toggle(this)">❌</span></div>
-      <div class="item"><span class="label">Common Rail Connector</span><span class="status" onclick="toggle(this)">❌</span></div>
-      <div class="item"><span class="label">Injector Tube</span><span class="status" onclick="toggle(this)">❌</span></div>
+    <!-- Oil Levels -->
+    <div style="margin-top:12px">
+      <h2>Oil Levels</h2>
+
+      <div class="big-item">
+        <div class="tile good" data-state="good" onclick="toggleTile(this,'engineInput','Engine oil level')">
+          <div class="ico">✔</div><div class="txt">GOOD</div>
+        </div>
+        <div class="item-input">
+          <div class="label">Engine oil level</div>
+          <input id="engineInput" type="text" value="Engine oil level : Good">
+        </div>
+      </div>
+
+      <div class="big-item">
+        <div class="tile good" data-state="good" onclick="toggleTile(this,'transInput','Transmission oil level')">
+          <div class="ico">✔</div><div class="txt">GOOD</div>
+        </div>
+        <div class="item-input">
+          <div class="label">Transmission oil level</div>
+          <input id="transInput" type="text" value="Transmission oil level : Good">
+        </div>
+      </div>
+
+      <div class="big-item">
+        <div class="tile good" data-state="good" onclick="toggleTile(this,'hydInput','Hydraulic oil level')">
+          <div class="ico">✔</div><div class="txt">GOOD</div>
+        </div>
+        <div class="item-input">
+          <div class="label">Hydraulic oil level</div>
+          <input id="hydInput" type="text" value="Hydraulic oil level : Good">
+        </div>
+      </div>
     </div>
 
-    <div class="card">
-      <h3>Cabin Area 🚗</h3>
-      <div class="item"><span class="label">FM Radio</span><span class="status" onclick="toggle(this)">❌</span></div>
-      <div class="item"><span class="label">Fatigue Warning</span><span class="status" onclick="toggle(this)">❌</span></div>
-      <div class="item"><span class="label">Power Window</span><span class="status" onclick="toggle(this)">❌</span></div>
+    <!-- Engine area -->
+    <div style="margin-top:12px">
+      <h2>Engine Area</h2>
+
+      <div class="big-item">
+        <div class="tile good" data-state="good" onclick="toggleTile(this,'beltInput','Belt tension')"><div class="ico">✔</div><div class="txt">GOOD</div></div>
+        <div class="item-input"><div class="label">V-belt tension</div><input id="beltInput" type="text" value="V-belt tension : Good"></div>
+      </div>
+
+      <div class="big-item">
+        <div class="tile good" data-state="good" onclick="toggleTile(this,'leakInput','Engine oil leakage')"><div class="ico">✔</div><div class="txt">GOOD</div></div>
+        <div class="item-input"><div class="label">Engine oil leakage</div><input id="leakInput" type="text" value="Good, No engine oil leakage"></div>
+      </div>
+
+      <div class="big-item">
+        <div class="tile good" data-state="good" onclick="toggleTile(this,'crcInput','Common Rail Connector')"><div class="ico">✔</div><div class="txt">GOOD</div></div>
+        <div class="item-input"><div class="label">Common Rail connector</div><input id="crcInput" type="text" value="Common Rail Connector : Good"></div>
+      </div>
+
+      <div class="big-item">
+        <div class="tile good" data-state="good" onclick="toggleTile(this,'injInput','Injector Tube')"><div class="ico">✔</div><div class="txt">GOOD</div></div>
+        <div class="item-input"><div class="label">Injector tube</div><input id="injInput" type="text" value="Injector Tube : Good"></div>
+      </div>
     </div>
 
-    <div class="card">
-      <h3>Frame Area 🚜</h3>
-      <div class="item"><span class="label">Operator Seat</span><span class="status" onclick="toggle(this)">❌</span></div>
-      <div class="item"><span class="label">Hand Rail</span><span class="status" onclick="toggle(this)">❌</span></div>
+    <!-- Cabin -->
+    <div style="margin-top:12px">
+      <h2>Cabin Area</h2>
+
+      <div class="big-item">
+        <div class="tile good" data-state="good" onclick="toggleTile(this,'radioInput','FM Radio')"><div class="ico">✔</div><div class="txt">GOOD</div></div>
+        <div class="item-input"><div class="label">FM Radio</div><input id="radioInput" type="text" value="FM Radio : Good"></div>
+      </div>
+
+      <div class="big-item">
+        <div class="tile good" data-state="good" onclick="toggleTile(this,'fatigueInput','Fatigue Warning')"><div class="ico">✔</div><div class="txt">GOOD</div></div>
+        <div class="item-input"><div class="label">Fatigue Warning</div><input id="fatigueInput" type="text" value="Fatigue Warning : Good"></div>
+      </div>
+
+      <div class="big-item">
+        <div class="tile good" data-state="good" onclick="toggleTile(this,'pwInput','Power Window')"><div class="ico">✔</div><div class="txt">GOOD</div></div>
+        <div class="item-input"><div class="label">Power Window</div><input id="pwInput" type="text" value="Power Window : Good"></div>
+      </div>
+
+      <div class="row" style="margin-top:6px">
+        <div class="col"><label>Power Supply (V)</label><input id="powerSupply" type="text" placeholder="e.g. 27.7"></div>
+        <div class="col"><label>Common Rail Pressure (MPa)</label><input id="crp" type="text" placeholder="e.g. 0"></div>
+      </div>
     </div>
 
-    <div class="card">
-      <h3>Deviation ⚠️</h3>
-      <textarea id="deviation" placeholder="Tulis deviation per baris..."></textarea>
+    <!-- Frame -->
+    <div style="margin-top:12px">
+      <h2>Frame Area</h2>
+      <div class="big-item">
+        <div class="tile good" data-state="good" onclick="toggleTile(this,'seatInput','Operator seat')"><div class="ico">✔</div><div class="txt">GOOD</div></div>
+        <div class="item-input"><div class="label">Operator seat</div><input id="seatInput" type="text" value="Operator seat : Good"></div>
+      </div>
+
+      <div class="big-item">
+        <div class="tile good" data-state="good" onclick="toggleTile(this,'railInput','Hand Rail')"><div class="ico">✔</div><div class="txt">GOOD</div></div>
+        <div class="item-input"><div class="label">Hand Rail</div><input id="railInput" type="text" value="Hand Rail : Good"></div>
+      </div>
     </div>
 
-    <div style="text-align:center;">
-      <button onclick="preview()">🧾 Preview</button>
-      <button onclick="copyToClipboard()">📋 Copy</button>
-      <button onclick="sendWA()">📤 Send to WhatsApp</button>
+    <!-- Suspension -->
+    <div style="margin-top:12px">
+      <h2>Pressure Suspension (Panel)</h2>
+      <div class="inline">
+        <input id="fl" type="text" placeholder="FL (MPa)">
+        <input id="fr" type="text" placeholder="FR (MPa)">
+        <input id="rl" type="text" placeholder="RL (MPa)">
+        <input id="rr" type="text" placeholder="RR (MPa)">
+      </div>
     </div>
 
-    <div class="preview" id="previewBox"></div>
+    <!-- Tyre -->
+    <div style="margin-top:12px">
+      <h2>Tyre Condition</h2>
+      <div class="big-item">
+        <div class="tile good" data-state="good" id="tyreTile" onclick="toggleTile(this,'tyreInput','Tyre')"><div class="ico">✔</div><div class="txt">GOOD</div></div>
+        <div class="item-input"><div class="label">Tyre</div><input id="tyreInput" type="text" value="Tyre : Good"></div>
+      </div>
+    </div>
+
+    <!-- Validasi -->
+    <div style="margin-top:12px">
+      <h2>Validasi & Kelengkapan Checklist Service</h2>
+      <div class="valid-grid" id="validGrid"></div>
+    </div>
+
+    <!-- Deviation -->
+    <div style="margin-top:12px">
+      <h2>Deviation</h2>
+      <textarea id="deviation" placeholder="Tulis temuan per baris..."></textarea>
+    </div>
+
+    <!-- actions -->
+    <div style="margin-top:12px">
+      <div class="actions">
+        <button class="btn preview" onclick="preview()">🧾 Preview</button>
+        <button class="btn copy" onclick="copyText()">📋 Copy</button>
+        <button class="btn wa" onclick="sendWA()">📤 Send to WhatsApp</button>
+      </div>
+    </div>
   </div>
 
-  <script>
-    function toggle(el) {
-      el.textContent = el.textContent === '✅' ? '❌' : '✅';
+  <!-- RIGHT: preview -->
+  <div class="preview-card card">
+    <div class="title">🧾 Preview (WhatsApp format)</div>
+    <div id="preview" class="preview-text">Klik <strong>Preview</strong> untuk melihat hasil format WA di sini.</div>
+    <div style="margin-top:10px" class="muted">Di layar kecil, preview akan berada di bawah form.</div>
+  </div>
+</div>
+
+<script>
+  // set today's date
+  (function(){ const d=new Date(); document.getElementById('date').value = d.toISOString().slice(0,10); })();
+
+  // validasi list
+  const validasiItems = [
+    "Job Card & Cover Checklist",
+    "Form Observasi Redo PS",
+    "Form QA 1 & QA 7",
+    "Form PPM",
+    "Form Check List A",
+    "Form Check List B",
+    "Form Check List C",
+    "Form Backlog",
+    "Form FUI",
+    "Form Repair Order",
+    "Form Combine Maintenance",
+    "Form Service Activity Report"
+  ];
+  const validGrid = document.getElementById('validGrid');
+  validasiItems.forEach((name, idx) => {
+    const d = document.createElement('div');
+    d.className = 'valid-item';
+    d.innerHTML = `<div>${name}</div><div><button class="yes" onclick="toggleValid(this)">✅</button></div>`;
+    validGrid.appendChild(d);
+  });
+
+  function toggleValid(btn){
+    if(btn.textContent.trim()==='✅'){
+      btn.textContent='❌'; btn.style.background='#ffd6d6'; btn.style.color='#900';
+    } else {
+      btn.textContent='✅'; btn.style.background='#c8f7c5'; btn.style.color='#0b6b2a';
     }
+  }
+  // init valid buttons style
+  document.querySelectorAll('#validGrid button').forEach(b=>{ b.textContent='✅'; b.style.background='#c8f7c5'; b.style.color='#0b6b2a' });
 
-    function generateMessage() {
-      const mekanik = document.getElementById("mekanik").value;
-      const cn = document.getElementById("cn").value;
-      const hm = document.getElementById("hm").value;
-      const deviation = document.getElementById("deviation").value.trim().split('\n').map(d => d ? `⚠️ ${d}` : '').join('\n');
+  // toggle tile GOOD/BAD
+  function toggleTile(tile, inputId, label){
+    const input = document.getElementById(inputId);
+    const state = tile.dataset.state === 'good' ? 'bad' : 'good';
+    tile.dataset.state = state;
+    if(state==='good'){
+      tile.classList.remove('bad'); tile.classList.add('good');
+      tile.innerHTML = '<div class="ico">✔</div><div class="txt">GOOD</div>';
+      if(input){ input.value = updateInputText(input.value, label, 'Good'); }
+    } else {
+      tile.classList.remove('good'); tile.classList.add('bad');
+      tile.innerHTML = '<div class="ico">✖</div><div class="txt">BAD</div>';
+      if(input){ input.value = updateInputText(input.value, label, 'Bad'); }
+    }
+  }
+  function updateInputText(current, label, state){
+    // ensure ends with ": Good" or ": Bad"
+    if(current && current.includes(':')) {
+      // replace tail after colon
+      return label + ' : ' + state;
+    } else {
+      return label + ' : ' + state;
+    }
+  }
 
-      let message = `🧾 *CHECKLIST QA HD785-7*\n`;
-      message += `👷 Mekanik: ${mekanik}\n🚘 CN: ${cn}\n⏱️ HM: ${hm}\n\n`;
+  // Deviation auto-format when previewing (keep free edit)
+  function formatDeviationRaw(raw){
+    if(!raw) return '';
+    const lines = raw.split(/\r?\n/).map(l=>l.trim()).filter(l=>l.length>0);
+    if(lines.length===0) return '';
+    return lines.map(l => l.startsWith('⚠️') ? l : '⚠️ ' + l).join('\\n');
+  }
 
-      const sections = document.querySelectorAll('.card');
-      sections.forEach(sec => {
-        const title = sec.querySelector('h3');
-        if (title) message += `*${title.textContent}*\n`;
-        sec.querySelectorAll('.item').forEach(item => {
-          const label = item.querySelector('.label').textContent;
-          const status = item.querySelector('.status').textContent;
-          message += `${label}: ${status}\n`;
-        });
-        message += `\n`;
-      });
+  // get check icon from tile state or input text
+  function tileIconByTileOrInput(tileSelector, inputId){
+    const tile = document.querySelector(tileSelector);
+    if(tile && tile.dataset && tile.dataset.state==='good') return '✅';
+    if(tile && tile.dataset && tile.dataset.state==='bad') return '❌';
+    const inp = document.getElementById(inputId);
+    if(inp){
+      if(/good/i.test(inp.value)) return '✅';
+      if(/bad/i.test(inp.value)) return '❌';
+    }
+    return '❌';
+  }
 
-      if (deviation) {
-        message += `⚠️ *Deviation:*\n${deviation}\n`;
+  // generate Validasi text
+  function getValidasiText(){
+    const arr = [];
+    document.querySelectorAll('#validGrid .valid-item').forEach((el,i)=>{
+      const name = validasiItems[i];
+      const btn = el.querySelector('button');
+      const ico = btn && btn.textContent.trim() === '✅' ? '🟩' : '❌';
+      arr.push(`• ${name} ${ico}`);
+    });
+    return arr.join('\\n');
+  }
+
+  // Generate WA-formatted text
+  function generateWA(){
+    const qa = document.querySelector('input[name="qatype"]:checked').value;
+    const date = document.getElementById('date').value || '-';
+    const code = document.getElementById('code').value || '-';
+    const hm = document.getElementById('hm').value || '-';
+
+    // oil
+    const e = document.getElementById('engineInput').value || 'Engine oil level : -';
+    const t = document.getElementById('transInput').value || 'Transmission oil level : -';
+    const h = document.getElementById('hydInput').value || 'Hydraulic oil level : -';
+
+    // engine
+    const belt = document.getElementById('beltInput').value || 'V-belt tension : -';
+    const leak = document.getElementById('leakInput').value || 'Engine oil leakage : -';
+    const crc = document.getElementById('crcInput').value || 'Common Rail Connector : -';
+    const inj = document.getElementById('injInput').value || 'Injector Tube : -';
+
+    // cabin
+    const radio = document.getElementById('radioInput').value || 'FM Radio : -';
+    const fatigue = document.getElementById('fatigueInput').value || 'Fatigue Warning : -';
+    const pw = document.getElementById('pwInput').value || 'Power Window : -';
+    const power = document.getElementById('powerSupply').value || '-';
+    const crp = document.getElementById('crp').value || '-';
+
+    // frame
+    const seat = document.getElementById('seatInput').value || 'Operator seat : -';
+    const rail = document.getElementById('railInput').value || 'Hand Rail : -';
+
+    // suspension
+    const fl = document.getElementById('fl').value || '-';
+    const fr = document.getElementById('fr').value || '-';
+    const rl = document.getElementById('rl').value || '-';
+    const rr = document.getElementById('rr').value || '-';
+
+    // tyre
+    const tyre = document.getElementById('tyreInput').value || 'Tyre : -';
+
+    // deviation
+    const devRaw = document.getElementById('deviation').value;
+    const dev = formatDeviationRaw(devRaw);
+
+    // icons based on tile dataset
+    function iconFor(id){
+      // find tile that toggles given input id by scanning onclick attr
+      const tile = Array.from(document.querySelectorAll('.tile')).find(t => (t.getAttribute('onclick')||'').includes(id));
+      if(tile){
+        if(tile.dataset.state === 'good') return '✅';
+        if(tile.dataset.state === 'bad') return '❌';
       }
-
-      return message.trim();
+      const inp = document.getElementById(id);
+      if(inp){
+        if(/good/i.test(inp.value)) return '✅';
+        if(/bad/i.test(inp.value)) return '❌';
+      }
+      return '❌';
     }
 
-    function preview() {
-      document.getElementById("previewBox").textContent = generateMessage();
-    }
+    // Build message (clean & spaced)
+    let msg = `*${qa}*\\n\\n`;
+    msg += `📅 Tgl : ${date}\\n`;
+    msg += `👷 Mekanik : -\\n`;
+    msg += `🚗 CN : ${code}\\n`;
+    msg += `⌛ HM : ${hm}\\n\\n`;
 
-    function copyToClipboard() {
-      navigator.clipboard.writeText(generateMessage());
-      alert("✅ Checklist disalin ke clipboard!");
-    }
+    // Oil
+    msg += `🩸 *Oil Level* 🩸\\n`;
+    msg += `${e.replace(/\\s*:\\s*(Good|Bad)$/i,'')} : ${iconFor('engineInput')}\\n`;
+    msg += `${t.replace(/\\s*:\\s*(Good|Bad)$/i,'')} : ${iconFor('transInput')}\\n`;
+    msg += `${h.replace(/\\s*:\\s*(Good|Bad)$/i,'')} : ${iconFor('hydInput')}\\n\\n`;
 
-    function sendWA() {
-      const msg = encodeURIComponent(generateMessage());
-      window.open(`https://wa.me/?text=${msg}`, "_blank");
-    }
-  </script>
+    // Engine Area
+    msg += `⚙ *Engine Area* ⚙\\n`;
+    msg += `${belt.replace(/\\s*:\\s*(Good|Bad)$/i,'')} : ${iconFor('beltInput')}\\n`;
+    msg += `${leak.replace(/\\s*:\\s*(Good|Bad)$/i,'')} : ${iconFor('leakInput')}\\n`;
+    msg += `${crc.replace(/\\s*:\\s*(Good|Bad)$/i,'')} : ${iconFor('crcInput')}\\n`;
+    msg += `${inj.replace(/\\s*:\\s*(Good|Bad)$/i,'')} : ${iconFor('injInput')}\\n\\n`;
+
+    // Cabin
+    msg += `🚗 *Cabin Area* 🚗\\n`;
+    msg += `${radio.replace(/\\s*:\\s*(Good|Bad)$/i,'')} : ${iconFor('radioInput')}\\n`;
+    msg += `${fatigue.replace(/\\s*:\\s*(Good|Bad)$/i,'')} : ${iconFor('fatigueInput')}\\n`;
+    msg += `⚡ Power Supply : ${power} V\\n`;
+    msg += `💧 Common Rail Pressure (ON) : ${crp} MPa\\n`;
+    msg += `${pw.replace(/\\s*:\\s*(Good|Bad)$/i,'')} : ${iconFor('pwInput')}\\n\\n`;
+
+    // Frame
+    msg += `🚗 *Frame Area* 🚗\\n`;
+    msg += `${seat.replace(/\\s*:\\s*(Good|Bad)$/i,'')} : ${iconFor('seatInput')}\\n`;
+    msg += `${rail.replace(/\\s*:\\s*(Good|Bad)$/i,'')} : ${iconFor('railInput')}\\n\\n`;
+
+    // Pressure
+    msg += `💧 *Pressure Suspension (Panel)* 💧\\n`;
+    msg += `FL : ${fl} MPa | FR : ${fr} MPa | RL : ${rl} MPa | RR : ${rr} MPa\\n\\n`;
+
+    // Tyre
+    msg += `🛞 *Tyre Condition :*\\n`;
+    msg += `${iconFor('tyreInput')} ${tyre}\\n\\n`;
+
+    // Validasi
+    msg += `📝 *Validasi & Kelengkapan Check list Service :*\\n`;
+    msg += `${getValidasiText()}\\n\\n`;
+
+    // Deviation
+    msg += `*Deviation :*\\n`;
+    msg += (dev ? dev : 'None');
+
+    return msg;
+  }
+
+  function preview(){
+    const p = document.getElementById('preview');
+    p.textContent = generateWA();
+    // ensure visible
+    document.querySelector('.preview-card').scrollIntoView({behavior:'smooth'});
+  }
+
+  function copyText(){
+    const txt = generateWA();
+    navigator.clipboard.writeText(txt).then(()=> alert('✅ Teks berhasil disalin ke clipboard.'));
+  }
+
+  function sendWA(){
+    const txt = encodeURIComponent(generateWA());
+    window.open('https://wa.me/?text=' + txt,'_blank');
+  }
+
+  // init tiles dataset
+  document.querySelectorAll('.tile').forEach(t => {
+    if(!t.dataset.state) t.dataset.state = t.classList.contains('bad') ? 'bad' : 'good';
+  });
+
+  // init default valid button icons
+  document.querySelectorAll('#validGrid button').forEach(b=>{ b.textContent='✅'; b.style.background='#c8f7c5'; b.style.color='#0b6b2a' });
+</script>
+
 </body>
 </html>
