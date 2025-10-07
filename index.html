@@ -7,7 +7,7 @@
   <style>
     body {
       font-family: "Segoe UI", sans-serif;
-      background: linear-gradient(180deg, #f4f6f8, #dbe5ec);
+      background: linear-gradient(180deg, #f4f6f8, #d3e1ec);
       padding: 20px;
     }
     h2 {
@@ -21,7 +21,7 @@
       border-radius: 15px;
       box-shadow: 0 4px 10px rgba(0,0,0,0.1);
       margin: auto;
-      max-width: 500px;
+      max-width: 650px;
     }
     label {
       display: block;
@@ -39,7 +39,7 @@
     .checkbox-group {
       display: flex;
       flex-wrap: wrap;
-      gap: 10px;
+      gap: 15px;
       margin-top: 5px;
     }
     .btn {
@@ -58,8 +58,14 @@
 </head>
 <body>
 
-  <h2>🌟 QA-1 Pre Inspection 🌟</h2>
+  <h2>🌟 QA Inspection Form 🌟</h2>
   <div class="form-card">
+    <label>Pilih Jenis Inspeksi:</label>
+    <select id="qaType">
+      <option value="QA-1 Pre Inspection">QA-1 Pre Inspection</option>
+      <option value="QA-7 Final Inspection">QA-7 Final Inspection</option>
+    </select>
+
     <label>Tanggal</label>
     <input id="tgl" type="date">
 
@@ -72,29 +78,68 @@
     <label>HM</label>
     <input id="hm">
 
-    <label>Oil Level</label>
+    <label>🩸 Oil Level</label>
     <div class="checkbox-group">
-      <label><input type="checkbox" id="oil1"> Engine ✅</label>
-      <label><input type="checkbox" id="oil2"> Trans ✅</label>
-      <label><input type="checkbox" id="oil3"> Hyd ✅</label>
+      <label><input type="checkbox" id="oil1"> Engine Oil Level ✅</label>
+      <label><input type="checkbox" id="oil2"> Transmission Oil Level ✅</label>
+      <label><input type="checkbox" id="oil3"> Hydraulic Oil Level ✅</label>
     </div>
 
-    <label>Pressure Suspension (Panel)</label>
+    <label>⚙ Engine Area</label>
     <div class="checkbox-group">
-      <input id="fl" placeholder="FL">
-      <input id="fr" placeholder="FR">
-      <input id="rl" placeholder="RL">
-      <input id="rr" placeholder="RR">
+      <label><input type="checkbox" id="eng1"> Belt tension ✅</label>
+      <label><input type="checkbox" id="eng2"> Engine oil leakage ✅</label>
+      <label><input type="checkbox" id="eng3"> Common Rail Connector ✅</label>
+      <label><input type="checkbox" id="eng4"> Injector Tube ✅</label>
     </div>
 
-    <label>Tyre Condition</label>
+    <label>🚗 Cabin Area</label>
+    <div class="checkbox-group">
+      <label><input type="checkbox" id="cab1"> FM Radio ✅</label>
+      <label><input type="checkbox" id="cab2"> Fatigue Warning ✅</label>
+      <label>Power Supply (Volt): <input id="power" style="width: 80px;"></label>
+      <label>Common Rail Pressure (MPa): <input id="crp" style="width: 80px;"></label>
+      <label><input type="checkbox" id="cab3"> Power Window ✅</label>
+    </div>
+
+    <label>🚗 Frame Area</label>
+    <div class="checkbox-group">
+      <label><input type="checkbox" id="frm1"> Operator seat ✅</label>
+      <label><input type="checkbox" id="frm2"> Hand Rail ✅</label>
+    </div>
+
+    <label>💧 Pressure Suspension (Panel)</label>
+    <div class="checkbox-group">
+      <input id="fl" placeholder="FL (MPa)">
+      <input id="fr" placeholder="FR (MPa)">
+      <input id="rl" placeholder="RL (MPa)">
+      <input id="rr" placeholder="RR (MPa)">
+    </div>
+
+    <label>🛞 Tyre Condition</label>
     <select id="tyre">
       <option value="Good">✅ Good</option>
       <option value="Bad">❌ Bad</option>
     </select>
     <textarea id="tyreDetail" placeholder="Isi jika kondisi Bad..."></textarea>
 
-    <label>Deviation</label>
+    <label>📝 Validasi & Kelengkapan Checklist Service</label>
+    <div class="checkbox-group">
+      <label><input type="checkbox" checked> Job Card & Cover Checklist ✅</label>
+      <label><input type="checkbox" checked> Form Observasi Redo PS ✅</label>
+      <label><input type="checkbox" checked> Form QA 1 & QA 7 ✅</label>
+      <label><input type="checkbox" checked> Form PPM ✅</label>
+      <label><input type="checkbox" checked> Form Checklist A ✅</label>
+      <label><input type="checkbox" checked> Form Checklist B ✅</label>
+      <label><input type="checkbox" checked> Form Checklist C ✅</label>
+      <label><input type="checkbox" checked> Form Backlog ✅</label>
+      <label><input type="checkbox" checked> Form FUI ✅</label>
+      <label><input type="checkbox" checked> Form Repair Order ✅</label>
+      <label><input type="checkbox" checked> Form Combine Maintenance ✅</label>
+      <label><input type="checkbox" checked> Form Service Activity Report ✅</label>
+    </div>
+
+    <label>⚠️ Deviation</label>
     <textarea id="deviation" placeholder="Ketik setiap temuan lalu tekan Enter..."></textarea>
 
     <button class="btn btn-wa" onclick="sendToWA()">📲 Kirim ke WA</button>
@@ -103,22 +148,24 @@
 
 <script>
 function formatDeviation(text) {
-  // Pisahkan baris & tambahkan ⚠️ di depan setiap temuan
   const lines = text.split('\n').filter(l => l.trim() !== '');
   if (lines.length === 0) return '';
-  return 'Deviation :\n' + lines.map(l => `⚠️ ${l.trim()}`).join('\n');
+  return '*Deviation :*\n' + lines.map(l => `⚠️ ${l.trim()}`).join('\n');
 }
 
 function generateText() {
+  const qaType = document.getElementById("qaType").value;
   const tgl = document.getElementById("tgl").value;
   const mekanik = document.getElementById("mekanik").value;
   const cn = document.getElementById("cn").value;
   const hm = document.getElementById("hm").value;
+  const power = document.getElementById("power").value;
+  const crp = document.getElementById("crp").value;
   const tyre = document.getElementById("tyre").value;
   const tyreDetail = document.getElementById("tyreDetail").value;
   const deviation = formatDeviation(document.getElementById("deviation").value);
 
-  return `*QA-1 Pre Inspection*
+  return `*${qaType}*
 
 📅 Tgl : ${tgl}
 👷 Mekanik : ${mekanik}
@@ -126,15 +173,48 @@ function generateText() {
 🚗 CN : ${cn}
 ⌛ HM : ${hm}
 
-💧 *Pressure Suspension (Panel)* 💧
-FL : ${document.getElementById("fl").value} MPa
-FR : ${document.getElementById("fr").value} MPa
-RL : ${document.getElementById("rl").value} MPa
-RR : ${document.getElementById("rr").value} MPa
+🩸 *Oil Level* 🩸
+Engine Oil Level : ✅
+Transmission Oil Level : ✅
+Hydraulic Oil Level : ✅
 
-🛞 *Tyre Condition* :
+⚙ *Engine Area* ⚙
+Belt tension : ✅
+Engine oil leakage : ✅
+Common Rail Connector : ✅
+Injector Tube : ✅
+
+🚗 *Cabin Area* 🚗
+📸 FM Radio : ✅
+⛔ Fatigue Warning : ✅
+⚡ Power Supply : ${power} V
+💧 Common Rail Pressure (ON) : ${crp} MPa
+🖼️ Power Window : ✅
+
+🚗 *Frame Area* 🚗
+Operator seat : ✅
+Hand Rail : ✅
+
+💧 *Pressure Suspension (Panel)* 💧
+FL : ${document.getElementById("fl").value} MPa | FR : ${document.getElementById("fr").value} MPa | RL : ${document.getElementById("rl").value} MPa | RR : ${document.getElementById("rr").value} MPa
+
+🛞 *Tyre Condition :*
 Tyre : ${tyre}
 ${tyreDetail ? "➡️ " + tyreDetail : ""}
+
+📝 *Validasi & Kelengkapan Check list Service :*
+- Job Card & Cover Checklist ✅
+- Form Observasi Redo PS ✅
+- Form QA 1 & QA 7 ✅
+- Form PPM ✅
+- Form Checklist A ✅
+- Form Checklist B ✅
+- Form Checklist C ✅
+- Form Backlog ✅
+- Form FUI ✅
+- Form Repair Order ✅
+- Form Combine Maintenance ✅
+- Form Service Activity Report ✅
 
 ${deviation}`;
 }
