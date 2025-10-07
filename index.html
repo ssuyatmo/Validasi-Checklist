@@ -1,240 +1,338 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Inspection Report HD</title>
-  <style>
-    body {
-      font-family: "Segoe UI", Arial, sans-serif;
-      margin: 0;
-      background: linear-gradient(to bottom, #fffef5, #f9f9e8);
-      color: #222;
-    }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Inspection Report HD</title>
+<style>
+  body {
+    font-family: "Segoe UI", Arial, sans-serif;
+    margin: 0;
+    background: linear-gradient(to bottom, #f9fff9, #e9ffe9);
+    color: #222;
+  }
 
-    header {
-      background: linear-gradient(90deg, #ffae42, #ffe97a);
-      color: #333;
-      text-align: center;
-      padding: 12px 8px;
-      font-weight: bold;
-      font-size: 20px;
-      letter-spacing: 1px;
-      border-bottom: 3px solid #f0c23c;
-      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 10px;
-    }
+  header {
+    background: linear-gradient(90deg, #f8e8a0, #fff5c3);
+    text-align: center;
+    color: #2e3a20;
+    padding: 12px;
+    font-size: 20px;
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    box-shadow: 0 3px 6px rgba(0,0,0,0.1);
+  }
 
-    header img {
-      width: 40px;
-      height: 40px;
-      border-radius: 8px;
-    }
+  header img {
+    width: 40px;
+    height: 40px;
+  }
 
-    .container {
-      padding: 15px;
-      max-width: 500px;
-      margin: auto;
-    }
+  .container {
+    padding: 15px;
+    max-width: 550px;
+    margin: auto;
+  }
 
-    .section {
-      background: linear-gradient(to right, #f9ffe5, #f1ffea);
-      border-radius: 12px;
-      box-shadow: 0 3px 6px rgba(0,0,0,0.1);
-      padding: 12px;
-      margin-bottom: 12px;
-    }
+  .card {
+    background: white;
+    border-radius: 15px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    padding: 15px;
+    margin-bottom: 15px;
+  }
 
-    .section h3 {
-      margin-top: 0;
-      color: #0044aa;
-      font-size: 15px;
-      border-bottom: 1px solid #ccc;
-      padding-bottom: 5px;
-    }
+  .card h3 {
+    margin-top: 0;
+    font-size: 16px;
+    color: #036d2e;
+    border-bottom: 1px solid #ccc;
+    padding-bottom: 5px;
+  }
 
-    label {
-      display: block;
-      margin: 6px 0;
-      font-size: 14px;
-    }
+  label {
+    display: block;
+    margin: 6px 0 3px;
+  }
 
-    input[type="text"], input[type="number"], input[type="date"] {
-      width: 100%;
-      padding: 8px;
-      border-radius: 8px;
-      border: 1px solid #ccc;
-      font-size: 14px;
-    }
+  input[type="text"], input[type="number"], input[type="date"], textarea {
+    width: 100%;
+    padding: 8px;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+    font-size: 14px;
+  }
 
-    .choice {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      margin-bottom: 8px;
-    }
+  .row {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 6px;
+  }
 
-    .choice button {
-      border: none;
-      border-radius: 10px;
-      font-weight: bold;
-      padding: 8px 10px;
-      cursor: pointer;
-      font-size: 14px;
-      transition: 0.2s;
-    }
+  .status-box {
+    flex: 0 0 80px;
+    text-align: center;
+    padding: 8px;
+    border-radius: 8px;
+    background: #e8f5e9;
+    font-weight: bold;
+    cursor: pointer;
+    user-select: none;
+    border: 1px solid #b5d6b5;
+    transition: 0.2s;
+  }
 
-    .btn-v {
-      background: #d1f7c4;
-      color: #1b5e20;
-      box-shadow: inset 0 0 4px #9cd69c;
-    }
+  .status-bad {
+    background: #ffebee;
+    color: #c62828;
+    border: 1px solid #f5a1a1;
+  }
 
-    .btn-x {
-      background: #ffd6d6;
-      color: #b71c1c;
-      box-shadow: inset 0 0 4px #e99696;
-    }
+  .actions {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 15px;
+    gap: 8px;
+  }
 
-    textarea {
-      width: 100%;
-      min-height: 80px;
-      border-radius: 8px;
-      padding: 8px;
-      border: 1px solid #ccc;
-      font-size: 14px;
-    }
+  .actions button {
+    flex: 1;
+    border: none;
+    border-radius: 8px;
+    padding: 10px;
+    font-size: 14px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: 0.2s;
+  }
 
-    .actions {
-      display: flex;
-      justify-content: space-between;
-      margin-top: 15px;
-    }
+  .preview-btn { background: #f0b429; color: white; }
+  .copy-btn { background: #4caf50; color: white; }
+  .send-btn { background: #25D366; color: white; }
 
-    .actions button {
-      flex: 1;
-      margin: 4px;
-      padding: 10px;
-      border: none;
-      border-radius: 8px;
-      font-weight: bold;
-      font-size: 14px;
-      cursor: pointer;
-      transition: 0.2s;
-    }
+  .preview-btn:hover { background: #e1a61f; }
+  .copy-btn:hover { background: #43a047; }
+  .send-btn:hover { background: #1ebe5c; }
 
-    .send {
-      background: #25D366;
-      color: white;
-    }
+  #previewBox {
+    display: none;
+    background: white;
+    border-radius: 10px;
+    box-shadow: 0 3px 8px rgba(0,0,0,0.15);
+    padding: 10px;
+    margin-top: 12px;
+    font-family: monospace;
+    white-space: pre-wrap;
+    font-size: 14px;
+  }
 
-    .preview {
-      background: #f0b429;
-      color: white;
-    }
+  .toggle-btn {
+    cursor: pointer;
+    background: #e8f5e9;
+    border-radius: 8px;
+    text-align: center;
+    padding: 5px;
+  }
 
-    .send:hover { background: #1ebe5c; }
-    .preview:hover { background: #e4a51c; }
+  .valid-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 6px;
+  }
 
-    #previewBox {
-      display: none;
-      background: white;
-      border-radius: 10px;
-      padding: 10px;
-      margin-top: 15px;
-      box-shadow: 0 3px 6px rgba(0,0,0,0.1);
-      font-family: monospace;
-      white-space: pre-wrap;
-      font-size: 14px;
-    }
+  .valid-btn {
+    border: none;
+    border-radius: 5px;
+    padding: 5px 10px;
+    cursor: pointer;
+  }
 
-    @media (max-width: 480px) {
-      header {
-        font-size: 18px;
-      }
-      .actions button {
-        font-size: 13px;
-      }
-    }
-  </style>
+  .valid-good {
+    background: #c8f7c5;
+    color: #2e7d32;
+  }
+
+  .valid-bad {
+    background: #ffd6d6;
+    color: #b71c1c;
+  }
+</style>
 </head>
 <body>
 
-  <header>
-    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/8c/Dump_truck_icon.png/480px-Dump_truck_icon.png" alt="logo">
-    INSPECTION REPORT HD
-  </header>
+<header>
+  <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/8c/Dump_truck_icon.png/480px-Dump_truck_icon.png" alt="logo">
+  INSPECTION REPORT HD
+</header>
 
-  <div class="container">
-    <div class="section">
-      <h3>Informasi Unit</h3>
-      <label>Code Number: <input type="text" id="codeNumber" placeholder="Misal: DT4947"></label>
-      <label>Date: <input type="date" id="date"></label>
-      <label>Hourmeter: <input type="number" id="hm" placeholder="Masukkan HM"></label>
-    </div>
-
-    <div class="section">
-      <h3>Oil Level</h3>
-      <label>Engine oil level</label>
-      <div class="choice">
-        <button class="btn-v">✅ GOOD</button>
-        <button class="btn-x">❌ BAD</button>
-      </div>
-      <label>Transmission oil level</label>
-      <div class="choice">
-        <button class="btn-v">✅ GOOD</button>
-        <button class="btn-x">❌ BAD</button>
-      </div>
-      <label>Hydraulic oil level</label>
-      <div class="choice">
-        <button class="btn-v">✅ GOOD</button>
-        <button class="btn-x">❌ BAD</button>
-      </div>
-    </div>
-
-    <div class="section">
-      <h3>Deviation</h3>
-      <textarea id="deviation" placeholder="⚠️ Tuliskan deviation, tiap baris otomatis ada tanda ⚠️"></textarea>
-    </div>
-
-    <div class="actions">
-      <button class="preview" onclick="showPreview()">🧾 Preview</button>
-      <button class="send" onclick="sendToWhatsApp()">📤 Send WA</button>
-    </div>
-
-    <div id="previewBox"></div>
+<div class="container">
+  <div class="card">
+    <h3>Informasi Unit</h3>
+    <label>Tanggal: <input type="date" id="date"></label>
+    <label>CN: <input type="text" id="cn" placeholder="Code Number"></label>
+    <label>HM: <input type="number" id="hm" placeholder="Hourmeter"></label>
   </div>
 
-  <script>
-    const deviationField = document.getElementById('deviation');
-    deviationField.addEventListener('input', () => {
-      const lines = deviationField.value.split('\n');
-      deviationField.value = lines.map(line => line.startsWith('⚠️') ? line : '⚠️ ' + line).join('\n');
-    });
+  <div class="card">
+    <h3>Oil Level</h3>
+    <div class="row">
+      <div class="status-box" onclick="toggleStatus(this, 'engineOil')">GOOD</div>
+      <input id="engineOil" type="text" value="Engine oil level: GOOD">
+    </div>
+    <div class="row">
+      <div class="status-box" onclick="toggleStatus(this, 'transOil')">GOOD</div>
+      <input id="transOil" type="text" value="Transmission oil level: GOOD">
+    </div>
+    <div class="row">
+      <div class="status-box" onclick="toggleStatus(this, 'hydOil')">GOOD</div>
+      <input id="hydOil" type="text" value="Hydraulic oil level: GOOD">
+    </div>
+  </div>
 
-    function generateText() {
-      const code = document.getElementById('codeNumber').value;
-      const date = document.getElementById('date').value;
-      const hm = document.getElementById('hm').value;
-      const deviation = document.getElementById('deviation').value;
+  <div class="card">
+    <h3>Pressure Suspension (Panel)</h3>
+    <div class="row">
+      <input type="text" id="fl" placeholder="FL">
+      <input type="text" id="fr" placeholder="FR">
+      <input type="text" id="rl" placeholder="RL">
+      <input type="text" id="rr" placeholder="RR">
+    </div>
+  </div>
 
-      return `*QA-1 Pre Inspection*\n\n📅 Tgl : ${date}\n🚗 CN : ${code}\n⌛ HM : ${hm}\n\n🩸 *Oil Level* 🩸\nEngine oil level : ✅\nTransmission oil level : ✅\nHydraulic oil level : ✅\n\n*Deviation :*\n${deviation}`;
+  <div class="card">
+    <h3>Tyre Condition</h3>
+    <div class="row">
+      <div class="status-box" onclick="toggleStatus(this, 'tyre')">GOOD</div>
+      <input id="tyre" type="text" value="Tyre condition: GOOD">
+    </div>
+  </div>
+
+  <div class="card">
+    <h3>Validasi & Kelengkapan Checklist</h3>
+    <div id="validasiList"></div>
+  </div>
+
+  <div class="card">
+    <h3>Deviation</h3>
+    <textarea id="deviation" placeholder="⚠️ Ketik deviation per baris..."></textarea>
+  </div>
+
+  <div class="actions">
+    <button class="preview-btn" onclick="showPreview()">🧾 Preview</button>
+    <button class="copy-btn" onclick="copyText()">📋 Copy</button>
+    <button class="send-btn" onclick="sendWA()">📤 Send</button>
+  </div>
+
+  <div id="previewBox"></div>
+</div>
+
+<script>
+  const validasiItems = [
+    "Job Card & Cover Checklist",
+    "Form Observasi Redo PS",
+    "Form QA 1 & QA 7",
+    "Form PPM",
+    "Form Check List A",
+    "Form Check List B",
+    "Form Check List C",
+    "Form Backlog",
+    "Form FUI",
+    "Form Repair Order",
+    "Form Combine Maintenance",
+    "Form Service Activity Report"
+  ];
+
+  const validasiDiv = document.getElementById('validasiList');
+  validasiItems.forEach(item => {
+    const div = document.createElement('div');
+    div.className = 'valid-item';
+    div.innerHTML = `<span>${item}</span>
+    <button class="valid-btn valid-good" onclick="toggleValidasi(this)">✅</button>`;
+    validasiDiv.appendChild(div);
+  });
+
+  function toggleStatus(el, fieldId) {
+    const input = document.getElementById(fieldId);
+    if (el.textContent === "GOOD") {
+      el.textContent = "BAD";
+      el.classList.add("status-bad");
+      input.value = input.value.replace("GOOD", "BAD");
+    } else {
+      el.textContent = "GOOD";
+      el.classList.remove("status-bad");
+      input.value = input.value.replace("BAD", "GOOD");
     }
+  }
 
-    function showPreview() {
-      const text = generateText();
-      const box = document.getElementById('previewBox');
-      box.textContent = text;
-      box.style.display = 'block';
+  function toggleValidasi(btn) {
+    if (btn.textContent === "✅") {
+      btn.textContent = "❌";
+      btn.classList.remove("valid-good");
+      btn.classList.add("valid-bad");
+    } else {
+      btn.textContent = "✅";
+      btn.classList.add("valid-good");
+      btn.classList.remove("valid-bad");
     }
+  }
 
-    function sendToWhatsApp() {
-      const text = encodeURIComponent(generateText());
-      window.open(`https://wa.me/?text=${text}`, '_blank');
-    }
-  </script>
+  function formatDeviation() {
+    const lines = document.getElementById("deviation").value.split("\n");
+    return lines.filter(l => l.trim() !== "").map(l => l.startsWith("⚠️") ? l : "⚠️ " + l).join("\n");
+  }
+
+  function generateText() {
+    const date = document.getElementById("date").value;
+    const cn = document.getElementById("cn").value;
+    const hm = document.getElementById("hm").value;
+    const deviation = formatDeviation();
+
+    const validasiStatus = Array.from(document.querySelectorAll("#validasiList .valid-item"))
+      .map(v => {
+        const name = v.querySelector("span").textContent;
+        const icon = v.querySelector("button").textContent;
+        return `- ${name} ${icon}`;
+      }).join("\n");
+
+    return `*QA-1 Pre Inspection*\n\n📅 Tgl: ${date}\n🚗 CN: ${cn}\n⌛ HM: ${hm}\n
+🩸 *Oil Level* 🩸
+${document.getElementById("engineOil").value}
+${document.getElementById("transOil").value}
+${document.getElementById("hydOil").value}
+
+💧 *Pressure Suspension (Panel)* 💧
+FL: ${fl.value} | FR: ${fr.value} | RL: ${rl.value} | RR: ${rr.value}
+
+🛞 *Tyre Condition:* ${tyre.value}
+
+📝 *Validasi & Kelengkapan Checklist Service:*
+${validasiStatus}
+
+*Deviation:*
+${deviation}`;
+  }
+
+  function showPreview() {
+    const preview = document.getElementById("previewBox");
+    preview.textContent = generateText();
+    preview.style.display = "block";
+  }
+
+  function copyText() {
+    navigator.clipboard.writeText(generateText());
+    alert("✅ Teks berhasil disalin!");
+  }
+
+  function sendWA() {
+    const text = encodeURIComponent(generateText());
+    window.open(`https://wa.me/?text=${text}`, '_blank');
+  }
+</script>
+
 </body>
 </html>
