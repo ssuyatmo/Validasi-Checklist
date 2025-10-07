@@ -1,152 +1,319 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>QA Inspection Form</title>
-  <style>
-    body {
-      font-family: "Segoe UI", sans-serif;
-      background: linear-gradient(180deg, #eef3f7, #d3e3f1);
-      padding: 20px;
-    }
-    h2 {
-      text-align: center;
-      color: #1b3d6d;
-      text-shadow: 1px 1px 3px #aaa;
-    }
-    .form-card {
-      background: #fff;
-      padding: 20px;
-      border-radius: 15px;
-      box-shadow: 0 5px 15px rgba(0,0,0,0.15);
-      margin: auto;
-      max-width: 650px;
-    }
-    label {
-      display: block;
-      margin-top: 10px;
-      font-weight: bold;
-      color: #333;
-    }
-    input, textarea, select {
-      width: 100%;
-      margin-top: 5px;
-      padding: 8px;
-      border: 1px solid #ccc;
-      border-radius: 8px;
-    }
-    .check-item {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 4px 0;
-      font-weight: normal;
-    }
-    .check-choice {
-      display: flex;
-      gap: 10px;
-    }
-    .check-choice input {
-      width: 20px;
-      height: 20px;
-      cursor: pointer;
-    }
-    .btn {
-      display: inline-block;
-      margin-top: 15px;
-      padding: 10px 15px;
-      border: none;
-      border-radius: 8px;
-      cursor: pointer;
-      color: #fff;
-      font-weight: bold;
-      box-shadow: 0 3px 6px rgba(0,0,0,0.15);
-    }
-    .btn-wa { background: #25D366; }
-    .btn-copy { background: #0078FF; }
-    .btn-preview { background: #FF9800; }
-    .button-group {
-      display: flex;
-      justify-content: space-between;
-      flex-wrap: wrap;
-      gap: 10px;
-    }
-    #previewBox {
-      white-space: pre-wrap;
-      background: #f9fbfd;
-      border-radius: 10px;
-      padding: 15px;
-      margin-top: 20px;
-      font-size: 14px;
-      border: 1px solid #ccc;
-      display: none;
-    }
-  </style>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>Inspection Report HD - QA</title>
+<style>
+  :root{
+    --soft-bg1:#f7fbf7;
+    --soft-bg2:#eef9ee;
+    --card:#ffffff;
+    --gold:#e6c57a;
+    --accent:#2b6b4a;
+    --muted:#6b6b6b;
+    --good:#28a745;
+    --bad:#e04b4b;
+    --shadow: 0 8px 20px rgba(30,60,80,0.08);
+  }
+  *{box-sizing:border-box}
+  body{
+    margin:0; font-family: Inter, "Segoe UI", Roboto, Arial, sans-serif;
+    background: linear-gradient(180deg,var(--soft-bg1),var(--soft-bg2));
+    padding:18px;
+    color:#1b2b2b;
+  }
+
+  .container{max-width:900px;margin:0 auto}
+  .header{
+    background: linear-gradient(90deg,#f0e2b7,#e8d09d);
+    border-radius:10px;
+    padding:12px 16px;
+    box-shadow: var(--shadow);
+    text-align:center;
+    margin-bottom:14px;
+  }
+  .header h1{margin:6px 0;font-size:20px;color:#3b2f10;letter-spacing:1px}
+  .card{
+    background:var(--card);
+    border-radius:12px;
+    padding:14px;
+    box-shadow: var(--shadow);
+  }
+  .row{display:flex;gap:12px;align-items:center;flex-wrap:wrap}
+  label{display:block;margin:6px 0;font-weight:700;color:#234}
+  input[type=text], input[type=date], select, textarea{
+    width:100%; padding:10px;border-radius:8px;border:1px solid #d9e6d9;background:#fff;
+    font-size:14px;color:#123;
+  }
+  textarea{min-height:80px;resize:vertical}
+  .small{font-size:13px;color:var(--muted)}
+  /* QA type */
+  .qa-type{display:flex;gap:12px;align-items:center;margin-bottom:8px}
+  .qa-type label{font-weight:700;display:flex;gap:6px;align-items:center}
+  .qa-type input[type=radio]{transform:scale(1.2)}
+
+  /* big item layout */
+  .section{
+    margin-top:12px;border-radius:8px;padding:12px;background:linear-gradient(90deg,#f4fff6,#eaf8ed);
+    border:1px solid #e2efe2;
+  }
+  .section h3{margin:0 0 8px;color:#18633d}
+  .big-item{
+    display:flex;align-items:center;gap:12px;padding:10px;border-radius:10px;
+    background:linear-gradient(180deg,#fff,#f6fff6); border:1px solid #e6efe6; margin-bottom:12px;
+    box-shadow: 0 4px 8px rgba(20,40,20,0.03);
+  }
+  .tile{
+    width:84px;height:64px;border-radius:8px;background:#f1f1f1;display:flex;flex-direction:column;
+    align-items:center;justify-content:center;font-weight:800;color:#333;box-shadow:0 6px 0 rgba(0,0,0,0.03);
+    cursor:pointer; user-select:none;
+  }
+  .tile .ico{font-size:26px;line-height:1}
+  .tile .txt{font-size:12px;margin-top:2px}
+  .tile.good{background:linear-gradient(180deg,#e8f7ea,#d7f0db); color:var(--good); box-shadow:0 6px 0 rgba(40,167,69,0.12)}
+  .tile.bad{background:linear-gradient(180deg,#ffeceb,#ffdcd7); color:var(--bad); box-shadow:0 6px 0 rgba(224,75,75,0.12)}
+
+  .item-input{flex:1}
+  .item-input input{padding:12px 10px;font-size:14px;border-radius:8px;border:1px solid #cfe6cf}
+  .item-label{font-weight:700;margin-bottom:6px;color:#114}
+
+  /* pressure one line */
+  .inline-row{display:flex;gap:8px;flex-wrap:wrap}
+  .inline-row input{width:calc(25% - 6px); min-width:80px}
+
+  /* validation toggle */
+  .valid-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:8px;margin-top:8px}
+  .valid-item{display:flex;justify-content:space-between;align-items:center;padding:8px;border-radius:8px;background:#fff;border:1px solid #e8efe8}
+  .toggle-btn{display:flex;gap:8px}
+  .toggle-btn button{width:36px;height:30px;border-radius:6px;border:none;background:#efefef;cursor:pointer;font-weight:700}
+  .toggle-btn button.yes{background:var(--good);color:#fff;box-shadow:0 2px 6px rgba(40,167,69,0.12)}
+  .toggle-btn button.no{background:var(--bad);color:#fff;box-shadow:0 2px 6px rgba(224,75,75,0.12)}
+
+  /* action buttons */
+  .actions{display:flex;gap:10px;margin-top:14px;flex-wrap:wrap}
+  .btn-main{padding:10px 14px;border-radius:8px;border:none;cursor:pointer;font-weight:800;color:#fff}
+  .btn-preview{background:#f2a43a}
+  .btn-copy{background:#2b7edc}
+  .btn-wa{background:#25d366}
+  /* preview box */
+  .preview-box{margin-top:12px;background:#fff;padding:12px;border-radius:8px;border:1px solid #e6ece6; display:none; white-space:pre-wrap; font-family:Menlo, monospace; font-size:14px}
+
+  @media (max-width:640px){
+    .big-item{flex-direction:column;align-items:stretch}
+    .tile{width:100%;height:66px;flex-direction:row;justify-content:flex-start;padding-left:10px}
+    .tile .ico{margin-right:8px}
+    .item-input input{width:100%}
+  }
+</style>
 </head>
 <body>
-
-  <h2>🧰 QA Inspection Form</h2>
-  <div class="form-card">
-    <label>Pilih Jenis Inspeksi:</label>
-    <select id="qaType">
-      <option value="QA-1 Pre Inspection">QA-1 Pre Inspection</option>
-      <option value="QA-7 Final Inspection">QA-7 Final Inspection</option>
-    </select>
-
-    <label>Tanggal</label>
-    <input id="tgl" type="date">
-
-    <label>Mekanik</label>
-    <input id="mekanik" placeholder="Contoh: Mario, Jovan">
-
-    <label>CN</label>
-    <input id="cn">
-
-    <label>HM</label>
-    <input id="hm">
-
-    <label>🩸 Oil Level</label>
-    <div id="oilLevel"></div>
-
-    <label>⚙ Engine Area</label>
-    <div id="engineArea"></div>
-
-    <label>🚗 Cabin Area</label>
-    <div id="cabinArea"></div>
-
-    <label>🚗 Frame Area</label>
-    <div id="frameArea"></div>
-
-    <label>💧 Pressure Suspension (Panel)</label>
-    <div style="display:grid;grid-template-columns:repeat(2,1fr);gap:5px;">
-      <input id="fl" placeholder="FL (MPa)">
-      <input id="fr" placeholder="FR (MPa)">
-      <input id="rl" placeholder="RL (MPa)">
-      <input id="rr" placeholder="RR (MPa)">
+  <div class="container">
+    <div class="header">
+      <h1>INSPECTION REPORT HD</h1>
     </div>
 
-    <label>🛞 Tyre Condition</label>
-    <select id="tyre">
-      <option value="Good">✅ Good</option>
-      <option value="Bad">❌ Bad</option>
-    </select>
-    <textarea id="tyreDetail" placeholder="Isi jika kondisi Bad..."></textarea>
+    <div class="card">
+      <!-- QA Type -->
+      <div class="qa-type">
+        <label><input type="radio" name="qatype" value="QA-1 Pre Inspection" checked> QA-1</label>
+        <label><input type="radio" name="qatype" value="QA-7 Final Inspection"> QA-7</label>
+        <label><input type="radio" name="qatype" value="Daily Check"> Daily Check</label>
+      </div>
 
-    <label>📝 Validasi & Kelengkapan Checklist Service</label>
-    <div id="validasi"></div>
+      <!-- basic info -->
+      <div style="display:grid; grid-template-columns:repeat(auto-fit,minmax(180px,1fr)); gap:10px; align-items:end;">
+        <div>
+          <label>CODE NUMBER</label>
+          <input type="text" id="code" placeholder="CODE NUMBER">
+        </div>
+        <div>
+          <label>DATE</label>
+          <input type="date" id="date">
+        </div>
+        <div>
+          <label>HOURMETER</label>
+          <input type="text" id="hm" placeholder="HOURMETER">
+        </div>
+        <div>
+          <label>MEKANIK</label>
+          <input type="text" id="mekanik" placeholder="contoh: Mario, Jovan">
+        </div>
+      </div>
 
-    <label>⚠️ Deviation</label>
-    <textarea id="deviation" placeholder="Ketik setiap temuan lalu tekan Enter..."></textarea>
+      <!-- Oil Levels -->
+      <div class="section">
+        <h3>Oil Levels</h3>
+        <div class="big-item">
+          <div class="tile good" data-state="good" onclick="toggleTile(this,'Engine oil level')">
+            <div class="ico">✔</div>
+            <div class="txt">GOOD</div>
+          </div>
+          <div class="item-input">
+            <div class="item-label">Engine oil level</div>
+            <input type="text" id="input_engine_oil" value="Engine oil level : Good">
+          </div>
+        </div>
 
-    <div class="button-group">
-      <button class="btn btn-wa" onclick="sendToWA()">📲 Kirim ke WA</button>
-      <button class="btn btn-preview" onclick="previewText()">🧾 Preview</button>
-      <button class="btn btn-copy" onclick="copyText()">📋 Salin</button>
+        <div class="big-item">
+          <div class="tile good" data-state="good" onclick="toggleTile(this,'Transmission oil level')">
+            <div class="ico">✔</div>
+            <div class="txt">GOOD</div>
+          </div>
+          <div class="item-input">
+            <div class="item-label">Transmission oil level</div>
+            <input type="text" id="input_trans_oil" value="Transmission oil level : Good">
+          </div>
+        </div>
+
+        <div class="big-item">
+          <div class="tile good" data-state="good" onclick="toggleTile(this,'Hydraulic oil level')">
+            <div class="ico">✔</div>
+            <div class="txt">GOOD</div>
+          </div>
+          <div class="item-input">
+            <div class="item-label">Hydraulic oil level</div>
+            <input type="text" id="input_hyd_oil" value="Hydraulic oil level : Good">
+          </div>
+        </div>
+      </div>
+
+      <!-- Engine Area -->
+      <div class="section">
+        <h3>Engine Area</h3>
+
+        <div class="big-item">
+          <div class="tile good" data-state="good" onclick="toggleTile(this,'Belt tension')">
+            <div class="ico">✔</div><div class="txt">GOOD</div>
+          </div>
+          <div class="item-input">
+            <div class="item-label">V-belt tension</div>
+            <input type="text" id="input_belt" value="V-belt tension : Good">
+          </div>
+        </div>
+
+        <div class="big-item">
+          <div class="tile good" data-state="good" onclick="toggleTile(this,'Engine oil leakage')">
+            <div class="ico">✔</div><div class="txt">GOOD</div>
+          </div>
+          <div class="item-input">
+            <div class="item-label">Engine oil leakage</div>
+            <input type="text" id="input_leak" value="Good, No engine oil leakage">
+          </div>
+        </div>
+
+        <div class="big-item">
+          <div class="tile good" data-state="good" onclick="toggleTile(this,'Common Rail Connector')">
+            <div class="ico">✔</div><div class="txt">GOOD</div>
+          </div>
+          <div class="item-input">
+            <div class="item-label">Common Rail connector</div>
+            <input type="text" id="input_crc" value="Common Rail Connector : Good">
+          </div>
+        </div>
+      </div>
+
+      <!-- Cabin Area -->
+      <div class="section">
+        <h3>Cabin Area</h3>
+
+        <div class="big-item">
+          <div class="tile good" data-state="good" onclick="toggleTile(this,'FM Radio')"><div class="ico">✔</div><div class="txt">GOOD</div></div>
+          <div class="item-input">
+            <div class="item-label">FM Radio</div>
+            <input type="text" id="input_radio" value="FM Radio : Good">
+          </div>
+        </div>
+
+        <div class="big-item">
+          <div class="tile good" data-state="good" onclick="toggleTile(this,'Fatigue Warning')"><div class="ico">✔</div><div class="txt">GOOD</div></div>
+          <div class="item-input">
+            <div class="item-label">Fatigue Warning</div>
+            <input type="text" id="input_fatigue" value="Fatigue Warning : Good">
+          </div>
+        </div>
+
+        <div class="big-item">
+          <div class="tile good" data-state="good" onclick="toggleTile(this,'Power Window')"><div class="ico">✔</div><div class="txt">GOOD</div></div>
+          <div class="item-input">
+            <div class="item-label">Power Window</div>
+            <input type="text" id="input_pw" value="Power Window : Good">
+          </div>
+        </div>
+
+        <div style="margin-top:10px" class="inline-row">
+          <div style="flex:1"><label>Power Supply (V)</label><input type="text" id="powerSupply" placeholder="contoh: 27.7"></div>
+          <div style="flex:1"><label>Common Rail Pressure (MPa)</label><input type="text" id="crp" placeholder="contoh: 0"></div>
+        </div>
+      </div>
+
+      <!-- Frame Area -->
+      <div class="section">
+        <h3>Frame Area</h3>
+
+        <div class="big-item">
+          <div class="tile good" data-state="good" onclick="toggleTile(this,'Operator seat')"><div class="ico">✔</div><div class="txt">GOOD</div></div>
+          <div class="item-input">
+            <div class="item-label">Operator seat</div>
+            <input type="text" id="input_seat" value="Operator seat : Good">
+          </div>
+        </div>
+
+        <div class="big-item">
+          <div class="tile good" data-state="good" onclick="toggleTile(this,'Hand Rail')"><div class="ico">✔</div><div class="txt">GOOD</div></div>
+          <div class="item-input">
+            <div class="item-label">Hand Rail</div>
+            <input type="text" id="input_rail" value="Hand Rail : Good">
+          </div>
+        </div>
+      </div>
+
+      <!-- Suspension -->
+      <div class="section">
+        <h3>Pressure Suspension (Panel)</h3>
+        <div class="inline-row">
+          <input id="fl" placeholder="FL (MPa)"/>
+          <input id="fr" placeholder="FR (MPa)"/>
+          <input id="rl" placeholder="RL (MPa)"/>
+          <input id="rr" placeholder="RR (MPa)"/>
+        </div>
+      </div>
+
+      <!-- Tyre -->
+      <div class="section">
+        <h3>Tyre condition</h3>
+        <div style="display:flex;gap:12px;align-items:center;flex-wrap:wrap">
+          <label style="display:flex;align-items:center;gap:8px"><input type="radio" name="tyreOpt" value="Good" checked onchange="onTyreChange()"> ✅ Good</label>
+          <label style="display:flex;align-items:center;gap:8px"><input type="radio" name="tyreOpt" value="Bad" onchange="onTyreChange()"> ❌ Bad</label>
+        </div>
+        <div style="margin-top:8px">
+          <input type="text" id="tyreNote" placeholder="Jika Bad, tulis temuan..." disabled>
+        </div>
+      </div>
+
+      <!-- Validasi -->
+      <div class="section">
+        <h3>Validasi & Kelengkapan Check list Service</h3>
+        <div class="valid-grid" id="validGrid"></div>
+      </div>
+
+      <!-- Deviation -->
+      <div class="section">
+        <h3>Deviation</h3>
+        <textarea id="deviation" placeholder="Tulis setiap temuan, tekan Enter untuk baris baru..."></textarea>
+      </div>
+
+      <!-- actions -->
+      <div class="actions">
+        <button class="btn-main btn-preview" onclick="preview()">🧾 Preview</button>
+        <button class="btn-main btn-copy" onclick="copyText()">📋 Copy</button>
+        <button class="btn-main btn-wa" onclick="sendWA()">📤 Send to WhatsApp</button>
+      </div>
+
+      <div class="preview-box" id="previewBox"></div>
     </div>
-
-    <div id="previewBox"></div>
   </div>
+
 
 <script>
 const oilItems = ["Engine oil level", "Transmission oil level", "Hydraulic oil level"];
