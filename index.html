@@ -1,152 +1,170 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>QA Inspection Form</title>
-  <style>
-    body {
-      font-family: "Segoe UI", sans-serif;
-      background: linear-gradient(180deg, #eef3f7, #d3e3f1);
-      padding: 20px;
-    }
-    h2 {
-      text-align: center;
-      color: #1b3d6d;
-      text-shadow: 1px 1px 3px #aaa;
-    }
-    .form-card {
-      background: #fff;
-      padding: 20px;
-      border-radius: 15px;
-      box-shadow: 0 5px 15px rgba(0,0,0,0.15);
-      margin: auto;
-      max-width: 650px;
-    }
-    label {
-      display: block;
-      margin-top: 10px;
-      font-weight: bold;
-      color: #333;
-    }
-    input, textarea, select {
-      width: 100%;
-      margin-top: 5px;
-      padding: 8px;
-      border: 1px solid #ccc;
-      border-radius: 8px;
-    }
-    .check-item {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 4px 0;
-      font-weight: normal;
-    }
-    .check-choice {
-      display: flex;
-      gap: 10px;
-    }
-    .check-choice input {
-      width: 20px;
-      height: 20px;
-      cursor: pointer;
-    }
-    .btn {
-      display: inline-block;
-      margin-top: 15px;
-      padding: 10px 15px;
-      border: none;
-      border-radius: 8px;
-      cursor: pointer;
-      color: #fff;
-      font-weight: bold;
-      box-shadow: 0 3px 6px rgba(0,0,0,0.15);
-    }
-    .btn-wa { background: #25D366; }
-    .btn-copy { background: #0078FF; }
-    .btn-preview { background: #FF9800; }
-    .button-group {
-      display: flex;
-      justify-content: space-between;
-      flex-wrap: wrap;
-      gap: 10px;
-    }
-    #previewBox {
-      white-space: pre-wrap;
-      background: #f9fbfd;
-      border-radius: 10px;
-      padding: 15px;
-      margin-top: 20px;
-      font-size: 14px;
-      border: 1px solid #ccc;
-      display: none;
-    }
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>QA Inspection Form</title>
+<style>
+  body {
+    font-family: "Segoe UI", sans-serif;
+    background: linear-gradient(180deg, #eef3f7, #d3e3f1);
+    padding: 20px;
+  }
+  h2 {
+    text-align: center;
+    color: #1b3d6d;
+    text-shadow: 1px 1px 3px #aaa;
+  }
+  .form-card {
+    background: #fff;
+    padding: 20px;
+    border-radius: 15px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.15);
+    margin: auto;
+    max-width: 650px;
+  }
+  label {
+    display: block;
+    margin-top: 10px;
+    font-weight: bold;
+    color: #333;
+  }
+  input, textarea, select {
+    width: 100%;
+    margin-top: 5px;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+  }
+  textarea {
+    resize: vertical;
+  }
+  .check-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 4px 0;
+    font-weight: normal;
+  }
+  .check-buttons {
+    display: flex;
+    gap: 10px;
+  }
+  .btn-check {
+    border: none;
+    border-radius: 6px;
+    width: 35px;
+    height: 30px;
+    cursor: pointer;
+    font-size: 18px;
+    transition: all 0.2s;
+    background: #eaeaea;
+  }
+  .btn-check.active-yes {
+    background: #4CAF50;
+    color: #fff;
+    box-shadow: 0 0 4px #4CAF50;
+  }
+  .btn-check.active-no {
+    background: #f44336;
+    color: #fff;
+    box-shadow: 0 0 4px #f44336;
+  }
+  .btn {
+    display: inline-block;
+    margin-top: 15px;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    color: #fff;
+    font-weight: bold;
+    box-shadow: 0 3px 6px rgba(0,0,0,0.15);
+  }
+  .btn-wa { background: #25D366; }
+  .btn-copy { background: #0078FF; }
+  .btn-preview { background: #FF9800; }
+  .button-group {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+  #previewBox {
+    white-space: pre-wrap;
+    background: #f9fbfd;
+    border-radius: 10px;
+    padding: 15px;
+    margin-top: 20px;
+    font-size: 14px;
+    border: 1px solid #ccc;
+    display: none;
+  }
+</style>
 </head>
 <body>
 
-  <h2>🧰 QA Inspection Form</h2>
-  <div class="form-card">
-    <label>Pilih Jenis Inspeksi:</label>
-    <select id="qaType">
-      <option value="QA-1 Pre Inspection">QA-1 Pre Inspection</option>
-      <option value="QA-7 Final Inspection">QA-7 Final Inspection</option>
-    </select>
+<h2>🧰 QA Inspection Form</h2>
+<div class="form-card">
+  <label>Pilih Jenis Inspeksi:</label>
+  <select id="qaType">
+    <option value="QA-1 Pre Inspection">QA-1 Pre Inspection</option>
+    <option value="QA-7 Final Inspection">QA-7 Final Inspection</option>
+  </select>
 
-    <label>Tanggal</label>
-    <input id="tgl" type="date">
+  <label>Tanggal</label>
+  <input id="tgl" type="date">
 
-    <label>Mekanik</label>
-    <input id="mekanik" placeholder="Contoh: Mario, Jovan">
+  <label>Mekanik</label>
+  <input id="mekanik" placeholder="Contoh: Mario, Jovan">
 
-    <label>CN</label>
-    <input id="cn">
+  <label>CN</label>
+  <input id="cn">
 
-    <label>HM</label>
-    <input id="hm">
+  <label>HM</label>
+  <input id="hm">
 
-    <label>🩸 Oil Level</label>
-    <div id="oilLevel"></div>
+  <label>🩸 Oil Level</label>
+  <div id="oilLevel"></div>
 
-    <label>⚙ Engine Area</label>
-    <div id="engineArea"></div>
+  <label>⚙ Engine Area</label>
+  <div id="engineArea"></div>
 
-    <label>🚗 Cabin Area</label>
-    <div id="cabinArea"></div>
+  <label>🚗 Cabin Area</label>
+  <div id="cabinArea"></div>
 
-    <label>🚗 Frame Area</label>
-    <div id="frameArea"></div>
+  <label>🚗 Frame Area</label>
+  <div id="frameArea"></div>
 
-    <label>💧 Pressure Suspension (Panel)</label>
-    <div style="display:grid;grid-template-columns:repeat(2,1fr);gap:5px;">
-      <input id="fl" placeholder="FL (MPa)">
-      <input id="fr" placeholder="FR (MPa)">
-      <input id="rl" placeholder="RL (MPa)">
-      <input id="rr" placeholder="RR (MPa)">
-    </div>
-
-    <label>🛞 Tyre Condition</label>
-    <select id="tyre">
-      <option value="Good">✅ Good</option>
-      <option value="Bad">❌ Bad</option>
-    </select>
-    <textarea id="tyreDetail" placeholder="Isi jika kondisi Bad..."></textarea>
-
-    <label>📝 Validasi & Kelengkapan Checklist Service</label>
-    <div id="validasi"></div>
-
-    <label>⚠️ Deviation</label>
-    <textarea id="deviation" placeholder="Ketik setiap temuan lalu tekan Enter..."></textarea>
-
-    <div class="button-group">
-      <button class="btn btn-wa" onclick="sendToWA()">📲 Kirim ke WA</button>
-      <button class="btn btn-preview" onclick="previewText()">🧾 Preview</button>
-      <button class="btn btn-copy" onclick="copyText()">📋 Salin</button>
-    </div>
-
-    <div id="previewBox"></div>
+  <label>💧 Pressure Suspension (Panel)</label>
+  <div style="display:grid;grid-template-columns:repeat(2,1fr);gap:5px;">
+    <input id="fl" placeholder="FL (MPa)">
+    <input id="fr" placeholder="FR (MPa)">
+    <input id="rl" placeholder="RL (MPa)">
+    <input id="rr" placeholder="RR (MPa)">
   </div>
+
+  <label>🛞 Tyre Condition</label>
+  <select id="tyre">
+    <option value="Good">✅ Good</option>
+    <option value="Bad">❌ Bad</option>
+  </select>
+  <textarea id="tyreDetail" placeholder="Isi jika kondisi Bad..."></textarea>
+
+  <label>📝 Validasi & Kelengkapan Checklist Service</label>
+  <div id="validasi"></div>
+
+  <label>⚠️ Deviation</label>
+  <textarea id="deviation" placeholder="Ketik setiap temuan lalu tekan Enter..."></textarea>
+
+  <div class="button-group">
+    <button class="btn btn-wa" onclick="sendToWA()">📲 Kirim ke WA</button>
+    <button class="btn btn-preview" onclick="previewText()">🧾 Preview</button>
+    <button class="btn btn-copy" onclick="copyText()">📋 Salin</button>
+  </div>
+
+  <div id="previewBox"></div>
+</div>
 
 <script>
 const oilItems = ["Engine oil level", "Transmission oil level", "Hydraulic oil level"];
@@ -175,12 +193,20 @@ function createCheckSection(id, items) {
     div.className = "check-item";
     div.innerHTML = `
       <span>${item}</span>
-      <div class="check-choice">
-        <label>✅ <input type="radio" name="${id}_${i}" value="✅"></label>
-        <label>❌ <input type="radio" name="${id}_${i}" value="❌"></label>
+      <div class="check-buttons">
+        <button class="btn-check" onclick="toggleCheck('${id}_${i}','yes',this)">✅</button>
+        <button class="btn-check" onclick="toggleCheck('${id}_${i}','no',this)">❌</button>
       </div>`;
     container.appendChild(div);
   });
+}
+
+function toggleCheck(name, val, el) {
+  const buttons = el.parentElement.querySelectorAll(".btn-check");
+  buttons.forEach(b => b.classList.remove("active-yes","active-no"));
+  if (val === "yes") el.classList.add("active-yes");
+  else el.classList.add("active-no");
+  el.parentElement.dataset.value = (val === "yes") ? "✅" : "❌";
 }
 
 ["oilLevel","engineArea","cabinArea","frameArea","validasi"].forEach((sec, i) => {
@@ -189,10 +215,13 @@ function createCheckSection(id, items) {
 });
 
 function getCheckResults(id, items) {
-  return items.map((item, i) => {
-    const val = document.querySelector(`input[name='${id}_${i}']:checked`);
-    return `${item} : ${val ? val.value : "❌"}`;
-  }).join("\n");
+  const container = document.getElementById(id);
+  const lines = [];
+  container.querySelectorAll(".check-item").forEach((item, i) => {
+    const val = item.querySelector(".check-buttons").dataset.value || "❌";
+    lines.push(`${items[i]} : ${val}`);
+  });
+  return lines.join("\n");
 }
 
 function formatDeviation(text) {
@@ -260,6 +289,5 @@ function previewText() {
   preview.style.display = "block";
 }
 </script>
-
 </body>
 </html>
