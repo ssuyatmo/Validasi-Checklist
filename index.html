@@ -1,573 +1,209 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-<meta charset="utf-8"/>
-<meta name="viewport" content="width=device-width,initial-scale=1"/>
-<title>Inspection Report HD - QA</title>
-<style>
-  :root{
-    --soft-bg1:#f7fbf7;
-    --soft-bg2:#eef9ee;
-    --card:#ffffff;
-    --gold:#e6c57a;
-    --accent:#2b6b4a;
-    --muted:#6b6b6b;
-    --good:#28a745;
-    --bad:#e04b4b;
-    --shadow: 0 8px 20px rgba(30,60,80,0.08);
-  }
-  *{box-sizing:border-box}
-  body{
-    margin:0; font-family: Inter, "Segoe UI", Roboto, Arial, sans-serif;
-    background: linear-gradient(180deg,var(--soft-bg1),var(--soft-bg2));
-    padding:18px;
-    color:#1b2b2b;
-  }
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Inspection Report HD</title>
+  <style>
+    body {
+      font-family: "Segoe UI", Arial, sans-serif;
+      margin: 0;
+      background: linear-gradient(to bottom, #fffef5, #f9f9e8);
+      color: #222;
+    }
 
-  .container{max-width:900px;margin:0 auto}
-  .header{
-    background: linear-gradient(90deg,#f0e2b7,#e8d09d);
-    border-radius:10px;
-    padding:12px 16px;
-    box-shadow: var(--shadow);
-    text-align:center;
-    margin-bottom:14px;
-  }
-  .header h1{margin:6px 0;font-size:20px;color:#3b2f10;letter-spacing:1px}
-  .card{
-    background:var(--card);
-    border-radius:12px;
-    padding:14px;
-    box-shadow: var(--shadow);
-  }
-  .row{display:flex;gap:12px;align-items:center;flex-wrap:wrap}
-  label{display:block;margin:6px 0;font-weight:700;color:#234}
-  input[type=text], input[type=date], select, textarea{
-    width:100%; padding:10px;border-radius:8px;border:1px solid #d9e6d9;background:#fff;
-    font-size:14px;color:#123;
-  }
-  textarea{min-height:80px;resize:vertical}
-  .small{font-size:13px;color:var(--muted)}
-  /* QA type */
-  .qa-type{display:flex;gap:12px;align-items:center;margin-bottom:8px}
-  .qa-type label{font-weight:700;display:flex;gap:6px;align-items:center}
-  .qa-type input[type=radio]{transform:scale(1.2)}
+    header {
+      background: linear-gradient(90deg, #ffae42, #ffe97a);
+      color: #333;
+      text-align: center;
+      padding: 15px 10px;
+      font-weight: bold;
+      font-size: 20px;
+      letter-spacing: 1px;
+      border-bottom: 3px solid #f0c23c;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+      position: sticky;
+      top: 0;
+      z-index: 10;
+    }
 
-  /* big item layout */
-  .section{
-    margin-top:12px;border-radius:8px;padding:12px;background:linear-gradient(90deg,#f4fff6,#eaf8ed);
-    border:1px solid #e2efe2;
-  }
-  .section h3{margin:0 0 8px;color:#18633d}
-  .big-item{
-    display:flex;align-items:center;gap:12px;padding:10px;border-radius:10px;
-    background:linear-gradient(180deg,#fff,#f6fff6); border:1px solid #e6efe6; margin-bottom:12px;
-    box-shadow: 0 4px 8px rgba(20,40,20,0.03);
-  }
-  .tile{
-    width:84px;height:64px;border-radius:8px;background:#f1f1f1;display:flex;flex-direction:column;
-    align-items:center;justify-content:center;font-weight:800;color:#333;box-shadow:0 6px 0 rgba(0,0,0,0.03);
-    cursor:pointer; user-select:none;
-  }
-  .tile .ico{font-size:26px;line-height:1}
-  .tile .txt{font-size:12px;margin-top:2px}
-  .tile.good{background:linear-gradient(180deg,#e8f7ea,#d7f0db); color:var(--good); box-shadow:0 6px 0 rgba(40,167,69,0.12)}
-  .tile.bad{background:linear-gradient(180deg,#ffeceb,#ffdcd7); color:var(--bad); box-shadow:0 6px 0 rgba(224,75,75,0.12)}
+    header img {
+      width: 40px;
+      height: 40px;
+      vertical-align: middle;
+      margin-right: 10px;
+      border-radius: 8px;
+    }
 
-  .item-input{flex:1}
-  .item-input input{padding:12px 10px;font-size:14px;border-radius:8px;border:1px solid #cfe6cf}
-  .item-label{font-weight:700;margin-bottom:6px;color:#114}
+    .container {
+      padding: 15px;
+      max-width: 480px;
+      margin: auto;
+    }
 
-  /* pressure one line */
-  .inline-row{display:flex;gap:8px;flex-wrap:wrap}
-  .inline-row input{width:calc(25% - 6px); min-width:80px}
+    .section {
+      background: linear-gradient(to right, #f9ffe5, #f1ffea);
+      border-radius: 12px;
+      box-shadow: 0 3px 6px rgba(0,0,0,0.1);
+      padding: 12px;
+      margin-bottom: 12px;
+    }
 
-  /* validation toggle */
-  .valid-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:8px;margin-top:8px}
-  .valid-item{display:flex;justify-content:space-between;align-items:center;padding:8px;border-radius:8px;background:#fff;border:1px solid #e8efe8}
-  .toggle-btn{display:flex;gap:8px}
-  .toggle-btn button{width:36px;height:30px;border-radius:6px;border:none;background:#efefef;cursor:pointer;font-weight:700}
-  .toggle-btn button.yes{background:var(--good);color:#fff;box-shadow:0 2px 6px rgba(40,167,69,0.12)}
-  .toggle-btn button.no{background:var(--bad);color:#fff;box-shadow:0 2px 6px rgba(224,75,75,0.12)}
+    .section h3 {
+      margin-top: 0;
+      color: #0044aa;
+      font-size: 15px;
+      border-bottom: 1px solid #ccc;
+      padding-bottom: 5px;
+    }
 
-  /* action buttons */
-  .actions{display:flex;gap:10px;margin-top:14px;flex-wrap:wrap}
-  .btn-main{padding:10px 14px;border-radius:8px;border:none;cursor:pointer;font-weight:800;color:#fff}
-  .btn-preview{background:#f2a43a}
-  .btn-copy{background:#2b7edc}
-  .btn-wa{background:#25d366}
-  /* preview box */
-  .preview-box{margin-top:12px;background:#fff;padding:12px;border-radius:8px;border:1px solid #e6ece6; display:none; white-space:pre-wrap; font-family:Menlo, monospace; font-size:14px}
+    label {
+      display: block;
+      margin: 6px 0;
+      font-size: 14px;
+    }
 
-  @media (max-width:640px){
-    .big-item{flex-direction:column;align-items:stretch}
-    .tile{width:100%;height:66px;flex-direction:row;justify-content:flex-start;padding-left:10px}
-    .tile .ico{margin-right:8px}
-    .item-input input{width:100%}
-  }
-</style>
+    input[type="text"], input[type="number"], input[type="date"] {
+      width: 100%;
+      padding: 8px;
+      border-radius: 8px;
+      border: 1px solid #ccc;
+      font-size: 14px;
+    }
+
+    .choice {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 8px;
+    }
+
+    .choice button {
+      border: none;
+      border-radius: 10px;
+      font-weight: bold;
+      padding: 8px 10px;
+      cursor: pointer;
+      font-size: 14px;
+    }
+
+    .btn-v {
+      background: #d1f7c4;
+      color: #1b5e20;
+      box-shadow: inset 0 0 4px #9cd69c;
+    }
+
+    .btn-x {
+      background: #ffd6d6;
+      color: #b71c1c;
+      box-shadow: inset 0 0 4px #e99696;
+    }
+
+    textarea {
+      width: 100%;
+      min-height: 70px;
+      border-radius: 8px;
+      padding: 8px;
+      border: 1px solid #ccc;
+      font-size: 14px;
+    }
+
+    .actions {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 15px;
+    }
+
+    .actions button {
+      flex: 1;
+      margin: 4px;
+      padding: 10px;
+      border: none;
+      border-radius: 8px;
+      font-weight: bold;
+      font-size: 14px;
+      cursor: pointer;
+      transition: 0.2s;
+    }
+
+    .send {
+      background: #25D366;
+      color: white;
+    }
+
+    .preview {
+      background: #f0b429;
+      color: white;
+    }
+
+    .send:hover { background: #1ebe5c; }
+    .preview:hover { background: #e4a51c; }
+
+    @media (max-width: 480px) {
+      header {
+        font-size: 18px;
+        padding: 10px;
+      }
+      .actions button {
+        font-size: 13px;
+      }
+    }
+  </style>
 </head>
 <body>
+
+  <header>
+    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/8c/Dump_truck_icon.png/480px-Dump_truck_icon.png" alt="logo">
+    INSPECTION REPORT HD
+  </header>
+
   <div class="container">
-    <div class="header">
-      <h1>INSPECTION REPORT HD</h1>
+    <div class="section">
+      <h3>Informasi Unit</h3>
+      <label>Code Number: <input type="text" id="codeNumber"></label>
+      <label>Date: <input type="date" id="date"></label>
+      <label>Hourmeter: <input type="number" id="hm"></label>
     </div>
 
-    <div class="card">
-      <!-- QA Type -->
-      <div class="qa-type">
-        <label><input type="radio" name="qatype" value="QA-1 Pre Inspection" checked> QA-1</label>
-        <label><input type="radio" name="qatype" value="QA-7 Final Inspection"> QA-7</label>
-        <label><input type="radio" name="qatype" value="Daily Check"> Daily Check</label>
+    <div class="section">
+      <h3>Oil Level</h3>
+      <label>Engine oil level</label>
+      <div class="choice">
+        <button class="btn-v">✅ GOOD</button>
+        <button class="btn-x">❌ BAD</button>
       </div>
 
-      <!-- basic info -->
-      <div style="display:grid; grid-template-columns:repeat(auto-fit,minmax(180px,1fr)); gap:10px; align-items:end;">
-        <div>
-          <label>CODE NUMBER</label>
-          <input type="text" id="code" placeholder="CODE NUMBER">
-        </div>
-        <div>
-          <label>DATE</label>
-          <input type="date" id="date">
-        </div>
-        <div>
-          <label>HOURMETER</label>
-          <input type="text" id="hm" placeholder="HOURMETER">
-        </div>
-        <div>
-          <label>MEKANIK</label>
-          <input type="text" id="mekanik" placeholder="contoh: Mario, Jovan">
-        </div>
+      <label>Transmission oil level</label>
+      <div class="choice">
+        <button class="btn-v">✅ GOOD</button>
+        <button class="btn-x">❌ BAD</button>
       </div>
 
-      <!-- Oil Levels -->
-      <div class="section">
-        <h3>Oil Levels</h3>
-        <div class="big-item">
-          <div class="tile good" data-state="good" onclick="toggleTile(this,'Engine oil level')">
-            <div class="ico">✔</div>
-            <div class="txt">GOOD</div>
-          </div>
-          <div class="item-input">
-            <div class="item-label">Engine oil level</div>
-            <input type="text" id="input_engine_oil" value="Engine oil level : Good">
-          </div>
-        </div>
-
-        <div class="big-item">
-          <div class="tile good" data-state="good" onclick="toggleTile(this,'Transmission oil level')">
-            <div class="ico">✔</div>
-            <div class="txt">GOOD</div>
-          </div>
-          <div class="item-input">
-            <div class="item-label">Transmission oil level</div>
-            <input type="text" id="input_trans_oil" value="Transmission oil level : Good">
-          </div>
-        </div>
-
-        <div class="big-item">
-          <div class="tile good" data-state="good" onclick="toggleTile(this,'Hydraulic oil level')">
-            <div class="ico">✔</div>
-            <div class="txt">GOOD</div>
-          </div>
-          <div class="item-input">
-            <div class="item-label">Hydraulic oil level</div>
-            <input type="text" id="input_hyd_oil" value="Hydraulic oil level : Good">
-          </div>
-        </div>
+      <label>Hydraulic oil level</label>
+      <div class="choice">
+        <button class="btn-v">✅ GOOD</button>
+        <button class="btn-x">❌ BAD</button>
       </div>
+    </div>
 
-      <!-- Engine Area -->
-      <div class="section">
-        <h3>Engine Area</h3>
+    <div class="section">
+      <h3>Deviation</h3>
+      <textarea id="deviation" placeholder="⚠️ Tuliskan deviation, setiap baris otomatis diawali tanda ⚠️"></textarea>
+    </div>
 
-        <div class="big-item">
-          <div class="tile good" data-state="good" onclick="toggleTile(this,'Belt tension')">
-            <div class="ico">✔</div><div class="txt">GOOD</div>
-          </div>
-          <div class="item-input">
-            <div class="item-label">V-belt tension</div>
-            <input type="text" id="input_belt" value="V-belt tension : Good">
-          </div>
-        </div>
-
-        <div class="big-item">
-          <div class="tile good" data-state="good" onclick="toggleTile(this,'Engine oil leakage')">
-            <div class="ico">✔</div><div class="txt">GOOD</div>
-          </div>
-          <div class="item-input">
-            <div class="item-label">Engine oil leakage</div>
-            <input type="text" id="input_leak" value="Good, No engine oil leakage">
-          </div>
-        </div>
-
-        <div class="big-item">
-          <div class="tile good" data-state="good" onclick="toggleTile(this,'Common Rail Connector')">
-            <div class="ico">✔</div><div class="txt">GOOD</div>
-          </div>
-          <div class="item-input">
-            <div class="item-label">Common Rail connector</div>
-            <input type="text" id="input_crc" value="Common Rail Connector : Good">
-          </div>
-        </div>
-      </div>
-
-      <!-- Cabin Area -->
-      <div class="section">
-        <h3>Cabin Area</h3>
-
-        <div class="big-item">
-          <div class="tile good" data-state="good" onclick="toggleTile(this,'FM Radio')"><div class="ico">✔</div><div class="txt">GOOD</div></div>
-          <div class="item-input">
-            <div class="item-label">FM Radio</div>
-            <input type="text" id="input_radio" value="FM Radio : Good">
-          </div>
-        </div>
-
-        <div class="big-item">
-          <div class="tile good" data-state="good" onclick="toggleTile(this,'Fatigue Warning')"><div class="ico">✔</div><div class="txt">GOOD</div></div>
-          <div class="item-input">
-            <div class="item-label">Fatigue Warning</div>
-            <input type="text" id="input_fatigue" value="Fatigue Warning : Good">
-          </div>
-        </div>
-
-        <div class="big-item">
-          <div class="tile good" data-state="good" onclick="toggleTile(this,'Power Window')"><div class="ico">✔</div><div class="txt">GOOD</div></div>
-          <div class="item-input">
-            <div class="item-label">Power Window</div>
-            <input type="text" id="input_pw" value="Power Window : Good">
-          </div>
-        </div>
-
-        <div style="margin-top:10px" class="inline-row">
-          <div style="flex:1"><label>Power Supply (V)</label><input type="text" id="powerSupply" placeholder="contoh: 27.7"></div>
-          <div style="flex:1"><label>Common Rail Pressure (MPa)</label><input type="text" id="crp" placeholder="contoh: 0"></div>
-        </div>
-      </div>
-
-      <!-- Frame Area -->
-      <div class="section">
-        <h3>Frame Area</h3>
-
-        <div class="big-item">
-          <div class="tile good" data-state="good" onclick="toggleTile(this,'Operator seat')"><div class="ico">✔</div><div class="txt">GOOD</div></div>
-          <div class="item-input">
-            <div class="item-label">Operator seat</div>
-            <input type="text" id="input_seat" value="Operator seat : Good">
-          </div>
-        </div>
-
-        <div class="big-item">
-          <div class="tile good" data-state="good" onclick="toggleTile(this,'Hand Rail')"><div class="ico">✔</div><div class="txt">GOOD</div></div>
-          <div class="item-input">
-            <div class="item-label">Hand Rail</div>
-            <input type="text" id="input_rail" value="Hand Rail : Good">
-          </div>
-        </div>
-      </div>
-
-      <!-- Suspension -->
-      <div class="section">
-        <h3>Pressure Suspension (Panel)</h3>
-        <div class="inline-row">
-          <input id="fl" placeholder="FL (MPa)"/>
-          <input id="fr" placeholder="FR (MPa)"/>
-          <input id="rl" placeholder="RL (MPa)"/>
-          <input id="rr" placeholder="RR (MPa)"/>
-        </div>
-      </div>
-
-      <!-- Tyre -->
-      <div class="section">
-        <h3>Tyre condition</h3>
-        <div style="display:flex;gap:12px;align-items:center;flex-wrap:wrap">
-          <label style="display:flex;align-items:center;gap:8px"><input type="radio" name="tyreOpt" value="Good" checked onchange="onTyreChange()"> ✅ Good</label>
-          <label style="display:flex;align-items:center;gap:8px"><input type="radio" name="tyreOpt" value="Bad" onchange="onTyreChange()"> ❌ Bad</label>
-        </div>
-        <div style="margin-top:8px">
-          <input type="text" id="tyreNote" placeholder="Jika Bad, tulis temuan..." disabled>
-        </div>
-      </div>
-
-      <!-- Validasi -->
-      <div class="section">
-        <h3>Validasi & Kelengkapan Check list Service</h3>
-        <div class="valid-grid" id="validGrid"></div>
-      </div>
-
-      <!-- Deviation -->
-      <div class="section">
-        <h3>Deviation</h3>
-        <textarea id="deviation" placeholder="Tulis setiap temuan, tekan Enter untuk baris baru..."></textarea>
-      </div>
-
-      <!-- actions -->
-      <div class="actions">
-        <button class="btn-main btn-preview" onclick="preview()">🧾 Preview</button>
-        <button class="btn-main btn-copy" onclick="copyText()">📋 Copy</button>
-        <button class="btn-main btn-wa" onclick="sendWA()">📤 Send to WhatsApp</button>
-      </div>
-
-      <div class="preview-box" id="previewBox"></div>
+    <div class="actions">
+      <button class="preview">🧾 Preview</button>
+      <button class="send">📤 Send WA</button>
     </div>
   </div>
 
-<script>
-  // set default date to today
-  (function(){ const d=new Date(); const iso=d.toISOString().slice(0,10); document.getElementById('date').value = iso; })();
-
-  // Create validasi items dynamically with toggle buttons
-  const validasiItems = [
-    "Job Card & Cover Checklist",
-    "Form Observasi Redo PS",
-    "Form QA 1 & QA 7",
-    "Form PPM",
-    "Form Check List A",
-    "Form Check List B",
-    "Form Check List C",
-    "Form Backlog",
-    "Form FUI",
-    "Form Repair Order",
-    "Form Combine Maintenance",
-    "Form Service Activity Report"
-  ];
-  const validGrid = document.getElementById('validGrid');
-  validasiItems.forEach((txt, idx) => {
-    const div = document.createElement('div');
-    div.className = 'valid-item';
-    div.innerHTML = `<div>${txt}</div>
-      <div class="toggle-btn" data-val="yes">
-        <button class="yes" onclick="setValid(this,true)">&nbsp;✅&nbsp;</button>
-        <button onclick="setValid(this,false)">&nbsp;❌&nbsp;</button>
-      </div>`;
-    validGrid.appendChild(div);
-  });
-
-  function setValid(btn, val){
-    const parent = btn.closest('.toggle-btn');
-    if(val){
-      parent.dataset.val = 'yes';
-      parent.querySelectorAll('button')[0].classList.add('yes');
-      parent.querySelectorAll('button')[1].classList.remove('no');
-      parent.querySelectorAll('button')[0].style.opacity=1;
-      parent.querySelectorAll('button')[1].style.opacity=0.6;
-    } else {
-      parent.dataset.val = 'no';
-      parent.querySelectorAll('button')[1].classList.add('no');
-      parent.querySelectorAll('button')[0].classList.remove('yes');
-      parent.querySelectorAll('button')[1].style.opacity=1;
-      parent.querySelectorAll('button')[0].style.opacity=0.6;
-    }
-  }
-  // init default all yes
-  document.querySelectorAll('.valid-grid .toggle-btn').forEach(tb => {
-    tb.dataset.val='yes';
-    tb.querySelectorAll('button')[1].style.opacity=0.6;
-  });
-
-  // Toggle tile GOOD/BAD (tile element + associated input)
-  function toggleTile(tile, label){
-    const inp = findInputForTile(tile);
-    if(!inp) return;
-    const state = tile.dataset.state === 'good' ? 'bad' : 'good';
-    tile.dataset.state = state;
-    tile.classList.toggle('good', state==='good');
-    tile.classList.toggle('bad', state==='bad');
-    // update input text default when toggling
-    if(state === 'good'){
-      if(!inp.value.includes(':')) inp.value = `${label} : Good`;
-      else inp.value = `${label} : Good`;
-    } else {
-      if(!inp.value.includes(':')) inp.value = `${label} : Bad`;
-      else inp.value = `${label} : Bad`;
-    }
-  }
-  function findInputForTile(tile){
-    // tile is left element, sibling .item-input contains input
-    const parent = tile.parentElement;
-    return parent.querySelector('.item-input input');
-  }
-
-  // Tyre behavior
-  function onTyreChange(){
-    const val = document.querySelector('input[name="tyreOpt"]:checked').value;
-    const tyreNote = document.getElementById('tyreNote');
-    tyreNote.disabled = (val === 'Good');
-    if(val === 'Good') tyreNote.value = '';
-  }
-
-  // get validation results
-  function getValidResults(){
-    const arr = [];
-    document.querySelectorAll('.valid-grid .valid-item').forEach((el,i)=>{
-      const name = validasiItems[i];
-      const val = el.querySelector('.toggle-btn').dataset.val === 'yes' ? '✅' : '❌';
-      arr.push(`- ${name} ${val}`);
+  <script>
+    const deviationField = document.getElementById('deviation');
+    deviationField.addEventListener('input', () => {
+      const lines = deviationField.value.split('\n');
+      deviationField.value = lines.map(line => line.startsWith('⚠️') ? line : '⚠️ ' + line).join('\n');
     });
-    return arr.join('\\n');
-  }
+  </script>
 
-  // Deviation formatting
-  function formatDeviation(text){
-    const lines = text.split(/\\r?\\n/).map(l=>l.trim()).filter(l=>l.length>0);
-    if(lines.length===0) return '';
-    return lines.map(l=>`⚠️ ${l}`).join('\\n');
-  }
-
-  // read all tile check statuses (oil, engine, cabin, frame)
-  function readSectionStatus(containerQuery, labels){
-    const container = document.querySelector(containerQuery);
-    const lines = [];
-    const items = Array.from(container.querySelectorAll('.big-item'));
-    for(let i=0;i<items.length;i++){
-      const item = items[i];
-      const tile = item.querySelector('.tile');
-      const state = tile.dataset.state === 'good' ? '✅' : '❌';
-      const inp = item.querySelector('.item-input input');
-      // prefer input text if filled; else use label + state
-      const text = inp && inp.value ? inp.value : `${labels[i]} : ${state==='✅'?'Good':'Bad'}`;
-      lines.push(text.replace(/\\s*:\\s*Good$|\\s*:\\s*Bad$/,'') + ` : ${state}`);
-    }
-    return lines.join('\\n');
-  }
-
-  // But easier: gather each known input by id to keep order and custom text
-  function generateText(){
-    const qa = document.querySelector('input[name="qatype"]:checked').value;
-    const date = document.getElementById('date').value || '-';
-    const mekanik = document.getElementById('mekanik').value || '-';
-    const code = document.getElementById('code').value || '-';
-    const hm = document.getElementById('hm').value || '-';
-
-    // oil inputs
-    const eOil = document.getElementById('input_engine_oil').value || 'Engine oil level : -';
-    const tOil = document.getElementById('input_trans_oil').value || 'Transmission oil level : -';
-    const hOil = document.getElementById('input_hyd_oil').value || 'Hydraulic oil level : -';
-
-    // engine area
-    const belt = document.getElementById('input_belt').value || 'V-belt tension : -';
-    const leak = document.getElementById('input_leak').value || 'Engine oil leakage : -';
-    const crc = document.getElementById('input_crc').value || 'Common Rail Connector : -';
-
-    // cabin
-    const radio = document.getElementById('input_radio').value || 'FM Radio : -';
-    const fatigue = document.getElementById('input_fatigue').value || 'Fatigue Warning : -';
-    const pw = document.getElementById('input_pw').value || 'Power Window : -';
-    const power = document.getElementById('powerSupply').value || '-';
-    const crp = document.getElementById('crp').value || '-';
-
-    // frame
-    const seat = document.getElementById('input_seat').value || 'Operator seat : -';
-    const rail = document.getElementById('input_rail').value || 'Hand Rail : -';
-
-    // suspension
-    const fl = document.getElementById('fl').value || '-';
-    const fr = document.getElementById('fr').value || '-';
-    const rl = document.getElementById('rl').value || '-';
-    const rr = document.getElementById('rr').value || '-';
-
-    // tyre
-    const tyre = document.querySelector('input[name="tyreOpt"]:checked').value;
-    const tyreNote = document.getElementById('tyreNote').value || '';
-
-    // validasi text
-    const validTxt = getValidResults();
-
-    // deviation formatted
-    const devRaw = document.getElementById('deviation').value;
-    const dev = formatDeviation(devRaw);
-
-    // Build text exact format
-    let txt = `*${qa}*\\n\\n` +
-    `📅 Tgl : ${date}\\n` +
-    `👷 Mekanik : ${mekanik}\\n\\n` +
-    `🚗 CN : ${code}\\n` +
-    `⌛ HM : ${hm}\\n\\n` +
-
-    `🩸 *Oil Level* 🩸\\n` +
-    `${eOil}\\n` +
-    `${tOil}\\n` +
-    `${hOil}\\n\\n` +
-
-    `⚙ *Engine Area* ⚙\\n` +
-    `${belt}\\n` +
-    `${leak}\\n` +
-    `${crc}\\n\\n` +
-
-    `🚗 *Cabin Area* 🚗\\n` +
-    `${radio}\\n` +
-    `${fatigue}\\n` +
-    `⚡ Power Supply : ${power} V\\n` +
-    `💧 Common Rail Pressure (ON) : ${crp} MPa\\n` +
-    `${pw}\\n\\n` +
-
-    `🚗 *Frame Area* 🚗\\n` +
-    `${seat}\\n` +
-    `${rail}\\n\\n` +
-
-    `💧 *Pressure Suspension (Panel)* 💧\\n` +
-    `FL : ${fl} MPa | FR : ${fr} MPa | RL : ${rl} MPa | RR : ${rr} MPa\\n\\n` +
-
-    `🛞 *Tyre condition :*\\n` +
-    `Tyre : ${tyre}${tyre==='Bad' && tyreNote ? ' - ' + tyreNote : ''}\\n\\n` +
-
-    `📝 *Validasi & Kelengkapan Check list Service :*\\n` +
-    `${validTxt}\\n\\n` +
-
-    `*Deviation :*\\n${dev || 'None'}`;
-
-    return txt;
-  }
-
-  function getValidResults(){
-    const arr = [];
-    document.querySelectorAll('.valid-grid .valid-item').forEach((el,i)=>{
-      const nm = validasiItems[i];
-      const val = el.querySelector('.toggle-btn').dataset.val === 'yes' ? '✅' : '❌';
-      arr.push(`- ${nm} ${val}`);
-    });
-    return arr.join('\\n');
-  }
-
-  function preview(){
-    const previewBox = document.getElementById('previewBox');
-    previewBox.innerText = generateText();
-    previewBox.style.display = 'block';
-    previewBox.scrollIntoView({behavior:'smooth', block:'center'});
-  }
-
-  function copyText(){
-    const txt = generateText();
-    navigator.clipboard.writeText(txt).then(()=>{
-      alert('✅ Teks berhasil disalin. Silakan paste di WhatsApp.');
-    }).catch(e=>{
-      alert('Gagal menyalin ke clipboard: '+e);
-    });
-  }
-
-  function sendWA(){
-    const txt = generateText();
-    const url = 'https://wa.me/?text=' + encodeURIComponent(txt);
-    window.open(url, '_blank');
-  }
-
-  // init: set some default values so preview looks like screenshot
-  document.getElementById('input_engine_oil').value = 'Engine oil level : Good';
-  document.getElementById('input_trans_oil').value = 'Transmission oil level : Good';
-  document.getElementById('input_hyd_oil').value = 'Hydraulic oil level : Good';
-  document.getElementById('input_belt').value = 'V-belt tension : Good';
-  document.getElementById('input_leak').value = 'Good, No engine oil leakage';
-  document.getElementById('input_crc').value = 'Common Rail Connector : Good';
-  document.getElementById('input_radio').value = 'FM Radio : Good';
-  document.getElementById('input_fatigue').value = 'Fatigue Warning : Good';
-  document.getElementById('input_pw').value = 'Power Window : Good';
-  document.getElementById('input_seat').value = 'Operator seat : Good';
-  document.getElementById('input_rail').value = 'Hand Rail : Good';
-
-  // make sure tyre note initial disabled
-  onTyreChange();
-</script>
 </body>
-</html>
+</html>                 
