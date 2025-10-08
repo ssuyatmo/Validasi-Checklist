@@ -58,10 +58,9 @@
     cursor: pointer;
     margin-left: 2px;
   }
-  .good { background: #e5e5e5; color: #333; }
+  .good, .bad { background: #e5e5e5; color: #333; }
   .good.active { background: #7ec67f; color: white; }
   .bad.active { background: #ff6b6b; color: white; }
-  .bad { background: #e5e5e5; color: #333; }
   textarea {
     width: 100%;
     height: 40px;
@@ -96,8 +95,19 @@
     margin-top: 12px;
     border: 1px solid #ddd;
   }
-  .small-input {width: calc(100% - 10px); margin-top: 4px; border-radius: 6px; padding: 5px; border: 1px solid #ccc;}
-  select {width: 100%; padding: 5px; border-radius: 6px; border: 1px solid #ccc;}
+  .small-input {
+    width: calc(100% - 10px);
+    margin-top: 4px;
+    border-radius: 6px;
+    padding: 5px;
+    border: 1px solid #ccc;
+  }
+  select {
+    width: 100%;
+    padding: 5px;
+    border-radius: 6px;
+    border: 1px solid #ccc;
+  }
 </style>
 </head>
 <body>
@@ -118,80 +128,7 @@
     <input class="small-input" id="hm" placeholder="⌛ HM">
   </div>
 
-  <div class="section" id="oil">
-    <h3>🩸 Oil Level</h3>
-    <div class="item">Engine Oil Level <div class="buttons"><button class="good">✅</button><button class="bad">❌</button></div></div>
-    <textarea placeholder="Temuan jika ada..."></textarea>
-    <div class="item">Transmission Oil Level <div class="buttons"><button class="good">✅</button><button class="bad">❌</button></div></div>
-    <textarea placeholder="Temuan jika ada..."></textarea>
-    <div class="item">Hydraulic Oil Level <div class="buttons"><button class="good">✅</button><button class="bad">❌</button></div></div>
-    <textarea placeholder="Temuan jika ada..."></textarea>
-  </div>
-
-  <div class="section">
-    <h3>⚙️ Engine Area</h3>
-    <div class="item">Belt Tension <div class="buttons"><button class="good">✅</button><button class="bad">❌</button></div></div>
-    <textarea placeholder="Temuan jika ada..."></textarea>
-    <div class="item">Engine Oil Leakage <div class="buttons"><button class="good">✅</button><button class="bad">❌</button></div></div>
-    <textarea placeholder="Temuan jika ada..."></textarea>
-    <div class="item">Common Rail Connector <div class="buttons"><button class="good">✅</button><button class="bad">❌</button></div></div>
-    <textarea placeholder="Temuan jika ada..."></textarea>
-    <div class="item">Injector Tube <div class="buttons"><button class="good">✅</button><button class="bad">❌</button></div></div>
-    <textarea placeholder="Temuan jika ada..."></textarea>
-  </div>
-
-  <div class="section">
-    <h3>🚗 Cabin Area</h3>
-    <div class="item">FM Radio <div class="buttons"><button class="good">✅</button><button class="bad">❌</button></div></div>
-    <textarea placeholder="Temuan jika ada..."></textarea>
-    <div class="item">Fatigue Warning <div class="buttons"><button class="good">✅</button><button class="bad">❌</button></div></div>
-    <textarea placeholder="Temuan jika ada..."></textarea>
-    <div class="item">Power Window <div class="buttons"><button class="good">✅</button><button class="bad">❌</button></div></div>
-    <textarea placeholder="Temuan jika ada..."></textarea>
-  </div>
-
-  <div class="section">
-    <h3>🛞 Frame Area</h3>
-    <div class="item">Operator Seat <div class="buttons"><button class="good">✅</button><button class="bad">❌</button></div></div>
-    <textarea placeholder="Temuan jika ada..."></textarea>
-    <div class="item">Hand Rail <div class="buttons"><button class="good">✅</button><button class="bad">❌</button></div></div>
-    <textarea placeholder="Temuan jika ada..."></textarea>
-  </div>
-
-  <div class="section">
-    <h3>💧 Pressure Suspension</h3>
-    <input class="small-input" id="fl" placeholder="FL">
-    <input class="small-input" id="fr" placeholder="FR">
-    <input class="small-input" id="rl" placeholder="RL">
-    <input class="small-input" id="rr" placeholder="RR">
-  </div>
-
-  <div class="section">
-    <h3>🛠️ Tyre Condition</h3>
-    <div class="item">Tyre Condition <div class="buttons"><button class="good">✅</button><button class="bad">❌</button></div></div>
-    <textarea placeholder="Tuliskan temuan jika BAD..."></textarea>
-  </div>
-
-  <div class="section" id="validasi">
-    <h3>📝 Validasi & Kelengkapan Checklist Service</h3>
-    <div class="item">Job Card & Cover Checklist <div class="buttons"><button class="good">✅</button><button class="bad">❌</button></div></div>
-    <div class="item">Form Observasi Redo PS <div class="buttons"><button class="good">✅</button><button class="bad">❌</button></div></div>
-    <div class="item">Form QA 1 & QA 7 <div class="buttons"><button class="good">✅</button><button class="bad">❌</button></div></div>
-    <div class="item">Form PPM <div class="buttons"><button class="good">✅</button><button class="bad">❌</button></div></div>
-    <div class="item">Form Check List A <div class="buttons"><button class="good">✅</button><button class="bad">❌</button></div></div>
-    <div class="item">Form Check List B <div class="buttons"><button class="good">✅</button><button class="bad">❌</button></div></div>
-    <div class="item">Form Check List C <div class="buttons"><button class="good">✅</button><button class="bad">❌</button></div></div>
-    <div class="item">Form Backlog <div class="buttons"><button class="good">✅</button><button class="bad">❌</button></div></div>
-    <div class="item">Form FUI <div class="buttons"><button class="good">✅</button><button class="bad">❌</button></div></div>
-    <div class="item">Form Repair Order <div class="buttons"><button class="good">✅</button><button class="bad">❌</button></div></div>
-    <div class="item">Form Combine Maintenance <div class="buttons"><button class="good">✅</button><button class="bad">❌</button></div></div>
-    <div class="item">Form Service Activity Report <div class="buttons"><button class="good">✅</button><button class="bad">❌</button></div></div>
-  </div>
-
-  <div class="section">
-    <h3>⚠️ Deviation</h3>
-    <div id="deviation"></div>
-  </div>
+  <div id="sections"></div>
 
   <div class="btn-row">
     <button class="preview-btn" onclick="preview()">🧾 Preview</button>
@@ -203,57 +140,145 @@
 </div>
 
 <script>
-const buttons = document.querySelectorAll('.buttons button');
-buttons.forEach(btn => {
-  btn.addEventListener('click', () => {
-    const siblings = btn.parentElement.querySelectorAll('button');
-    siblings.forEach(b => b.classList.remove('active'));
-    btn.classList.add('active');
+const sectionsData = {
+  "Oil Level": ["Engine Oil Level", "Transmission Oil Level", "Hydraulic Oil Level"],
+  "Engine Area": ["Belt Tension", "Engine Oil Leakage", "Common Rail Connector", "Injector Tube"],
+  "Cabin Area": ["FM Radio", "Fatigue Warning", "Power Window"],
+  "Frame Area": ["Operator Seat", "Hand Rail"],
+  "Tyre Condition": ["Tyre Condition"]
+};
+
+const validasiData = [
+  "Job Card & Cover Checklist","Form Observasi Redo PS","Form QA 1 & QA 7","Form PPM",
+  "Form Check List A","Form Check List B","Form Check List C","Form Backlog",
+  "Form FUI","Form Repair Order","Form Combine Maintenance","Form Service Activity Report"
+];
+
+function renderSections() {
+  const container = document.getElementById("sections");
+  container.innerHTML = "";
+  for (const [title, items] of Object.entries(sectionsData)) {
+    const div = document.createElement("div");
+    div.className = "section";
+    div.innerHTML = `<h3>${title}</h3>`;
+    items.forEach(item => {
+      div.innerHTML += `
+        <div class="item">${item}
+          <div class="buttons">
+            <button class="good">✅</button><button class="bad">❌</button>
+          </div>
+        </div>
+        <textarea placeholder="Tuliskan temuan jika ada..."></textarea>
+      `;
+    });
+    container.appendChild(div);
+  }
+
+  const pressure = document.createElement("div");
+  pressure.className = "section";
+  pressure.innerHTML = `
+    <h3>💧 Pressure Suspension (Panel)</h3>
+    <input class="small-input" id="fl" placeholder="FL">
+    <input class="small-input" id="fr" placeholder="FR">
+    <input class="small-input" id="rl" placeholder="RL">
+    <input class="small-input" id="rr" placeholder="RR">
+  `;
+  container.appendChild(pressure);
+
+  const valid = document.createElement("div");
+  valid.className = "section";
+  valid.id = "validasi";
+  valid.innerHTML = `
+    <h3>📝 Validasi & Kelengkapan Checklist Service</h3>
+    ${validasiData.map(v=>`
+      <div class="item">${v}<div class="buttons"><button class="good">✅</button><button class="bad">❌</button></div></div>
+    `).join("")}
+  `;
+  container.appendChild(valid);
+
+  const dev = document.createElement("div");
+  dev.className = "section";
+  dev.innerHTML = `<h3>⚠️ Deviation</h3><div id="deviation"></div>`;
+  container.appendChild(dev);
+
+  activateButtons();
+}
+
+function activateButtons(){
+  document.querySelectorAll('.buttons button').forEach(btn=>{
+    btn.onclick = ()=>{
+      const sibs = btn.parentElement.querySelectorAll('button');
+      sibs.forEach(b=>b.classList.remove('active'));
+      btn.classList.add('active');
+    };
   });
-});
+}
 
-document.getElementById("formType").addEventListener("change", function() {
-  const val = this.value;
+document.getElementById("formType").addEventListener("change",()=>{
   const title = document.querySelector("#validasi h3");
-  if(val === "QA7") title.textContent = "📝 Kelengkapan Pengisian Checklist Service";
-  else title.textContent = "📝 Validasi & Kelengkapan Checklist Service";
+  if(document.getElementById("formType").value==="QA7") 
+    title.textContent = "📝 Kelengkapan Pengisian Checklist Service";
+  else 
+    title.textContent = "📝 Validasi & Kelengkapan Checklist Service";
 });
 
-function collectDeviation() {
-  let devs = [];
-  document.querySelectorAll("textarea").forEach(t => {
-    if (t.value.trim() !== "") devs.push("⚠️ " + t.value.trim());
+function collectDeviation(){
+  const devs=[];
+  document.querySelectorAll("textarea").forEach(t=>{
+    if(t.value.trim()!=="") devs.push("⚠️ "+t.value.trim());
   });
   return devs.join("\n");
 }
 
-function preview() {
-  const formType = document.getElementById("formType").value;
-  const tgl = document.getElementById("tgl").value;
-  const mekanik = document.getElementById("mekanik").value;
-  const cn = document.getElementById("cn").value;
-  const hm = document.getElementById("hm").value;
-  const fl = document.getElementById("fl").value;
-  const fr = document.getElementById("fr").value;
-  const rl = document.getElementById("rl").value;
-  const rr = document.getElementById("rr").value;
-  const deviation = collectDeviation();
+function preview(){
+  const tgl=document.getElementById("tgl").value;
+  const mekanik=document.getElementById("mekanik").value;
+  const cn=document.getElementById("cn").value;
+  const hm=document.getElementById("hm").value;
+  const fl=document.getElementById("fl").value;
+  const fr=document.getElementById("fr").value;
+  const rl=document.getElementById("rl").value;
+  const rr=document.getElementById("rr").value;
+  const formType=document.getElementById("formType").value;
+  const deviation=collectDeviation();
 
-  let result = `📅 Tgl : ${tgl}\n👷 Mekanik : ${mekanik}\n🚗 CN : ${cn}\n⌛ HM : ${hm}\n\n---\n${formType === "QA1" ? "*QA-1 PRE-INSPECTION*" : "*QA-7 PRE-INSPECTION*"}\n\n💧 Pressure Suspension 💧\nFL: ${fl} | FR: ${fr} | RL: ${rl} | RR: ${rr}\n\n---\n⚠️ Deviation:\n${deviation}`;
-  
-  document.getElementById("preview").textContent = result;
+  let text=`📅 Tgl : ${tgl}\n👷 Mekanik : ${mekanik}\n🚗 CN : ${cn}\n⌛ HM : ${hm}\n\n---\n`;
+
+  for(const [title, items] of Object.entries(sectionsData)){
+    text+=`🩸 ${title} 🩸\n`;
+    items.forEach((item,i)=>{
+      const buttons=document.querySelectorAll(".section")[Object.keys(sectionsData).indexOf(title)].querySelectorAll(".buttons");
+      const state=buttons[i].querySelector(".good.active")?"✅ GOOD":buttons[i].querySelector(".bad.active")?"❌ BAD":"-";
+      text+=`${item} : ${state}\n`;
+    });
+    text+="\n---\n";
+  }
+
+  text+=`💧 Pressure Suspension 💧\nFL : ${fl} | FR : ${fr} | RL : ${rl} | RR : ${rr}\n\n---\n`;
+
+  text+=`${formType==="QA1"?"📝 Validasi & Kelengkapan Checklist Service":"📝 Kelengkapan Pengisian Checklist Service"}\n`;
+  validasiData.forEach((v,i)=>{
+    const valSec=document.getElementById("validasi").querySelectorAll(".buttons");
+    const state=valSec[i].querySelector(".good.active")?"✅":"❌";
+    text+=`${v} ${state}\n`;
+  });
+
+  text+=`\n---\n⚠️ Deviation:\n${deviation||"Tidak ada temuan"}`;
+
+  document.getElementById("preview").textContent=text;
 }
 
 function copyText(){
   navigator.clipboard.writeText(document.getElementById("preview").textContent);
-  alert("✅ Hasil sudah disalin ke clipboard");
+  alert("✅ Hasil sudah disalin ke clipboard!");
 }
 
 function sendWA(){
-  const text = encodeURIComponent(document.getElementById("preview").textContent);
-  window.open(`https://wa.me/?text=${text}`, '_blank');
+  const text=encodeURIComponent(document.getElementById("preview").textContent);
+  window.open(`https://wa.me/?text=${text}`,"_blank");
 }
-</script>
 
+renderSections();
+</script>
 </body>
 </html>
