@@ -29,9 +29,7 @@ select, input, textarea {
   box-sizing: border-box;
   font-size: 15px;
 }
-.container {
-  margin-top: 12px;
-}
+.container { margin-top: 12px; }
 .card {
   background: #fff;
   border-radius: 14px;
@@ -49,10 +47,10 @@ select, input, textarea {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  margin: 5px 0;
+  margin: 6px 0;
 }
 .status {
-  width: 80px;
+  width: 50px;
   height: 36px;
   text-align: center;
   border-radius: 10px;
@@ -60,12 +58,15 @@ select, input, textarea {
   cursor: pointer;
   border: 1px solid #ccc;
   box-shadow: inset 0 2px 3px rgba(0,0,0,0.2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
-.good {
+.checked {
   background-color: #d9ffd9;
   color: #097f09;
 }
-.bad {
+.unchecked {
   background-color: #ffd6d6;
   color: #a00;
 }
@@ -114,39 +115,39 @@ button {
     <input type="text" id="hm">
   </div>
 
-  <!-- OIL LEVEL -->
+  <!-- Oil Level -->
   <div class="card">
     <div class="section-title">🩸 Oil Level</div>
-    <div class="input-row"><div class="status good" onclick="toggle(this)">✅ GOOD</div><span>Engine oil level</span></div>
-    <div class="input-row"><div class="status good" onclick="toggle(this)">✅ GOOD</div><span>Transmission oil level</span></div>
-    <div class="input-row"><div class="status good" onclick="toggle(this)">✅ GOOD</div><span>Hydraulic oil level</span></div>
+    <div class="input-row"><div class="status checked" onclick="toggleGoodBad(this)">✅</div><span>Engine oil level</span></div>
+    <div class="input-row"><div class="status checked" onclick="toggleGoodBad(this)">✅</div><span>Transmission oil level</span></div>
+    <div class="input-row"><div class="status checked" onclick="toggleGoodBad(this)">✅</div><span>Hydraulic oil level</span></div>
   </div>
 
-  <!-- ENGINE -->
+  <!-- Engine -->
   <div class="card">
     <div class="section-title">⚙️ Engine Area</div>
-    <div class="input-row"><div class="status good" onclick="toggle(this)">✅ GOOD</div><span>Belt tension</span></div>
-    <div class="input-row"><div class="status good" onclick="toggle(this)">✅ GOOD</div><span>Engine oil leakage</span></div>
-    <div class="input-row"><div class="status good" onclick="toggle(this)">✅ GOOD</div><span>Common Rail Connector</span></div>
-    <div class="input-row"><div class="status good" onclick="toggle(this)">✅ GOOD</div><span>Injector Tube</span></div>
+    <div class="input-row"><div class="status checked" onclick="toggleGoodBad(this)">✅</div><span>Belt tension</span></div>
+    <div class="input-row"><div class="status checked" onclick="toggleGoodBad(this)">✅</div><span>Engine oil leakage</span></div>
+    <div class="input-row"><div class="status checked" onclick="toggleGoodBad(this)">✅</div><span>Common Rail Connector</span></div>
+    <div class="input-row"><div class="status checked" onclick="toggleGoodBad(this)">✅</div><span>Injector Tube</span></div>
   </div>
 
-  <!-- CABIN -->
+  <!-- Cabin -->
   <div class="card">
     <div class="section-title">🚗 Cabin Area</div>
-    <div class="input-row"><div class="status good" onclick="toggle(this)">✅ GOOD</div><span>FM Radio</span></div>
-    <div class="input-row"><div class="status good" onclick="toggle(this)">✅ GOOD</div><span>Fatigue Warning</span></div>
-    <div class="input-row"><div class="status good" onclick="toggle(this)">✅ GOOD</div><span>Power Window</span></div>
+    <div class="input-row"><div class="status checked" onclick="toggleGoodBad(this)">✅</div><span>FM Radio</span></div>
+    <div class="input-row"><div class="status checked" onclick="toggleGoodBad(this)">✅</div><span>Fatigue Warning</span></div>
+    <div class="input-row"><div class="status checked" onclick="toggleGoodBad(this)">✅</div><span>Power Window</span></div>
   </div>
 
-  <!-- FRAME -->
+  <!-- Frame -->
   <div class="card">
     <div class="section-title">🛞 Frame Area</div>
-    <div class="input-row"><div class="status good" onclick="toggle(this)">✅ GOOD</div><span>Operator seat</span></div>
-    <div class="input-row"><div class="status good" onclick="toggle(this)">✅ GOOD</div><span>Hand Rail</span></div>
+    <div class="input-row"><div class="status checked" onclick="toggleGoodBad(this)">✅</div><span>Operator seat</span></div>
+    <div class="input-row"><div class="status checked" onclick="toggleGoodBad(this)">✅</div><span>Hand Rail</span></div>
   </div>
 
-  <!-- PRESSURE -->
+  <!-- Pressure Suspension -->
   <div class="card">
     <div class="section-title">💧 Pressure Suspension (Panel)</div>
     <div class="input-row">
@@ -157,7 +158,7 @@ button {
     </div>
   </div>
 
-  <!-- TYRE -->
+  <!-- Tyre -->
   <div class="card">
     <div class="section-title">🛠️ Tyre Condition</div>
     <select id="tyre">
@@ -167,13 +168,13 @@ button {
     <textarea id="tyreNote" placeholder="Jika BAD → tulis temuan di bawah ini:"></textarea>
   </div>
 
-  <!-- VALIDATION -->
+  <!-- Validation -->
   <div class="card">
     <div class="section-title">📝 Validasi & Kelengkapan Checklist Service</div>
     <div id="validationList"></div>
   </div>
 
-  <!-- DEVIATION -->
+  <!-- Deviation -->
   <div class="card">
     <div class="section-title">⚠️ Deviation</div>
     <textarea id="deviation" rows="4" placeholder="Tulis deviation satu per baris..."></textarea>
@@ -204,32 +205,36 @@ const validationItems = [
   "Form Service Activity Report"
 ];
 
-// generate validation buttons
+// generate validation list
 const container = document.getElementById("validationList");
 validationItems.forEach(item=>{
   const row=document.createElement("div");
   row.className="input-row";
   const btn=document.createElement("div");
-  btn.className="status good";
-  btn.textContent="✅ GOOD";
+  btn.className="status checked";
+  btn.textContent="✅";
   const label=document.createElement("span");
   label.textContent=item;
-  btn.onclick=()=>toggle(btn);
+  btn.onclick=()=>toggleCheck(btn);
   row.appendChild(btn);
   row.appendChild(label);
   container.appendChild(row);
 });
 
-function toggle(btn){
-  if(btn.classList.contains("good")){
-    btn.classList.remove("good");
-    btn.classList.add("bad");
-    btn.textContent="❌ BAD";
+function toggleGoodBad(btn){
+  if(btn.classList.contains("checked")){
+    btn.classList.remove("checked");
+    btn.classList.add("unchecked");
+    btn.textContent="❌";
   }else{
-    btn.classList.remove("bad");
-    btn.classList.add("good");
-    btn.textContent="✅ GOOD";
+    btn.classList.remove("unchecked");
+    btn.classList.add("checked");
+    btn.textContent="✅";
   }
+}
+function toggleCheck(btn){
+  if(btn.textContent==="✅"){btn.textContent="❌";btn.classList.remove("checked");btn.classList.add("unchecked");}
+  else{btn.textContent="✅";btn.classList.remove("unchecked");btn.classList.add("checked");}
 }
 
 function preview(){
