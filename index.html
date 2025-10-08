@@ -3,225 +3,231 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Checklist QA1 & QA7</title>
+<title>Form QA1 & QA7 - Pre & Final Inspection</title>
 <style>
-body {
-  font-family: 'Segoe UI', sans-serif;
-  background: linear-gradient(180deg,#f8fff4,#e8f5e9);
-  margin:0; padding:0;
-}
-header {
-  background: linear-gradient(90deg,#d4af37,#c2a05f);
-  color:#fff; text-align:center;
-  padding:15px; font-size:20px; font-weight:bold;
-  border-bottom-left-radius:20px; border-bottom-right-radius:20px;
-  box-shadow:0 4px 10px rgba(0,0,0,0.2);
-}
-.container {
-  max-width:850px; margin:20px auto; background:#fff;
-  border-radius:16px; box-shadow:0 4px 10px rgba(0,0,0,0.1); padding:20px;
-}
-.section {margin-bottom:20px;}
-.section h3 {
-  background:#4caf50; color:white; padding:8px;
-  border-radius:10px; font-size:16px;
-}
-.item {display:flex; align-items:center; justify-content:space-between; margin:8px 0;}
-.item label {flex:1; font-size:15px;}
-.toggle {display:flex; gap:5px;}
-.toggle button {
-  width:50px; height:35px; border:none; border-radius:8px;
-  font-size:15px; cursor:pointer; color:#fff;
-}
-.good {background:#66bb6a;}
-.bad {background:#ef5350;}
-.check {background:#4caf50;}
-.cross {background:#ef5350;}
-textarea {
-  width:100%; border-radius:8px; border:1px solid #ccc;
-  padding:6px; margin-top:5px; font-size:14px;
-}
-.buttons {display:flex; justify-content:space-around; margin-top:20px;}
-.buttons button {
-  border:none; border-radius:10px; padding:10px 15px;
-  cursor:pointer; font-size:16px; color:#fff;
-}
-.preview {background:#66bb6a;}
-.copy {background:#fbc02d;}
-.send {background:#42a5f5;}
-.preview-area {
-  background:#f0f4c3; padding:10px; border-radius:10px;
-  margin-top:20px; white-space:pre-wrap;
-}
-.pressure input {
-  width:60px; margin-right:5px; text-align:center;
-}
-select, input[type="text"], input[type="date"] {
-  border-radius:8px; border:1px solid #ccc;
-  padding:5px 8px; margin:5px 0; width:100%;
-}
+  body {
+    font-family: 'Segoe UI', sans-serif;
+    margin: 0;
+    background: linear-gradient(180deg, #f8f9fa, #d4f1d0);
+    color: #222;
+  }
+  header {
+    background: linear-gradient(90deg, #d4af37, #1e8449);
+    color: white;
+    text-align: center;
+    padding: 15px;
+    font-weight: bold;
+    font-size: 20px;
+    border-radius: 0 0 15px 15px;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.2);
+  }
+  .card {
+    background: #fff;
+    margin: 15px;
+    padding: 15px;
+    border-radius: 15px;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+  }
+  .section-title {
+    font-weight: bold;
+    margin-bottom: 8px;
+    border-bottom: 2px solid #1e8449;
+    color: #1e8449;
+  }
+  .item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin: 8px 0;
+    flex-wrap: wrap;
+  }
+  .item label {
+    flex: 1;
+    min-width: 150px;
+  }
+  .btn {
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    padding: 4px 10px;
+    margin: 0 2px;
+    cursor: pointer;
+    transition: 0.2s;
+  }
+  .good.active {
+    background: #2ecc71;
+    color: white;
+  }
+  .bad.active {
+    background: #e74c3c;
+    color: white;
+  }
+  .check.active {
+    background: #2ecc71;
+    color: white;
+  }
+  .cross.active {
+    background: #e74c3c;
+    color: white;
+  }
+  .temuan {
+    width: 100%;
+    margin-top: 5px;
+    border-radius: 8px;
+    padding: 6px;
+    border: 1px solid #ccc;
+  }
+  .buttons {
+    display: flex;
+    justify-content: space-around;
+    margin: 15px;
+  }
+  button {
+    padding: 10px 15px;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    font-weight: bold;
+    color: white;
+  }
+  #preview { background: #3498db; }
+  #copy { background: #2ecc71; }
+  #send { background: #27ae60; }
+  #result {
+    white-space: pre-wrap;
+    background: #fff;
+    margin: 15px;
+    padding: 15px;
+    border-radius: 12px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+  }
 </style>
 </head>
 <body>
+<header>📋 Form QA1 & QA7 - Pre & Final Inspection</header>
 
-<header>🧾 QA1 & QA7 Inspection Checklist</header>
-
-<div class="container">
-  <div class="section">
-    <label>🧩 Jenis Inspeksi:</label>
-    <select id="jenis">
-      <option value="QA-1 Pre Inspection">QA-1 Pre Inspection</option>
-      <option value="QA-7 Final Inspection">QA-7 Final Inspection</option>
-    </select>
-
-    <label>📅 Tanggal: <input type="date" id="tanggal"></label>
-    <label>👷 Mekanik: <input type="text" id="mekanik"></label>
-    <label>🚗 CN: <input type="text" id="cn"></label>
-    <label>⌛ HM: <input type="text" id="hm"></label>
+<div class="card">
+  <div class="section-title">🩸 Oil Level</div>
+  <div class="item">
+    <label>Engine oil level</label>
+    <div>
+      <span class="btn good">GOOD</span>
+      <span class="btn bad">BAD</span>
+    </div>
+    <input type="text" class="temuan" placeholder="Tulis temuan jika BAD">
   </div>
-
-  <div class="section" id="oil-level"><h3>🩸 Oil Level 🩸</h3></div>
-  <div class="section" id="engine-area"><h3>⚙️ Engine Area ⚙️</h3></div>
-  <div class="section" id="cabin-area"><h3>🚗 Cabin Area 🚗</h3></div>
-  <div class="section" id="frame-area"><h3>🛞 Frame Area 🛞</h3></div>
-
-  <div class="section pressure">
-    <h3>💧 Pressure Suspension (Panel) 💧</h3>
-    FL: <input type="text" id="fl">
-    FR: <input type="text" id="fr">
-    RL: <input type="text" id="rl">
-    RR: <input type="text" id="rr">
+  <div class="item">
+    <label>Transmission oil level</label>
+    <div>
+      <span class="btn good">GOOD</span>
+      <span class="btn bad">BAD</span>
+    </div>
+    <input type="text" class="temuan" placeholder="Tulis temuan jika BAD">
   </div>
-
-  <div class="section" id="tyre"><h3>🛠️ Tyre Condition 🛠️</h3></div>
-
-  <div class="section" id="validasi"><h3>📝 Validasi & Kelengkapan Checklist Service</h3></div>
-
-  <div class="section">
-    <h3>⚠️ Deviation (Tambahan Manual)</h3>
-    <textarea id="manualDeviation" rows="4" placeholder="Tambahkan deviasi manual di sini..."></textarea>
-  </div>
-
-  <div class="buttons">
-    <button class="preview" onclick="previewResult()">🧾 Preview</button>
-    <button class="copy" onclick="copyResult()">📋 Copy</button>
-    <button class="send" onclick="sendWA()">📤 Send WA</button>
-  </div>
-
-  <div id="preview" class="preview-area"></div>
 </div>
 
+<div class="card">
+  <div class="section-title">⚙️ Engine Area</div>
+  <div class="item">
+    <label>Belt tension</label>
+    <div><span class="btn good">GOOD</span><span class="btn bad">BAD</span></div>
+    <input type="text" class="temuan" placeholder="Tulis temuan jika BAD">
+  </div>
+  <div class="item">
+    <label>Engine oil leakage</label>
+    <div><span class="btn good">GOOD</span><span class="btn bad">BAD</span></div>
+    <input type="text" class="temuan" placeholder="Tulis temuan jika BAD">
+  </div>
+</div>
+
+<div class="card">
+  <div class="section-title">🚗 Cabin Area</div>
+  <div class="item">
+    <label>FM Radio</label>
+    <div><span class="btn good">GOOD</span><span class="btn bad">BAD</span></div>
+    <input type="text" class="temuan" placeholder="Tulis temuan jika BAD">
+  </div>
+</div>
+
+<div class="card">
+  <div class="section-title">🛞 Tyre Condition</div>
+  <div class="item">
+    <label>Tyre</label>
+    <div><span class="btn good">GOOD</span><span class="btn bad">BAD</span></div>
+    <input type="text" class="temuan" placeholder="Tulis temuan jika BAD">
+  </div>
+</div>
+
+<div class="card">
+  <div class="section-title">📝 Validasi & Kelengkapan Checklist Service</div>
+  <div class="item"><label>Job Card & Cover Checklist</label><div><span class="btn check">✅</span><span class="btn cross">❌</span></div></div>
+  <div class="item"><label>Form QA 1 & QA 7</label><div><span class="btn check">✅</span><span class="btn cross">❌</span></div></div>
+  <div class="item"><label>Form Service Activity Report</label><div><span class="btn check">✅</span><span class="btn cross">❌</span></div></div>
+</div>
+
+<div class="buttons">
+  <button id="preview">🧾 Preview</button>
+  <button id="copy">📋 Copy</button>
+  <button id="send">📤 Send WA</button>
+</div>
+
+<div id="result"></div>
+
 <script>
-const oilItems=["Engine oil level","Transmission oil level","Hydraulic oil level"];
-const engineItems=["Belt tension","Engine oil leakage","Common Rail Connector","Injector Tube"];
-const cabinItems=["FM Radio","Fatigue Warning","Power Window"];
-const frameItems=["Operator seat","Hand Rail"];
-const tyreItems=["Tyre"];
-const validasiItems=[
-  "Job Card & Cover Checklist","Form Observasi Redo PS","Form QA 1 & QA 7","Form PPM",
-  "Form Check List A","Form Check List B","Form Check List C","Form Backlog",
-  "Form FUI","Form Repair Order","Form Combine Maintenance","Form Service Activity Report"
-];
-
-function createSection(id, items, withTemuan=true, validasi=false){
-  const section=document.getElementById(id);
-  items.forEach(item=>{
-    const div=document.createElement("div");
-    div.className="item";
-    div.innerHTML=`
-      <label>${item}</label>
-      <div class="toggle">
-        ${validasi
-          ? `<button class="check" onclick="setStatus(this,'✅')">✅</button>
-             <button class="cross" onclick="setStatus(this,'❌')">❌</button>`
-          : `<button class="good" onclick="setStatus(this,'GOOD')">✅</button>
-             <button class="bad" onclick="setStatus(this,'BAD')">❌</button>`
-        }
-      </div>
-    `;
-    section.appendChild(div);
-    if(withTemuan && !validasi){
-      const textarea=document.createElement("textarea");
-      textarea.placeholder=`Tuliskan temuan untuk ${item} (jika ada)...`;
-      section.appendChild(textarea);
-    }
+const btns = document.querySelectorAll('.btn');
+btns.forEach(b=>{
+  b.addEventListener('click',()=>{
+    const group = b.parentElement.querySelectorAll('.btn');
+    group.forEach(g=>g.classList.remove('active'));
+    b.classList.add('active');
   });
-}
+});
 
-createSection("oil-level",oilItems);
-createSection("engine-area",engineItems);
-createSection("cabin-area",cabinItems);
-createSection("frame-area",frameItems);
-createSection("tyre",tyreItems);
-createSection("validasi",validasiItems,false,true);
-
-function setStatus(btn,status){
-  const parent=btn.closest(".item");
-  parent.setAttribute("data-status",status);
-}
-
-function previewResult(){
-  const jenis=document.getElementById("jenis").value;
-  const tgl=document.getElementById("tanggal").value;
-  const mekanik=document.getElementById("mekanik").value;
-  const cn=document.getElementById("cn").value;
-  const hm=document.getElementById("hm").value;
-  const fl=document.getElementById("fl").value;
-  const fr=document.getElementById("fr").value;
-  const rl=document.getElementById("rl").value;
-  const rr=document.getElementById("rr").value;
-  const manual=document.getElementById("manualDeviation").value.trim();
-
-  let deviation="";
-  let result=`*${jenis}*\n\n📅 Tgl : ${tgl}\n👷 Mekanik : ${mekanik}\n🚗 CN : ${cn}\n⌛ HM : ${hm}\n\n---\n`;
-
-  function buildSection(title,id,withTemuan=true,validasi=false){
-    result+=`${title}\n`;
-    const section=document.getElementById(id);
-    const textareas=section.querySelectorAll("textarea");
-    let i=0;
-    section.querySelectorAll(".item").forEach(item=>{
-      const label=item.querySelector("label").innerText;
-      const status=item.getAttribute("data-status")|| (validasi?"❌":"GOOD");
-      const temuan=withTemuan && !validasi ? textareas[i++].value.trim() : "";
-      result+=`${label} : ${status}\n`;
-      if(temuan) deviation+=`⚠️ ${temuan}\n`;
+document.getElementById('preview').onclick = function(){
+  let text = "📅 Tgl : "+new Date().toLocaleDateString('en-GB')+
+  "\n👷 Mekanik :\n🚗 CN :\n⌛ HM :\n\n---\n";
+  const sections = document.querySelectorAll('.card');
+  let deviations = [];
+  sections.forEach(sec=>{
+    let title = sec.querySelector('.section-title').textContent;
+    text += title+"\n";
+    const items = sec.querySelectorAll('.item');
+    items.forEach(it=>{
+      const label = it.querySelector('label').textContent;
+      const good = it.querySelector('.good');
+      const bad = it.querySelector('.bad');
+      const check = it.querySelector('.check');
+      const cross = it.querySelector('.cross');
+      const temuan = it.querySelector('.temuan');
+      if(good || bad){
+        if(good?.classList.contains('active')) text += label+" : ✅ GOOD\n";
+        else if(bad?.classList.contains('active')){
+          text += label+" : ❌ BAD\n";
+          if(temuan.value.trim()!=="") deviations.push("⚠️ "+temuan.value.trim());
+        }
+        else text += label+" : ⬜\n";
+      } else if(check || cross){
+        if(check?.classList.contains('active')) text += label+" ✅\n";
+        else if(cross?.classList.contains('active')) text += label+" ❌\n";
+        else text += label+" ⬜\n";
+      }
     });
-    result+=`\n---\n`;
+    text += "\n---\n";
+  });
+  if(deviations.length>0){
+    text += "⚠️ Deviation :\n"+deviations.join("\n");
   }
+  document.getElementById('result').textContent = text;
+};
 
-  buildSection("🩸 Oil Level 🩸","oil-level");
-  buildSection("⚙️ Engine Area ⚙️","engine-area");
-  buildSection("🚗 Cabin Area 🚗","cabin-area");
-  buildSection("🛞 Frame Area 🛞","frame-area");
+document.getElementById('copy').onclick = ()=>{
+  navigator.clipboard.writeText(document.getElementById('result').textContent);
+  alert("✅ Teks disalin!");
+};
 
-  result+=`💧 Pressure Suspension (Panel) 💧\nFL : ${fl} | FR : ${fr} | RL : ${rl} | RR : ${rr}\n\n---\n`;
-
-  buildSection("🛠️ Tyre Condition 🛠️","tyre");
-  buildSection("📝 Validasi & Kelengkapan Checklist Service","validasi",false,true);
-
-  if(manual){
-    manual.split("\n").forEach(line=>{
-      if(line.trim()!=="") deviation+=`⚠️ ${line.trim()}\n`;
-    });
-  }
-
-  if(deviation){
-    result+=`⚠️ Deviation :\n${deviation}`;
-  }
-
-  document.getElementById("preview").innerText=result;
-}
-
-function copyResult(){
-  navigator.clipboard.writeText(document.getElementById("preview").innerText);
-  alert("✅ Hasil disalin ke clipboard!");
-}
-
-function sendWA(){
-  const text=encodeURIComponent(document.getElementById("preview").innerText);
-  window.open(`https://wa.me/?text=${text}`,'_blank');
-}
+document.getElementById('send').onclick = ()=>{
+  let msg = encodeURIComponent(document.getElementById('result').textContent);
+  window.open("https://wa.me/?text="+msg, "_blank");
+};
 </script>
 </body>
 </html>
