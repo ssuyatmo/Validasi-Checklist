@@ -45,38 +45,24 @@ select, input, textarea {
   border-bottom: 2px solid #cde5cd;
   padding-bottom: 4px;
 }
-.input-row {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
+.item {
   margin: 8px 0;
-  padding: 4px 0;
 }
-.input-row span {
-  flex: 1;
-  color: #333;
+.item label {
+  display: block;
+  font-weight: 500;
+  margin-bottom: 4px;
 }
-.status {
-  width: 48px;
-  height: 36px;
-  text-align: center;
-  border-radius: 10px;
-  font-weight: bold;
-  cursor: pointer;
+.goodbad {
+  width: 100%;
+  border-radius: 8px;
   border: 1px solid #ccc;
-  box-shadow: inset 0 2px 3px rgba(0,0,0,0.2);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin-left: 10px;
+  padding: 6px;
+  background: #f9fff9;
 }
-.checked {
-  background-color: #d9ffd9;
-  color: #097f09;
-}
-.unchecked {
-  background-color: #ffd6d6;
-  color: #a00;
+textarea.note {
+  display: none;
+  margin-top: 5px;
 }
 button {
   border: none;
@@ -98,6 +84,36 @@ button {
   padding: 12px;
   margin-top: 10px;
   box-shadow: inset 0 0 8px rgba(0,0,0,0.1);
+}
+.status {
+  width: 48px;
+  height: 36px;
+  text-align: center;
+  border-radius: 10px;
+  font-weight: bold;
+  cursor: pointer;
+  border: 1px solid #ccc;
+  box-shadow: inset 0 2px 3px rgba(0,0,0,0.2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.checked {
+  background-color: #d9ffd9;
+  color: #097f09;
+}
+.unchecked {
+  background-color: #ffd6d6;
+  color: #a00;
+}
+.input-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 6px 0;
+}
+.input-row span {
+  flex: 1;
 }
 </style>
 </head>
@@ -126,57 +142,55 @@ button {
   <!-- Oil Level -->
   <div class="card">
     <div class="section-title">🩸 Oil Level</div>
-    <div class="input-row"><span>Engine oil level</span><div class="status checked" onclick="toggleCheck(this)">✅</div></div>
-    <div class="input-row"><span>Transmission oil level</span><div class="status checked" onclick="toggleCheck(this)">✅</div></div>
-    <div class="input-row"><span>Hydraulic oil level</span><div class="status checked" onclick="toggleCheck(this)">✅</div></div>
+    <div class="item"><label>Engine oil level</label><select class="goodbad" onchange="toggleNote(this)"><option value="✅ GOOD">✅ GOOD</option><option value="❌ BAD">❌ BAD</option></select><textarea class="note" placeholder="Tulis temuan jika BAD..."></textarea></div>
+    <div class="item"><label>Transmission oil level</label><select class="goodbad" onchange="toggleNote(this)"><option value="✅ GOOD">✅ GOOD</option><option value="❌ BAD">❌ BAD</option></select><textarea class="note"></textarea></div>
+    <div class="item"><label>Hydraulic oil level</label><select class="goodbad" onchange="toggleNote(this)"><option value="✅ GOOD">✅ GOOD</option><option value="❌ BAD">❌ BAD</option></select><textarea class="note"></textarea></div>
   </div>
 
-  <!-- Engine -->
+  <!-- Engine Area -->
   <div class="card">
     <div class="section-title">⚙️ Engine Area</div>
-    <div class="input-row"><span>Belt tension</span><div class="status checked" onclick="toggleCheck(this)">✅</div></div>
-    <div class="input-row"><span>Engine oil leakage</span><div class="status checked" onclick="toggleCheck(this)">✅</div></div>
-    <div class="input-row"><span>Common Rail Connector</span><div class="status checked" onclick="toggleCheck(this)">✅</div></div>
-    <div class="input-row"><span>Injector Tube</span><div class="status checked" onclick="toggleCheck(this)">✅</div></div>
+    <div class="item"><label>Belt tension</label><select class="goodbad" onchange="toggleNote(this)"><option value="✅ GOOD">✅ GOOD</option><option value="❌ BAD">❌ BAD</option></select><textarea class="note"></textarea></div>
+    <div class="item"><label>Engine oil leakage</label><select class="goodbad" onchange="toggleNote(this)"><option value="✅ GOOD">✅ GOOD</option><option value="❌ BAD">❌ BAD</option></select><textarea class="note"></textarea></div>
+    <div class="item"><label>Common Rail Connector</label><select class="goodbad" onchange="toggleNote(this)"><option value="✅ GOOD">✅ GOOD</option><option value="❌ BAD">❌ BAD</option></select><textarea class="note"></textarea></div>
+    <div class="item"><label>Injector Tube</label><select class="goodbad" onchange="toggleNote(this)"><option value="✅ GOOD">✅ GOOD</option><option value="❌ BAD">❌ BAD</option></select><textarea class="note"></textarea></div>
   </div>
 
-  <!-- Cabin -->
+  <!-- Cabin Area -->
   <div class="card">
     <div class="section-title">🚗 Cabin Area</div>
-    <div class="input-row"><span>FM Radio</span><div class="status checked" onclick="toggleCheck(this)">✅</div></div>
-    <div class="input-row"><span>Fatigue Warning</span><div class="status checked" onclick="toggleCheck(this)">✅</div></div>
-    <div class="input-row"><span>Power Window</span><div class="status checked" onclick="toggleCheck(this)">✅</div></div>
+    <div class="item"><label>FM Radio</label><select class="goodbad" onchange="toggleNote(this)"><option value="✅ GOOD">✅ GOOD</option><option value="❌ BAD">❌ BAD</option></select><textarea class="note"></textarea></div>
+    <div class="item"><label>Fatigue Warning</label><select class="goodbad" onchange="toggleNote(this)"><option value="✅ GOOD">✅ GOOD</option><option value="❌ BAD">❌ BAD</option></select><textarea class="note"></textarea></div>
+    <div class="item"><label>Power Window</label><select class="goodbad" onchange="toggleNote(this)"><option value="✅ GOOD">✅ GOOD</option><option value="❌ BAD">❌ BAD</option></select><textarea class="note"></textarea></div>
   </div>
 
-  <!-- Frame -->
+  <!-- Frame Area -->
   <div class="card">
     <div class="section-title">🛞 Frame Area</div>
-    <div class="input-row"><span>Operator seat</span><div class="status checked" onclick="toggleCheck(this)">✅</div></div>
-    <div class="input-row"><span>Hand Rail</span><div class="status checked" onclick="toggleCheck(this)">✅</div></div>
+    <div class="item"><label>Operator seat</label><select class="goodbad" onchange="toggleNote(this)"><option value="✅ GOOD">✅ GOOD</option><option value="❌ BAD">❌ BAD</option></select><textarea class="note"></textarea></div>
+    <div class="item"><label>Hand Rail</label><select class="goodbad" onchange="toggleNote(this)"><option value="✅ GOOD">✅ GOOD</option><option value="❌ BAD">❌ BAD</option></select><textarea class="note"></textarea></div>
   </div>
 
-  <!-- Pressure Suspension -->
+  <!-- Pressure -->
   <div class="card">
     <div class="section-title">💧 Pressure Suspension (Panel)</div>
     <div class="input-row">
-      <input id="fl" placeholder="FL :">
-      <input id="fr" placeholder="FR :">
-      <input id="rl" placeholder="RL :">
-      <input id="rr" placeholder="RR :">
+      <input id="fl" placeholder="FL :"> <input id="fr" placeholder="FR :"> 
+      <input id="rl" placeholder="RL :"> <input id="rr" placeholder="RR :">
     </div>
   </div>
 
   <!-- Tyre -->
   <div class="card">
     <div class="section-title">🛠️ Tyre Condition</div>
-    <select id="tyre">
+    <select id="tyre" onchange="toggleTyre()">
       <option value="✅ GOOD">✅ GOOD</option>
       <option value="❌ BAD">❌ BAD</option>
     </select>
-    <textarea id="tyreNote" placeholder="Jika BAD → tulis temuan di bawah ini:"></textarea>
+    <textarea id="tyreNote" placeholder="Jika BAD → tulis temuan di bawah ini:" style="display:none;"></textarea>
   </div>
 
-  <!-- Validation -->
+  <!-- Validasi -->
   <div class="card">
     <div class="section-title">📝 Validasi & Kelengkapan Checklist Service</div>
     <div id="validationList"></div>
@@ -198,83 +212,78 @@ button {
 </div>
 
 <script>
-const validationItems = [
-  "Job Card & Cover Checklist",
-  "Form Observasi Redo PS",
-  "Form QA 1 & QA 7",
-  "Form PPM",
-  "Form Check List A",
-  "Form Check List B",
-  "Form Check List C",
-  "Form Backlog",
-  "Form FUI",
-  "Form Repair Order",
-  "Form Combine Maintenance",
-  "Form Service Activity Report"
-];
-
-const container = document.getElementById("validationList");
+const validationItems=[
+"Job Card & Cover Checklist","Form Observasi Redo PS","Form QA 1 & QA 7",
+"Form PPM","Form Check List A","Form Check List B","Form Check List C",
+"Form Backlog","Form FUI","Form Repair Order","Form Combine Maintenance",
+"Form Service Activity Report"];
+const vContainer=document.getElementById("validationList");
 validationItems.forEach(item=>{
   const row=document.createElement("div");
   row.className="input-row";
-  const label=document.createElement("span");
-  label.textContent=item;
+  const span=document.createElement("span");
+  span.textContent=item;
   const btn=document.createElement("div");
   btn.className="status checked";
   btn.textContent="✅";
   btn.onclick=()=>toggleCheck(btn);
-  row.appendChild(label);
+  row.appendChild(span);
   row.appendChild(btn);
-  container.appendChild(row);
+  vContainer.appendChild(row);
 });
-
 function toggleCheck(btn){
   if(btn.textContent==="✅"){btn.textContent="❌";btn.classList.remove("checked");btn.classList.add("unchecked");}
   else{btn.textContent="✅";btn.classList.remove("unchecked");btn.classList.add("checked");}
 }
-
+function toggleNote(sel){
+  const note=sel.nextElementSibling;
+  if(sel.value.includes("BAD")) note.style.display="block"; else note.style.display="none";
+}
+function toggleTyre(){
+  const tyre=document.getElementById("tyre");
+  const note=document.getElementById("tyreNote");
+  note.style.display=tyre.value.includes("BAD")?"block":"none";
+}
 function preview(){
   const date=new Date(document.getElementById("date").value);
   const formattedDate=isNaN(date)?"":date.toLocaleDateString("en-GB",{day:"2-digit",month:"short",year:"numeric"}).replace(",","");
   const deviationLines=document.getElementById("deviation").value.split("\n").filter(l=>l.trim()!=="").map(l=>"⚠️ "+l.trim()).join("\n");
-  const getSection=(title,selector)=>`${title}\n${[...document.querySelectorAll(selector)].map(r=>{
-    const btn=r.querySelector(".status");const label=r.querySelector("span");
-    return `${label.textContent} : ${btn.textContent}`;
-  }).join("\n")}\n`;
 
-  const validText=[...container.querySelectorAll(".input-row")].map(r=>{
-    const btn=r.querySelector(".status");const label=r.querySelector("span");
-    return `${label.textContent} ${btn.textContent}`;
+  const sectionToText=(title,selector)=>{
+    const items=document.querySelectorAll(selector);
+    return `${title}\n${[...items].map(it=>{
+      const sel=it.querySelector(".goodbad");const note=it.querySelector(".note");
+      return `${it.querySelector("label").textContent} : ${sel.value}${note.value?` (${note.value})`:""}`;
+    }).join("\n")}\n`;
+  };
+
+  const validText=[...vContainer.querySelectorAll(".input-row")].map(r=>{
+    return `${r.querySelector("span").textContent} ${r.querySelector(".status").textContent}`;
   }).join("\n");
 
-  const result=
-`📋 Inspection Type : ${document.getElementById("inspectionType").value}
+  const text=`📋 Inspection Type : ${inspectionType.value}
 
 📅 Tgl : ${formattedDate}
-👷 Mekanik : ${document.getElementById("mechanic").value}
-🚗 CN : ${document.getElementById("cn").value}
-⌛ HM : ${document.getElementById("hm").value}
+👷 Mekanik : ${mechanic.value}
+🚗 CN : ${cn.value}
+⌛ HM : ${hm.value}
 
 
 ---
 
-🩸 Oil Level 🩸
-${getSection("",".card:nth-of-type(2) .input-row")}
+${sectionToText("🩸 Oil Level 🩸",".card:nth-of-type(2) .item")}
 
 ---
 
-⚙️ Engine Area ⚙️
-${getSection("",".card:nth-of-type(3) .input-row")}
+${sectionToText("⚙️ Engine Area ⚙️",".card:nth-of-type(3) .item")}
 
 ---
 
-🚗 Cabin Area 🚗
-${getSection("",".card:nth-of-type(4) .input-row")}
+${sectionToText("🚗 Cabin Area 🚗",".card:nth-of-type(4) .item")}
 
 ---
 
-🛞 Frame Area 🛞
-${getSection("",".card:nth-of-type(5) .input-row")}
+${sectionToText("🛞 Frame Area 🛞",".card:nth-of-type(5) .item")}
 
 ---
 
@@ -286,7 +295,7 @@ FL : ${fl.value} | FR : ${fr.value} | RL : ${rl.value} | RR : ${rr.value}
 
 🛠️ Tyre Condition 🛠️
 Tyre : ${tyre.value}
-${tyreNote.value?tyreNote.value:"Jika BAD → tulis temuan di bawah ini:"}
+${tyreNote.style.display==="block"?tyreNote.value:"Jika BAD → tulis temuan di bawah ini:"}
 
 
 ---
@@ -300,14 +309,12 @@ ${validText}
 ⚠️ Deviation :
 ${deviationLines}`;
 
-  document.getElementById("preview").textContent=result;
+  document.getElementById("preview").textContent=text;
 }
-
 function copyText(){
   navigator.clipboard.writeText(document.getElementById("preview").textContent);
   alert("✅ Format WA telah disalin!");
 }
-
 function sendWA(){
   const msg=encodeURIComponent(document.getElementById("preview").textContent);
   window.open(`https://wa.me/?text=${msg}`);
