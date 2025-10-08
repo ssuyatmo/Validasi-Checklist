@@ -3,275 +3,266 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>QA Inspection Form</title>
+<title>Checklist QA1 & QA7</title>
 <style>
-  body {
-    font-family: "Segoe UI", sans-serif;
-    background: linear-gradient(180deg, #e6f4ea, #d1f0d0);
-    margin: 0;
-    padding: 0;
-  }
-
-  header {
-    background: linear-gradient(90deg, #c9b45b, #a9d48a);
-    color: #fff;
-    text-align: center;
-    padding: 15px;
-    font-size: 1.4em;
-    font-weight: bold;
-    box-shadow: 0 3px 8px rgba(0,0,0,0.3);
-  }
-
-  .container {
-    max-width: 700px;
-    margin: 20px auto;
-    background: #fff;
-    padding: 20px;
-    border-radius: 15px;
-    box-shadow: 0 4px 10px rgba(0,0,0,0.2);
-  }
-
-  .section {
-    margin-bottom: 15px;
-    border: 1px solid #ddd;
-    border-radius: 10px;
-    padding: 10px 15px;
-    box-shadow: 0 2px 6px rgba(0,0,0,0.1);
-  }
-
-  h3 {
-    margin-top: 0;
-    color: #355e3b;
-  }
-
-  label {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 4px 0;
-  }
-
-  .btn-toggle {
-    display: flex;
-    gap: 6px;
-  }
-
-  button.choice {
-    border: none;
-    padding: 5px 10px;
-    border-radius: 6px;
-    cursor: pointer;
-    font-weight: bold;
-  }
-
-  .good { background-color: #c5f7c5; }
-  .bad { background-color: #f7c5c5; }
-
-  textarea {
-    width: 100%;
-    border-radius: 8px;
-    border: 1px solid #ccc;
-    padding: 5px;
-    margin-top: 5px;
-    resize: vertical;
-  }
-
-  .row { display: flex; gap: 10px; flex-wrap: wrap; }
-
-  input[type="text"], input[type="number"], input[type="date"] {
-    width: 100%;
-    padding: 6px;
-    border-radius: 6px;
-    border: 1px solid #ccc;
-  }
-
-  .btns {
-    display: flex;
-    justify-content: space-around;
-    margin-top: 20px;
-  }
-
-  .btns button {
-    border: none;
-    padding: 10px 15px;
-    border-radius: 8px;
-    font-weight: bold;
-    cursor: pointer;
-    color: #fff;
-  }
-
-  .preview { background-color: #5ab55e; }
-  .copy { background-color: #f0b13e; }
-  .send { background-color: #2b8dff; }
-
-  pre {
-    white-space: pre-wrap;
-    background: #f7fff7;
-    border-radius: 10px;
-    padding: 15px;
-    margin-top: 15px;
-    box-shadow: inset 0 0 5px rgba(0,0,0,0.1);
-  }
+body {
+  font-family: 'Segoe UI', sans-serif;
+  background: linear-gradient(180deg, #e8f5e9, #f7fff9);
+  margin: 0;
+  padding: 0;
+}
+header {
+  background: linear-gradient(90deg, #d4af37, #c2a05f);
+  color: white;
+  text-align: center;
+  padding: 15px;
+  font-size: 20px;
+  font-weight: bold;
+  border-bottom-left-radius: 20px;
+  border-bottom-right-radius: 20px;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+}
+.container {
+  max-width: 800px;
+  margin: 20px auto;
+  background: white;
+  border-radius: 16px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+  padding: 20px;
+}
+.section {
+  margin-bottom: 20px;
+}
+.section h3 {
+  background: #388e3c;
+  color: white;
+  padding: 8px;
+  border-radius: 10px;
+  font-size: 16px;
+}
+.item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin: 8px 0;
+}
+.item label {
+  flex: 1;
+}
+.toggle {
+  display: flex;
+  gap: 5px;
+}
+.toggle button {
+  width: 40px;
+  height: 35px;
+  border: none;
+  border-radius: 8px;
+  font-size: 18px;
+  cursor: pointer;
+}
+.good { background: #a5d6a7; }
+.bad { background: #ef9a9a; }
+textarea {
+  width: 100%;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  padding: 6px;
+  margin-top: 5px;
+  font-size: 14px;
+}
+.buttons {
+  display: flex;
+  justify-content: space-around;
+  margin-top: 20px;
+}
+.buttons button {
+  border: none;
+  border-radius: 10px;
+  padding: 10px 15px;
+  cursor: pointer;
+  font-size: 16px;
+}
+.preview-area {
+  background: #f0f4c3;
+  padding: 10px;
+  border-radius: 10px;
+  margin-top: 20px;
+  white-space: pre-wrap;
+}
+.copy { background: #fdd835; }
+.preview { background: #81c784; }
+.send { background: #64b5f6; }
+.pressure input {
+  width: 60px;
+  margin-right: 5px;
+  text-align: center;
+}
 </style>
 </head>
 <body>
-<header>🧾 QA-1 & QA-7 INSPECTION FORM</header>
+
+<header>🧾 QA1 & QA7 Inspection Checklist</header>
 
 <div class="container">
+  <div class="section">
+    <label>📅 Tanggal: <input type="date" id="tanggal"></label><br>
+    <label>👷 Mekanik: <input type="text" id="mekanik"></label><br>
+    <label>🚗 CN: <input type="text" id="cn"></label><br>
+    <label>⌛ HM: <input type="text" id="hm"></label>
+  </div>
+
+  <div class="section" id="oil-level">
+    <h3>🩸 Oil Level 🩸</h3>
+  </div>
+
+  <div class="section" id="engine-area">
+    <h3>⚙️ Engine Area ⚙️</h3>
+  </div>
+
+  <div class="section" id="cabin-area">
+    <h3>🚗 Cabin Area 🚗</h3>
+  </div>
+
+  <div class="section" id="frame-area">
+    <h3>🛞 Frame Area 🛞</h3>
+  </div>
+
+  <div class="section pressure">
+    <h3>💧 Pressure Suspension (Panel) 💧</h3>
+    FL: <input type="text" id="fl"> 
+    FR: <input type="text" id="fr"> 
+    RL: <input type="text" id="rl"> 
+    RR: <input type="text" id="rr">
+  </div>
+
+  <div class="section" id="tyre">
+    <h3>🛠️ Tyre Condition 🛠️</h3>
+  </div>
+
+  <div class="section" id="validasi">
+    <h3>📝 Validasi & Kelengkapan Checklist Service</h3>
+  </div>
 
   <div class="section">
-    <div class="row">
-      <div style="flex:1">
-        <label>Tipe QA:
-          <select id="qaType">
-            <option value="QA-1 Pre Inspection">QA-1 Pre Inspection</option>
-            <option value="QA-7 Final Inspection">QA-7 Final Inspection</option>
-          </select>
-        </label>
-      </div>
-    </div>
-    <div class="row">
-      <div style="flex:1"><label>Tanggal: <input type="date" id="tgl"></label></div>
-      <div style="flex:1"><label>Mekanik: <input type="text" id="mekanik"></label></div>
-    </div>
-    <div class="row">
-      <div style="flex:1"><label>CN: <input type="text" id="cn"></label></div>
-      <div style="flex:1"><label>HM: <input type="text" id="hm"></label></div>
-    </div>
+    <h3>⚠️ Deviation (Tambahan Manual) ⚠️</h3>
+    <textarea id="manualDeviation" rows="4" placeholder="Tulis deviasi tambahan di sini..."></textarea>
   </div>
 
-  <div id="sections"></div>
-
-  <div class="section">
-    <h3>💧 Pressure Suspension (Panel)</h3>
-    <div class="row">
-      <input type="text" id="FL" placeholder="FL">
-      <input type="text" id="FR" placeholder="FR">
-      <input type="text" id="RL" placeholder="RL">
-      <input type="text" id="RR" placeholder="RR">
-    </div>
+  <div class="buttons">
+    <button class="preview" onclick="previewResult()">🧾 Preview</button>
+    <button class="copy" onclick="copyResult()">📋 Copy</button>
+    <button class="send" onclick="sendWA()">📤 Send WA</button>
   </div>
 
-  <div class="btns">
-    <button class="preview" onclick="generatePreview()">🧾 Preview</button>
-    <button class="copy" onclick="copyText()">📋 Copy</button>
-    <button class="send" onclick="sendWA()">📤 Send</button>
-  </div>
-
-  <pre id="output"></pre>
+  <div id="preview" class="preview-area"></div>
 </div>
 
 <script>
-const items = {
-  "🩸 Oil Level 🩸": ["Engine oil level", "Transmission oil level", "Hydraulic oil level"],
-  "⚙️ Engine Area ⚙️": ["Belt tension", "Engine oil leakage", "Common Rail Connector", "Injector Tube"],
-  "🚗 Cabin Area 🚗": ["FM Radio", "Fatigue Warning", "Power Window"],
-  "🛞 Frame Area 🛞": ["Operator seat", "Hand Rail"],
-  "🛠️ Tyre Condition 🛠️": ["Tyre"]
-};
-
-const validasi = [
-  "Job Card & Cover Checklist", "Form Observasi Redo PS", "Form QA 1 & QA 7", "Form PPM",
-  "Form Check List A", "Form Check List B", "Form Check List C", "Form Backlog",
-  "Form FUI", "Form Repair Order", "Form Combine Maintenance", "Form Service Activity Report"
+const oilItems = ["Engine oil level", "Transmission oil level", "Hydraulic oil level"];
+const engineItems = ["Belt tension", "Engine oil leakage", "Common Rail Connector", "Injector Tube"];
+const cabinItems = ["FM Radio", "Fatigue Warning", "Power Window"];
+const frameItems = ["Operator seat", "Hand Rail"];
+const tyreItems = ["Tyre"];
+const validasiItems = [
+"Job Card & Cover Checklist", "Form Observasi Redo PS", "Form QA 1 & QA 7", "Form PPM",
+"Form Check List A", "Form Check List B", "Form Check List C", "Form Backlog",
+"Form FUI", "Form Repair Order", "Form Combine Maintenance", "Form Service Activity Report"
 ];
 
-const sectionContainer = document.getElementById("sections");
-
-for (const [title, list] of Object.entries(items)) {
-  const section = document.createElement("div");
-  section.className = "section";
-  section.innerHTML = `<h3>${title}</h3>`;
-  list.forEach(name => {
-    const row = document.createElement("div");
-    row.innerHTML = `
-      <label>
-        <span>${name}</span>
-        <span class="btn-toggle">
-          <button class="choice good" onclick="setChoice(this,'GOOD')">✅</button>
-          <button class="choice bad" onclick="setChoice(this,'BAD')">❌</button>
-        </span>
-      </label>
-      <textarea placeholder="Tambahkan temuan jika ada" data-item="${name}"></textarea>
+function createSection(id, items) {
+  const section = document.getElementById(id);
+  items.forEach(item => {
+    const div = document.createElement("div");
+    div.className = "item";
+    div.innerHTML = `
+      <label>${item}</label>
+      <div class="toggle">
+        <button class="good" onclick="setStatus(this,'GOOD')">✅</button>
+        <button class="bad" onclick="setStatus(this,'BAD')">❌</button>
+      </div>
     `;
-    section.appendChild(row);
+    section.appendChild(div);
+    const textarea = document.createElement("textarea");
+    textarea.placeholder = `Temuan jika ${item} BAD...`;
+    textarea.style.display = "none";
+    section.appendChild(textarea);
   });
-  sectionContainer.appendChild(section);
 }
 
-const validasiSec = document.createElement("div");
-validasiSec.className = "section";
-validasiSec.innerHTML = "<h3>📝 Validasi & Kelengkapan Checklist Service</h3>";
-validasi.forEach(v => {
-  const row = document.createElement("div");
-  row.innerHTML = `
-    <label>
-      <span>${v}</span>
-      <span class="btn-toggle">
-        <button class="choice good" onclick="setChoice(this,'OK')">✅</button>
-        <button class="choice bad" onclick="setChoice(this,'NO')">❌</button>
-      </span>
-    </label>
-  `;
-  validasiSec.appendChild(row);
-});
-sectionContainer.appendChild(validasiSec);
-
-function setChoice(btn, value) {
-  const parent = btn.parentElement;
-  parent.querySelectorAll(".choice").forEach(b => b.style.opacity = "0.4");
-  btn.style.opacity = "1";
-  parent.setAttribute("data-value", value);
+function setStatus(btn, status) {
+  const parent = btn.closest(".item");
+  const text = parent.nextElementSibling;
+  text.style.display = (status === "BAD") ? "block" : "none";
+  parent.setAttribute("data-status", status);
 }
 
-function generatePreview() {
-  const qaType = document.getElementById("qaType").value;
-  const tgl = document.getElementById("tgl").value;
+createSection("oil-level", oilItems);
+createSection("engine-area", engineItems);
+createSection("cabin-area", cabinItems);
+createSection("frame-area", frameItems);
+createSection("tyre", tyreItems);
+createSection("validasi", validasiItems);
+
+function previewResult() {
+  const date = document.getElementById("tanggal").value;
   const mekanik = document.getElementById("mekanik").value;
   const cn = document.getElementById("cn").value;
   const hm = document.getElementById("hm").value;
+  const fl = document.getElementById("fl").value;
+  const fr = document.getElementById("fr").value;
+  const rl = document.getElementById("rl").value;
+  const rr = document.getElementById("rr").value;
+  const manual = document.getElementById("manualDeviation").value.trim();
 
-  let txt = `📅 Tgl : ${tgl}\n👷 Mekanik : ${mekanik}\n🚗 CN : ${cn}\n⌛ HM : ${hm}\n\n---\n\n`;
+  let deviation = "";
+  let result = `📅 Tgl : ${date}\n👷 Mekanik : ${mekanik}\n🚗 CN : ${cn}\n⌛ HM : ${hm}\n\n---\n`;
 
-  let deviations = [];
-
-  for (const [title, list] of Object.entries(items)) {
-    txt += `${title}\n`;
-    list.forEach(name => {
-      const row = [...document.querySelectorAll("label span:first-child")].find(e => e.textContent === name);
-      const parent = row?.parentElement?.querySelector(".btn-toggle");
-      const val = parent?.getAttribute("data-value") || "";
-      const temuan = document.querySelector(`textarea[data-item="${name}"]`)?.value.trim();
-      txt += `${name} : ${val ? (val === "GOOD" ? "✅ GOOD" : "❌ BAD") : ""}\n`;
-      if (temuan) deviations.push(temuan);
+  function buildSection(title, id) {
+    result += `${title}\n`;
+    const section = document.getElementById(id);
+    section.querySelectorAll(".item").forEach(item => {
+      const label = item.querySelector("label").innerText;
+      const status = item.getAttribute("data-status") || "GOOD";
+      result += `${label} : ${status === "GOOD" ? "✅ GOOD" : "❌ BAD"}\n`;
+      if (status === "BAD") {
+        const txt = item.nextElementSibling.value.trim();
+        if (txt) deviation += `⚠️ ${txt}\n`;
+      }
     });
-    txt += `\n---\n\n`;
+    result += `\n---\n`;
   }
 
-  txt += `💧 Pressure Suspension (Panel)\nFL : ${FL.value} | FR : ${FR.value} | RL : ${RL.value} | RR : ${RR.value}\n\n---\n\n`;
+  buildSection("🩸 Oil Level 🩸", "oil-level");
+  buildSection("⚙️ Engine Area ⚙️", "engine-area");
+  buildSection("🚗 Cabin Area 🚗", "cabin-area");
+  buildSection("🛞 Frame Area 🛞", "frame-area");
+  result += `💧 Pressure Suspension (Panel) 💧\nFL : ${fl} | FR : ${fr} | RL : ${rl} | RR : ${rr}\n\n---\n`;
+  buildSection("🛠️ Tyre Condition 🛠️", "tyre");
+  buildSection("📝 Validasi & Kelengkapan Checklist Service", "validasi");
 
-  txt += `📝 Validasi & Kelengkapan Checklist Service\n\n`;
-  document.querySelectorAll('.section h3 + div label').forEach(l => {
-    const val = l.querySelector(".btn-toggle")?.getAttribute("data-value");
-    if (val && l.closest(".section").querySelector("h3").textContent.includes("Validasi")) {
-      txt += `${l.querySelector("span").textContent} ${val === "OK" ? "✅" : "❌"}\n\n`;
-    }
-  });
+  if (manual) {
+    manual.split("\n").forEach(line => {
+      if (line.trim() !== "") deviation += `⚠️ ${line.trim()}\n`;
+    });
+  }
 
-  txt += `---\n\n⚠️ Deviation :\n`;
-  deviations.forEach(d => txt += `⚠️ ${d}\n`);
-  document.getElementById("output").textContent = txt;
+  if (deviation) {
+    result += `⚠️ Deviation :\n${deviation}`;
+  }
+
+  document.getElementById("preview").innerText = result;
 }
 
-function copyText() {
-  const text = document.getElementById("output").textContent;
+function copyResult() {
+  const text = document.getElementById("preview").innerText;
   navigator.clipboard.writeText(text);
-  alert("✅ Teks berhasil disalin!");
+  alert("✅ Hasil disalin ke clipboard");
 }
 
 function sendWA() {
-  const msg = encodeURIComponent(document.getElementById("output").textContent);
-  window.open(`https://wa.me/?text=${msg}`, "_blank");
+  const text = encodeURIComponent(document.getElementById("preview").innerText);
+  window.open(`https://wa.me/?text=${text}`, '_blank');
 }
 </script>
 </body>
