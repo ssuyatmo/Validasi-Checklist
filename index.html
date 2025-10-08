@@ -3,86 +3,74 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Inspection Report HD</title>
+<title>QA Inspection HD785-7</title>
 <style>
 body {
   font-family: "Poppins", sans-serif;
   margin: 0;
-  background: linear-gradient(to bottom right, #e7f8e3, #d0efc0);
+  background: linear-gradient(to bottom right, #d8e9a8, #9cdba6);
   color: #222;
 }
 header {
-  background: #f3cd6e;
+  background: linear-gradient(to right, #f1d28a, #f5e4a2);
   color: #1a1a1a;
   text-align: center;
-  padding: 12px;
-  font-weight: 700;
+  padding: 10px 0;
+  font-weight: bold;
   font-size: 18px;
-  box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+  box-shadow: 0 2px 6px rgba(0,0,0,0.2);
 }
 .container {
   padding: 10px;
-  max-width: 650px;
+  max-width: 600px;
   margin: auto;
 }
 .card {
   background: #fff;
   border-radius: 10px;
-  box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+  box-shadow: 0 2px 6px rgba(0,0,0,0.2);
   padding: 10px;
-  margin-bottom: 12px;
-}
-select, input[type="text"], input[type="number"], input[type="date"], textarea {
-  width: 100%;
-  border-radius: 6px;
-  border: 1px solid #ccc;
-  padding: 6px;
-  font-size: 13px;
-  margin-top: 4px;
-}
-textarea {
-  resize: none;
-  height: 50px;
+  margin-bottom: 10px;
 }
 h3 {
   background: #cfe8cf;
   padding: 6px;
   border-radius: 6px;
   font-size: 15px;
-  margin-bottom: 6px;
 }
 .label {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin: 5px 0;
+  margin: 4px 0;
 }
-.label span {
-  flex: 1;
-  font-size: 14px;
-}
+.label span { flex: 1; font-size: 14px; }
 .label button {
-  border: none;
-  border-radius: 8px;
-  padding: 5px 10px;
   margin-left: 5px;
+  padding: 4px 10px;
+  border: none;
+  border-radius: 6px;
   cursor: pointer;
-  background: #eee;
   font-weight: bold;
 }
-.good.active { background: #b8f5b8; }
-.bad.active { background: #f5b8b8; }
-section {
-  margin-bottom: 12px;
-}
-.pressure input {
-  width: 48%;
-  margin-bottom: 4px;
+.good { background: #e0e0e0; }
+.good.active { background: #a4f5a4; }
+.bad.active { background: #f5a4a4; }
+.bad { background: #e0e0e0; }
+
+textarea, input[type="text"], input[type="number"], input[type="date"] {
+  width: 100%;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  resize: none;
+  margin-top: 4px;
+  padding: 5px;
+  font-size: 13px;
 }
 .buttons {
   display: flex;
   justify-content: space-around;
-  margin-top: 12px;
+  margin-top: 10px;
 }
 button.main {
   padding: 8px 14px;
@@ -122,70 +110,29 @@ button.main {
 </head>
 <body>
 
-<header>INSPECTION REPORT HD</header>
-
+<header>🌿 QA Inspection Komatsu HD785-7</header>
 <div class="container">
   <div class="card">
-    <label><input type="checkbox" id="qa1" checked> QA-1</label>
-    <label><input type="checkbox" id="qa7"> QA-7</label>
-    <label><input type="checkbox" id="daily"> Daily Check</label>
+    <label>Pilih Jenis QA:
+      <select id="qaType">
+        <option value="QA1">QA-1 (Pre Inspection)</option>
+        <option value="QA7">QA-7 (Final Inspection)</option>
+      </select>
+    </label>
   </div>
 
   <div class="card">
-    <label>CODE NUMBER :</label><input type="text" id="code">
-    <label>DATE :</label><input type="date" id="date">
-    <label>HOURMETER :</label><input type="number" id="hm">
+    <label>📅 Tanggal:</label><input type="date" id="tgl">
+    <label>👷 Mekanik:</label><input type="text" id="mekanik">
+    <label>🚗 CN Unit:</label><input type="text" id="cn">
+    <label>⌛ HM:</label><input type="number" id="hm">
   </div>
 
-  <div class="card">
-    <h3>Frame Area</h3>
-    <div class="label">
-      <span>Operator seat</span>
-      <div>
-        <button class="good" onclick="toggleBtn(this)">✅</button>
-        <button class="bad" onclick="toggleBtn(this)">❌</button>
-      </div>
-    </div>
-    <textarea placeholder="add Notes"></textarea>
-
-    <div class="label">
-      <span>Hand Rail</span>
-      <div>
-        <button class="good" onclick="toggleBtn(this)">✅</button>
-        <button class="bad" onclick="toggleBtn(this)">❌</button>
-      </div>
-    </div>
-    <textarea placeholder="add Notes"></textarea>
-  </div>
-
-  <div class="card">
-    <h3>Suspension Pressure (on monitor panel)</h3>
-    <div class="pressure">
-      <input type="text" placeholder="FL (MPa)"> <input type="text" placeholder="FR (MPa)">
-      <input type="text" placeholder="RL (MPa)"> <input type="text" placeholder="RR (MPa)">
-    </div>
-  </div>
-
-  <div class="card">
-    <h3>Tyre Condition</h3>
-    <div class="label">
-      <span>Tyre Condition</span>
-      <div>
-        <button class="good" onclick="toggleBtn(this)">✅</button>
-        <button class="bad" onclick="toggleBtn(this)">❌</button>
-      </div>
-    </div>
-    <textarea placeholder="add Notes"></textarea>
-  </div>
-
-  <div class="card">
-    <h3>Other Deviation List</h3>
-    <textarea id="deviation" placeholder="Tulis deviation lainnya..."></textarea>
-  </div>
+  <div id="sections"></div>
 
   <div class="buttons">
     <button class="main" onclick="showPreview()">🧾 Preview</button>
-    <button class="main" onclick="sendWA()">📤 Send WA</button>
+    <button class="main" onclick="sendToWhatsApp()">📤 Send WA</button>
   </div>
 </div>
 
@@ -193,68 +140,149 @@ button.main {
   <pre id="previewText"></pre>
   <div id="popupButtons">
     <button onclick="copyText()">📋 Copy</button>
-    <button onclick="sendWA()">📤 Send WA</button>
+    <button onclick="sendToWhatsApp()">📤 Send WA</button>
     <button onclick="closePopup()">❌ Close</button>
   </div>
 </div>
 
 <script>
-function toggleBtn(btn) {
-  const group = btn.parentElement.querySelectorAll('button');
-  group.forEach(b => b.classList.remove('active'));
-  btn.classList.add('active');
-}
+const sectionsData = {
+  QA1: { title: "Validasi & Kelengkapan Checklist Service", items: [
+      "Job Card & Cover Checklist","Form Observasi Redo PS","Form QA 1 & QA 7","Form PPM",
+      "Form Check List A","Form Check List B","Form Check List C","Form Backlog",
+      "Form FUI","Form Repair Order","Form Combine Maintenance","Form Service Activity Report"
+  ]},
+  QA7: { title: "Kelengkapan Pengisian Checklist Service", items: [
+      "Job Card & Cover Checklist","Form Observasi Redo PS","Form QA 1 & QA 7","Form PPM",
+      "Form Check List A","Form Check List B","Form Check List C","Form Backlog",
+      "Form FUI","Form Repair Order","Form Combine Maintenance","Form Service Activity Report"
+  ]}
+};
 
-function showPreview() {
-  let text = `📋 *INSPECTION REPORT HD*\n\n`;
-  text += `QA-1: ${document.getElementById('qa1').checked ? '✅' : '❌'}\n`;
-  text += `QA-7: ${document.getElementById('qa7').checked ? '✅' : '❌'}\n`;
-  text += `Daily Check: ${document.getElementById('daily').checked ? '✅' : '❌'}\n\n`;
-  text += `CODE NUMBER: ${document.getElementById('code').value}\n`;
-  text += `DATE: ${document.getElementById('date').value}\n`;
-  text += `HOURMETER: ${document.getElementById('hm').value}\n\n---\n`;
+const inspectionSections = [
+  { name: "Oil Level", items: ["Engine oil level","Transmission oil level","Hydraulic oil level"] },
+  { name: "Engine Area", items: [
+    "Belt tension","Engine oil leakage","Common Rail Connector","Injector Tube",
+    {label:"Common rail pressure (ON) MPa", type:"number"},
+    {label:"Power Supply (ON) V", type:"number"}
+  ]},
+  { name: "Cabin Area", items: ["FM Radio","Fatigue Warning","Power Window"] },
+  { name: "Frame Area", items: ["Operator seat","Hand Rail"] },
+  { name: "Suspension Pressure (on monitor panel)", items: [
+    {label:"FL MPa", type:"number"},
+    {label:"FR MPa", type:"number"},
+    {label:"RL MPa", type:"number"},
+    {label:"RR MPa", type:"number"}
+  ]},
+  { name: "Tyre Condition", items: ["Tyre Condition"] }
+];
 
-  const cards = document.querySelectorAll('.card');
-  let deviations = [];
+function renderSections(){
+  const qaType = document.getElementById('qaType').value;
+  let html = "";
 
-  cards.forEach(card => {
-    const title = card.querySelector('h3');
-    if (title) {
-      text += `*${title.textContent}*\n`;
-      const labels = card.querySelectorAll('.label');
-      labels.forEach((lbl, idx) => {
-        const name = lbl.querySelector('span').textContent;
-        const good = lbl.querySelector('.good.active');
-        const bad = lbl.querySelector('.bad.active');
-        const note = card.querySelectorAll('textarea')[idx]?.value || '';
-        text += `${name} : ${good ? '✅ GOOD' : bad ? '❌ BAD' : '❔'}\n`;
-        if (note.trim()) deviations.push(`⚠️ ${note.trim()}`);
-      });
-      text += `\n`;
-    }
+  inspectionSections.forEach(sec=>{
+    html += `<div class="card"><h3>${sec.name}</h3>`;
+    sec.items.forEach((item, idx)=>{
+      const id = sec.name.replace(/\s+/g,'')+idx;
+      if(typeof item === 'object' && item.type === 'number'){
+        html += `<label>${item.label}:<input type="number" id="num_${id}" step="0.1" placeholder="Masukkan nilai..."></label>`;
+      } else {
+        html += `
+        <div class="label">
+          <span>${item}</span>
+          <div>
+            <button class="good" onclick="toggleButton(this,'GOOD','${id}')">✅</button>
+            <button class="bad" onclick="toggleButton(this,'BAD','${id}')">❌</button>
+          </div>
+        </div>
+        <textarea id="note_${id}" placeholder="Tulis temuan jika ada..."></textarea>`;
+      }
+    });
+    html += `</div>`;
   });
 
-  const dev = document.getElementById('deviation').value.trim();
-  if (dev) dev.split('\n').forEach(d => deviations.push(`⚠️ ${d}`));
+  const validasi = sectionsData[qaType];
+  html += `<div class="card"><h3>${validasi.title}</h3>`;
+  validasi.items.forEach((v,i)=>{
+    const id="val"+i;
+    html += `
+      <div class="label">
+        <span>${v}</span>
+        <div>
+          <button class="good" onclick="toggleButton(this,'✅','${id}')">✅</button>
+          <button class="bad" onclick="toggleButton(this,'❌','${id}')">❌</button>
+        </div>
+      </div>`;
+  });
+  html += `</div><div class="card"><h3>⚠️ Deviation (Tambahkan jika ada)</h3><textarea id="manualDeviation" rows="3" placeholder="Tambahkan deviation manual..."></textarea></div>`;
+  
+  document.getElementById('sections').innerHTML = html;
+}
+renderSections();
+document.getElementById('qaType').addEventListener('change', renderSections);
 
-  text += `---\n⚠️ *Deviation List:*\n` + (deviations.length ? deviations.join('\n') : 'Tidak ada');
-
-  document.getElementById('previewText').textContent = text;
-  document.getElementById('previewPopup').style.display = 'block';
+function toggleButton(el,val,id){
+  const parent = el.parentElement;
+  parent.querySelectorAll('button').forEach(btn=>btn.classList.remove('active'));
+  el.classList.add('active');
+  el.dataset.value = val;
 }
 
-function copyText() {
-  navigator.clipboard.writeText(document.getElementById('previewText').textContent);
-  alert("✅ Laporan disalin!");
+function showPreview(){
+  const qaType=document.getElementById('qaType').value;
+  let text=`*${qaType==='QA1'?'QA-1 Pre Inspection':'QA-7 Final Inspection'}*\n\n`;
+  text+=`📅 Tanggal : ${tgl.value}\n👷 Mekanik : ${mekanik.value}\n🚗 CN : ${cn.value}\n⌛ HM : ${hm.value}\n\n---\n`;
+
+  let deviations=[];
+
+  inspectionSections.forEach(sec=>{
+    text+=`🧩 *${sec.name}*\n`;
+    sec.items.forEach((item,idx)=>{
+      const id=sec.name.replace(/\s+/g,'')+idx;
+      if(typeof item==='object' && item.type==='number'){
+        const val=document.getElementById(`num_${id}`).value;
+        text+=`${item.label} : ${val?val:'-'}\n`;
+      } else {
+        const good=document.querySelector(`#note_${id}`).previousElementSibling.querySelector('.good.active');
+        const bad=document.querySelector(`#note_${id}`).previousElementSibling.querySelector('.bad.active');
+        const status=good?'✅ GOOD':bad?'❌ BAD':'❔';
+        text+=`${item} : ${status}\n`;
+        const note=document.getElementById(`note_${id}`).value.trim();
+        if(note) deviations.push(`⚠️ ${note}`);
+      }
+    });
+    text+=`\n`;
+  });
+
+  const qaSection=sectionsData[qaType];
+  text+=`📝 *${qaSection.title}*\n`;
+  qaSection.items.forEach((v,i)=>{
+    const id="val"+i;
+    const good=document.querySelector(`[onclick*="${id}"].good.active`);
+    const bad=document.querySelector(`[onclick*="${id}"].bad.active`);
+    text+=`${v} : ${good?'✅':bad?'❌':'❔'}\n`;
+  });
+
+  const manualDev=document.getElementById('manualDeviation').value.trim();
+  if(manualDev) manualDev.split('\n').forEach(d=>deviations.push(`⚠️ ${d.trim()}`));
+  
+  text+=`\n⚠️ *Deviation:*\n`+(deviations.length?deviations.join('\n'):'Tidak ada')+'\n';
+
+  document.getElementById('previewText').textContent=text;
+  document.getElementById('previewPopup').style.display='block';
 }
 
-function sendWA() {
-  const msg = encodeURIComponent(document.getElementById('previewText').textContent);
-  window.open(`https://wa.me/?text=${msg}`, '_blank');
+function copyText(){
+  navigator.clipboard.writeText(previewText.textContent);
+  alert('✅ Teks disalin!');
 }
-
-function closePopup() {
-  document.getElementById('previewPopup').style.display = 'none';
+function sendToWhatsApp(){
+  const msg=encodeURIComponent(previewText.textContent);
+  window.open(`https://wa.me/?text=${msg}`,'_blank');
+}
+function closePopup(){
+  previewPopup.style.display='none';
 }
 </script>
 
