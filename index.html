@@ -8,98 +8,51 @@
 body {
   font-family: 'Segoe UI', sans-serif;
   background: linear-gradient(180deg,#f8fff4,#e8f5e9);
-  margin:0;
-  padding:0;
+  margin:0; padding:0;
 }
 header {
   background: linear-gradient(90deg,#d4af37,#c2a05f);
-  color:#fff;
-  text-align:center;
-  padding:15px;
-  font-size:20px;
-  font-weight:bold;
-  border-bottom-left-radius:20px;
-  border-bottom-right-radius:20px;
+  color:#fff; text-align:center;
+  padding:15px; font-size:20px; font-weight:bold;
+  border-bottom-left-radius:20px; border-bottom-right-radius:20px;
   box-shadow:0 4px 10px rgba(0,0,0,0.2);
 }
 .container {
-  max-width:850px;
-  margin:20px auto;
-  background:#fff;
-  border-radius:16px;
-  box-shadow:0 4px 10px rgba(0,0,0,0.1);
-  padding:20px;
+  max-width:850px; margin:20px auto; background:#fff;
+  border-radius:16px; box-shadow:0 4px 10px rgba(0,0,0,0.1); padding:20px;
 }
-.section {
-  margin-bottom:20px;
-}
+.section {margin-bottom:20px;}
 .section h3 {
-  background:#4caf50;
-  color:white;
-  padding:8px;
-  border-radius:10px;
-  font-size:16px;
+  background:#4caf50; color:white; padding:8px;
+  border-radius:10px; font-size:16px;
 }
-.item {
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  margin:8px 0;
-}
-.item label {
-  flex:1;
-  font-size:15px;
-}
-.toggle {
-  display:flex;
-  gap:5px;
-}
+.item {display:flex; align-items:center; justify-content:space-between; margin:8px 0;}
+.item label {flex:1; font-size:15px;}
+.toggle {display:flex; gap:5px;}
 .toggle button {
-  width:40px;
-  height:35px;
-  border:none;
-  border-radius:8px;
-  font-size:18px;
-  cursor:pointer;
+  width:50px; height:35px; border:none; border-radius:8px;
+  font-size:15px; cursor:pointer; color:#fff;
 }
-.good {background:#a5d6a7;}
-.bad {background:#ef9a9a;}
+.good {background:#66bb6a;}
+.bad {background:#ef5350;}
 textarea {
-  width:100%;
-  border-radius:8px;
-  border:1px solid #ccc;
-  padding:6px;
-  margin-top:5px;
-  font-size:14px;
-  display:none;
+  width:100%; border-radius:8px; border:1px solid #ccc;
+  padding:6px; margin-top:5px; font-size:14px;
 }
-.buttons {
-  display:flex;
-  justify-content:space-around;
-  margin-top:20px;
-}
+.buttons {display:flex; justify-content:space-around; margin-top:20px;}
 .buttons button {
-  border:none;
-  border-radius:10px;
-  padding:10px 15px;
-  cursor:pointer;
-  font-size:16px;
-  color:#fff;
+  border:none; border-radius:10px; padding:10px 15px;
+  cursor:pointer; font-size:16px; color:#fff;
 }
 .preview {background:#66bb6a;}
 .copy {background:#fbc02d;}
 .send {background:#42a5f5;}
 .preview-area {
-  background:#f0f4c3;
-  padding:10px;
-  border-radius:10px;
-  margin-top:20px;
-  white-space:pre-wrap;
+  background:#f0f4c3; padding:10px; border-radius:10px;
+  margin-top:20px; white-space:pre-wrap;
 }
 .pressure input {
-  width:60px;
-  margin-right:5px;
-  text-align:center;
+  width:60px; margin-right:5px; text-align:center;
 }
 </style>
 </head>
@@ -173,8 +126,7 @@ function createSection(id, items, withTemuan=true){
     section.appendChild(div);
     if(withTemuan){
       const textarea=document.createElement("textarea");
-      textarea.placeholder=`Temuan jika ${item} BAD...`;
-      textarea.style.display="none";
+      textarea.placeholder=`Tuliskan temuan untuk ${item} (jika ada)...`;
       section.appendChild(textarea);
     }
   });
@@ -188,11 +140,7 @@ createSection("validasi",validasiItems,false);
 
 function setStatus(btn,status){
   const parent=btn.closest(".item");
-  const txt=parent.nextElementSibling;
   parent.setAttribute("data-status",status);
-  if(txt && txt.tagName==="TEXTAREA"){
-    txt.style.display=(status==="BAD")?"block":"none";
-  }
 }
 
 function previewResult(){
@@ -212,14 +160,14 @@ function previewResult(){
   function buildSection(title,id,withTemuan=true){
     result+=`${title}\n`;
     const section=document.getElementById(id);
+    const textareas=section.querySelectorAll("textarea");
+    let i=0;
     section.querySelectorAll(".item").forEach(item=>{
       const label=item.querySelector("label").innerText;
       const status=item.getAttribute("data-status")||"GOOD";
+      const temuan=withTemuan ? textareas[i++].value.trim() : "";
       result+=`${label} : ${status==="GOOD"?"✅ GOOD":"❌ BAD"}\n`;
-      if(withTemuan && status==="BAD"){
-        const txt=item.nextElementSibling.value.trim();
-        if(txt) deviation+=`⚠️ ${txt}\n`;
-      }
+      if(temuan) deviation+=`⚠️ ${temuan}\n`;
     });
     result+=`\n---\n`;
   }
@@ -230,6 +178,7 @@ function previewResult(){
   buildSection("🛞 Frame Area 🛞","frame-area");
 
   result+=`💧 Pressure Suspension (Panel) 💧\nFL : ${fl} | FR : ${fr} | RL : ${rl} | RR : ${rr}\n\n---\n`;
+
   buildSection("🛠️ Tyre Condition 🛠️","tyre");
   buildSection("📝 Validasi & Kelengkapan Checklist Service","validasi",false);
 
