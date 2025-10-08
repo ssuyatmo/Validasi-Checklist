@@ -37,6 +37,7 @@
     font-weight: bold;
   }
   .mode-btn.active { background:#1e8449; color:#fff; }
+
   .card {
     background:#fff;
     margin:15px;
@@ -119,6 +120,18 @@
     border:1px solid #ccc;
     margin-top:8px;
   }
+  .input-top {
+    display:flex;
+    flex-wrap:wrap;
+    gap:8px;
+    margin:10px 15px 0 15px;
+  }
+  .input-top input {
+    flex:1 1 45%;
+    border-radius:8px;
+    padding:8px;
+    border:1px solid #ccc;
+  }
 </style>
 </head>
 <body>
@@ -127,6 +140,13 @@
 <div class="mode-select">
   <button class="mode-btn active" id="qa1">QA-1 Pre Inspection</button>
   <button class="mode-btn" id="qa7">QA-7 Final Inspection</button>
+</div>
+
+<div class="input-top">
+  <input type="date" id="tanggal">
+  <input type="text" id="mekanik" placeholder="Nama Mekanik">
+  <input type="text" id="cnunit" placeholder="CN Unit">
+  <input type="text" id="hm" placeholder="Hour Meter">
 </div>
 
 <div class="card">
@@ -202,6 +222,7 @@
 <div id="result"></div>
 
 <script>
+document.getElementById("tanggal").valueAsDate = new Date();
 let mode="QA-1 Pre Inspection";
 document.getElementById("qa1").onclick=()=>{mode="QA-1 Pre Inspection";toggleMode("qa1");};
 document.getElementById("qa7").onclick=()=>{mode="QA-7 Final Inspection";toggleMode("qa7");};
@@ -209,7 +230,6 @@ function toggleMode(id){
   document.querySelectorAll(".mode-btn").forEach(b=>b.classList.remove("active"));
   document.getElementById(id).classList.add("active");
 }
-
 document.querySelectorAll('.btn').forEach(btn=>{
   btn.addEventListener('click',()=>{
     const group=btn.parentElement.querySelectorAll('.btn');
@@ -219,8 +239,11 @@ document.querySelectorAll('.btn').forEach(btn=>{
 });
 
 document.getElementById('preview').onclick=()=>{
-  let t="*"+mode+"*\n\n📅 Tgl : "+new Date().toLocaleDateString('en-GB')+
-  "\n👷 Mekanik :\n🚗 CN :\n⌛ HM :\n\n---\n";
+  let t="*"+mode+"*\n\n"+
+  "📅 Tgl : "+document.getElementById('tanggal').value+
+  "\n👷 Mekanik : "+document.getElementById('mekanik').value+
+  "\n🚗 CN : "+document.getElementById('cnunit').value+
+  "\n⌛ HM : "+document.getElementById('hm').value+"\n\n---\n";
   const cards=document.querySelectorAll('.card');
   let dev=[];
   cards.forEach(c=>{
