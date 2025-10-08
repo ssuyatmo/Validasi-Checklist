@@ -58,7 +58,7 @@ header {
 button {
   border: none;
   border-radius: 8px;
-  padding: 5px 10px;
+  padding: 6px 10px;
   cursor: pointer;
   font-size: 14px;
   transition: 0.3s;
@@ -67,6 +67,17 @@ button {
 .btn-no { background: #e0e0e0; }
 .active-yes { background: #8bc34a; color: #fff; }
 .active-no { background: #f44336; color: #fff; }
+.bottom-buttons {
+  display: flex;
+  justify-content: space-around;
+  margin-top: 10px;
+}
+.bottom-buttons button {
+  flex: 1;
+  margin: 4px;
+  font-weight: bold;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+}
 #previewPopup {
   position: fixed;
   top: 50%; left: 50%;
@@ -127,7 +138,10 @@ button {
     <pre id="deviationList" style="white-space: pre-wrap; margin-top: 5px;"></pre>
   </div>
 
-  <button onclick="showPreview()">🧾 Preview</button>
+  <div class="bottom-buttons">
+    <button onclick="showPreview()">🧾 Preview</button>
+    <button onclick="sendWA()">📤 Send WA</button>
+  </div>
 </div>
 
 <div class="overlay" id="overlay"></div>
@@ -135,7 +149,6 @@ button {
   <pre id="previewText" style="white-space: pre-wrap;"></pre>
   <div class="popup-buttons">
     <button onclick="copyWA()">📋 Copy</button>
-    <button onclick="sendWA()">📤 Send WA</button>
     <button onclick="closePreview()">❌ Close</button>
   </div>
 </div>
@@ -149,7 +162,11 @@ const dataQA = {
       "🚗 Cabin Area": ["FM Radio", "Fatigue Warning", "Power Window"],
       "🛞 Frame Area": ["Operator seat", "Hand Rail"],
       "🛠️ Tyre Condition": ["Tyre"],
-      "📝 Validasi & Kelengkapan Checklist Service": ["Job Card & Cover Checklist", "Form Observasi Redo PS", "Form QA 1 & QA 7", "Form PPM", "Form Check List A", "Form Check List B", "Form Check List C", "Form Backlog", "Form FUI", "Form Repair Order", "Form Combine Maintenance", "Form Service Activity Report"]
+      "📝 Validasi & Kelengkapan Checklist Service": [
+        "Job Card & Cover Checklist", "Form Observasi Redo PS", "Form QA 1 & QA 7", 
+        "Form PPM", "Form Check List A", "Form Check List B", "Form Check List C", 
+        "Form Backlog", "Form FUI", "Form Repair Order", "Form Combine Maintenance", "Form Service Activity Report"
+      ]
     }
   },
   QA7: {
@@ -159,11 +176,16 @@ const dataQA = {
       "🚗 Cabin Area": ["FM Radio", "Fatigue Warning", "Power Window"],
       "🛞 Frame Area": ["Operator seat", "Hand Rail"],
       "🛠️ Tyre Condition": ["Tyre"],
-      "📝 Kelengkapan Pengisian Checklist Service": ["Job Card & Cover Checklist", "Form QA 1 & QA 7", "Form PPM", "Form Backlog", "Form FUI", "Form Repair Order", "Form Combine Maintenance", "Form Service Activity Report"]
+      "📝 Kelengkapan Pengisian Checklist Service": [
+        "Job Card & Cover Checklist", "Form QA 1 & QA 7", "Form PPM",
+        "Form Backlog", "Form FUI", "Form Repair Order", 
+        "Form Combine Maintenance", "Form Service Activity Report"
+      ]
     }
   }
 };
 
+// Render form sesuai QA
 function renderQA() {
   const qa = document.getElementById('qaSelect').value;
   const container = document.getElementById('sections');
@@ -202,6 +224,7 @@ function renderQA() {
 renderQA();
 document.getElementById('qaSelect').addEventListener('change', renderQA);
 
+// Tombol centang/silang
 function toggleBtn(btn, isYes) {
   const parent = btn.parentElement;
   const yesBtn = parent.querySelector('.btn-yes');
@@ -213,6 +236,7 @@ function toggleBtn(btn, isYes) {
   updateDeviation();
 }
 
+// Update deviation otomatis
 function updateDeviation() {
   const inputs = document.querySelectorAll('.item');
   const deviations = [];
@@ -223,13 +247,23 @@ function updateDeviation() {
   document.getElementById('deviationList').innerText = deviations.join('\n');
 }
 
+// Format tanggal ke 07-Oct-2025
+function formatTanggal(tgl) {
+  if (!tgl) return '';
+  const date = new Date(tgl);
+  const day = String(date.getDate()).padStart(2, '0');
+  const monthNames = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
+  return `${day}-${monthNames[date.getMonth()]}-${date.getFullYear()}`;
+}
+
+// Preview hasil
 function showPreview() {
-  const tgl = document.getElementById('tgl').value;
+  const tgl = formatTanggal(document.getElementById('tgl').value);
   const mekanik = document.getElementById('mekanik').value;
   const cn = document.getElementById('cn').value;
   const hm = document.getElementById('hm').value;
   const qa = document.getElementById('qaSelect').value;
-  let hasil = `📅 Tgl : ${tgl}\n👷 Mekanik : ${mekanik}\n🚗 CN : ${cn}\n⌛ HM : ${hm}\n\n---\n`;
+  let hasil = `📅 Tanggal : ${tgl}\n👷 Mekanik : ${mekanik}\n🚗 CN : ${cn}\n⌛ HM : ${hm}\n📋 QA : ${qa}\n\n`;
 
   const cards = document.querySelectorAll('.card');
   cards.forEach(card => {
@@ -240,7 +274,7 @@ function showPreview() {
       const item = div.querySelector('span').innerText;
       const yesActive = div.querySelector('.active-yes');
       const noActive = div.querySelector('.active-no');
-      const status = yesActive ? '✅ GOOD' : noActive ? '❌ BAD' : '⏺️';
+      const status = yesActive ? '✅ OK' : noActive ? '❌ NOK' : '⏺️';
       hasil += `${item} : ${status}\n`;
     });
     hasil += `\n`;
@@ -252,6 +286,7 @@ function showPreview() {
   document.getElementById('overlay').style.display = 'block';
 }
 
+// Popup control
 function closePreview() {
   document.getElementById('previewPopup').style.display = 'none';
   document.getElementById('overlay').style.display = 'none';
