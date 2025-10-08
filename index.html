@@ -42,15 +42,22 @@ select, input, textarea {
   color: #2c662d;
   margin-bottom: 8px;
   font-size: 16px;
+  border-bottom: 2px solid #cde5cd;
+  padding-bottom: 4px;
 }
 .input-row {
   display: flex;
-  align-items: center;
   justify-content: space-between;
-  margin: 6px 0;
+  align-items: center;
+  margin: 8px 0;
+  padding: 4px 0;
+}
+.input-row span {
+  flex: 1;
+  color: #333;
 }
 .status {
-  width: 50px;
+  width: 48px;
   height: 36px;
   text-align: center;
   border-radius: 10px;
@@ -61,6 +68,7 @@ select, input, textarea {
   display: flex;
   align-items: center;
   justify-content: center;
+  margin-left: 10px;
 }
 .checked {
   background-color: #d9ffd9;
@@ -118,33 +126,33 @@ button {
   <!-- Oil Level -->
   <div class="card">
     <div class="section-title">🩸 Oil Level</div>
-    <div class="input-row"><div class="status checked" onclick="toggleGoodBad(this)">✅</div><span>Engine oil level</span></div>
-    <div class="input-row"><div class="status checked" onclick="toggleGoodBad(this)">✅</div><span>Transmission oil level</span></div>
-    <div class="input-row"><div class="status checked" onclick="toggleGoodBad(this)">✅</div><span>Hydraulic oil level</span></div>
+    <div class="input-row"><span>Engine oil level</span><div class="status checked" onclick="toggleCheck(this)">✅</div></div>
+    <div class="input-row"><span>Transmission oil level</span><div class="status checked" onclick="toggleCheck(this)">✅</div></div>
+    <div class="input-row"><span>Hydraulic oil level</span><div class="status checked" onclick="toggleCheck(this)">✅</div></div>
   </div>
 
   <!-- Engine -->
   <div class="card">
     <div class="section-title">⚙️ Engine Area</div>
-    <div class="input-row"><div class="status checked" onclick="toggleGoodBad(this)">✅</div><span>Belt tension</span></div>
-    <div class="input-row"><div class="status checked" onclick="toggleGoodBad(this)">✅</div><span>Engine oil leakage</span></div>
-    <div class="input-row"><div class="status checked" onclick="toggleGoodBad(this)">✅</div><span>Common Rail Connector</span></div>
-    <div class="input-row"><div class="status checked" onclick="toggleGoodBad(this)">✅</div><span>Injector Tube</span></div>
+    <div class="input-row"><span>Belt tension</span><div class="status checked" onclick="toggleCheck(this)">✅</div></div>
+    <div class="input-row"><span>Engine oil leakage</span><div class="status checked" onclick="toggleCheck(this)">✅</div></div>
+    <div class="input-row"><span>Common Rail Connector</span><div class="status checked" onclick="toggleCheck(this)">✅</div></div>
+    <div class="input-row"><span>Injector Tube</span><div class="status checked" onclick="toggleCheck(this)">✅</div></div>
   </div>
 
   <!-- Cabin -->
   <div class="card">
     <div class="section-title">🚗 Cabin Area</div>
-    <div class="input-row"><div class="status checked" onclick="toggleGoodBad(this)">✅</div><span>FM Radio</span></div>
-    <div class="input-row"><div class="status checked" onclick="toggleGoodBad(this)">✅</div><span>Fatigue Warning</span></div>
-    <div class="input-row"><div class="status checked" onclick="toggleGoodBad(this)">✅</div><span>Power Window</span></div>
+    <div class="input-row"><span>FM Radio</span><div class="status checked" onclick="toggleCheck(this)">✅</div></div>
+    <div class="input-row"><span>Fatigue Warning</span><div class="status checked" onclick="toggleCheck(this)">✅</div></div>
+    <div class="input-row"><span>Power Window</span><div class="status checked" onclick="toggleCheck(this)">✅</div></div>
   </div>
 
   <!-- Frame -->
   <div class="card">
     <div class="section-title">🛞 Frame Area</div>
-    <div class="input-row"><div class="status checked" onclick="toggleGoodBad(this)">✅</div><span>Operator seat</span></div>
-    <div class="input-row"><div class="status checked" onclick="toggleGoodBad(this)">✅</div><span>Hand Rail</span></div>
+    <div class="input-row"><span>Operator seat</span><div class="status checked" onclick="toggleCheck(this)">✅</div></div>
+    <div class="input-row"><span>Hand Rail</span><div class="status checked" onclick="toggleCheck(this)">✅</div></div>
   </div>
 
   <!-- Pressure Suspension -->
@@ -205,33 +213,21 @@ const validationItems = [
   "Form Service Activity Report"
 ];
 
-// generate validation list
 const container = document.getElementById("validationList");
 validationItems.forEach(item=>{
   const row=document.createElement("div");
   row.className="input-row";
+  const label=document.createElement("span");
+  label.textContent=item;
   const btn=document.createElement("div");
   btn.className="status checked";
   btn.textContent="✅";
-  const label=document.createElement("span");
-  label.textContent=item;
   btn.onclick=()=>toggleCheck(btn);
-  row.appendChild(btn);
   row.appendChild(label);
+  row.appendChild(btn);
   container.appendChild(row);
 });
 
-function toggleGoodBad(btn){
-  if(btn.classList.contains("checked")){
-    btn.classList.remove("checked");
-    btn.classList.add("unchecked");
-    btn.textContent="❌";
-  }else{
-    btn.classList.remove("unchecked");
-    btn.classList.add("checked");
-    btn.textContent="✅";
-  }
-}
 function toggleCheck(btn){
   if(btn.textContent==="✅"){btn.textContent="❌";btn.classList.remove("checked");btn.classList.add("unchecked");}
   else{btn.textContent="✅";btn.classList.remove("unchecked");btn.classList.add("checked");}
