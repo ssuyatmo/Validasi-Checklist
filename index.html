@@ -16,10 +16,25 @@ header {
   text-align: center;
   color: #333;
   font-weight: bold;
-  padding: 12px;
+  padding: 14px;
   border-radius: 14px;
   font-size: 18px;
   box-shadow: 0 3px 8px rgba(0,0,0,0.25);
+}
+.card {
+  background: #fff;
+  border-radius: 14px;
+  padding: 12px;
+  margin: 12px 0;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+}
+.section-title {
+  font-weight: bold;
+  color: #2c662d;
+  border-bottom: 2px solid #cde5cd;
+  margin-bottom: 10px;
+  padding-bottom: 4px;
+  font-size: 16px;
 }
 select, input, textarea {
   width: 100%;
@@ -29,40 +44,17 @@ select, input, textarea {
   box-sizing: border-box;
   font-size: 15px;
 }
-.container { margin-top: 12px; }
-.card {
-  background: #fff;
-  border-radius: 14px;
-  padding: 12px;
-  margin-bottom: 12px;
-  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-}
-.section-title {
-  font-weight: bold;
-  color: #2c662d;
-  margin-bottom: 8px;
-  font-size: 16px;
-  border-bottom: 2px solid #cde5cd;
-  padding-bottom: 4px;
-}
-.item { margin: 8px 0; }
-.item label { display: block; font-weight: 500; margin-bottom: 4px; }
-.goodbad {
-  width: 100%;
-  border-radius: 8px;
-  border: 1px solid #ccc;
-  padding: 6px;
-  background: #f9fff9;
-}
 .note-hint {
   font-size: 13px;
   color: #666;
   margin-top: 3px;
   font-style: italic;
 }
-textarea.note {
-  display: none;
+.note {
+  width: 100%;
   margin-top: 5px;
+  resize: vertical;
+  height: 50px;
 }
 button {
   border: none;
@@ -98,14 +90,8 @@ button {
   align-items: center;
   justify-content: center;
 }
-.checked {
-  background-color: #d9ffd9;
-  color: #097f09;
-}
-.unchecked {
-  background-color: #ffd6d6;
-  color: #a00;
-}
+.checked { background-color: #d9ffd9; color: #097f09; }
+.unchecked { background-color: #ffd6d6; color: #a00; }
 .input-row {
   display: flex;
   justify-content: space-between;
@@ -119,153 +105,129 @@ button {
 
 <header>🧾 QA-1 & QA-7 INSPECTION REPORT 🧾</header>
 
-<div class="container">
-
-  <div class="card">
-    <label>📋 Jenis Inspection</label>
-    <select id="inspectionType">
-      <option value="QA-1">QA-1 (Pre-Inspection)</option>
-      <option value="QA-7">QA-7 (Final Inspection)</option>
-    </select><br>
-    <label>📅 Date:</label>
-    <input type="date" id="date"><br>
-    <label>👷 Mechanic:</label>
-    <input type="text" id="mechanic"><br>
-    <label>🚗 CN:</label>
-    <input type="text" id="cn"><br>
-    <label>⌛ HM:</label>
-    <input type="text" id="hm">
-  </div>
-
-  <!-- Oil Level -->
-  <div class="card">
-    <div class="section-title">🩸 Oil Level</div>
-    <div class="item"><label>Engine oil level</label>
-      <select class="goodbad" onchange="toggleNote(this)">
-        <option value="✅ GOOD">✅ GOOD</option><option value="❌ BAD">❌ BAD</option>
-      </select>
-      <div class="note-hint">Tambahkan temuan jika ada</div>
-      <textarea class="note" placeholder="Tulis temuan di sini..."></textarea>
-    </div>
-    <div class="item"><label>Transmission oil level</label>
-      <select class="goodbad" onchange="toggleNote(this)">
-        <option value="✅ GOOD">✅ GOOD</option><option value="❌ BAD">❌ BAD</option>
-      </select>
-      <div class="note-hint">Tambahkan temuan jika ada</div>
-      <textarea class="note"></textarea>
-    </div>
-    <div class="item"><label>Hydraulic oil level</label>
-      <select class="goodbad" onchange="toggleNote(this)">
-        <option value="✅ GOOD">✅ GOOD</option><option value="❌ BAD">❌ BAD</option>
-      </select>
-      <div class="note-hint">Tambahkan temuan jika ada</div>
-      <textarea class="note"></textarea>
-    </div>
-  </div>
-
-  <!-- Engine Area -->
-  <div class="card">
-    <div class="section-title">⚙️ Engine Area</div>
-    <div class="item"><label>Belt tension</label>
-      <select class="goodbad" onchange="toggleNote(this)">
-        <option value="✅ GOOD">✅ GOOD</option><option value="❌ BAD">❌ BAD</option>
-      </select>
-      <div class="note-hint">Tambahkan temuan jika ada</div>
-      <textarea class="note"></textarea>
-    </div>
-    <div class="item"><label>Engine oil leakage</label>
-      <select class="goodbad" onchange="toggleNote(this)">
-        <option value="✅ GOOD">✅ GOOD</option><option value="❌ BAD">❌ BAD</option>
-      </select>
-      <div class="note-hint">Tambahkan temuan jika ada</div>
-      <textarea class="note"></textarea>
-    </div>
-    <div class="item"><label>Common Rail Connector</label>
-      <select class="goodbad" onchange="toggleNote(this)">
-        <option value="✅ GOOD">✅ GOOD</option><option value="❌ BAD">❌ BAD</option>
-      </select>
-      <div class="note-hint">Tambahkan temuan jika ada</div>
-      <textarea class="note"></textarea>
-    </div>
-    <div class="item"><label>Injector Tube</label>
-      <select class="goodbad" onchange="toggleNote(this)">
-        <option value="✅ GOOD">✅ GOOD</option><option value="❌ BAD">❌ BAD</option>
-      </select>
-      <div class="note-hint">Tambahkan temuan jika ada</div>
-      <textarea class="note"></textarea>
-    </div>
-  </div>
-
-  <!-- Cabin Area -->
-  <div class="card">
-    <div class="section-title">🚗 Cabin Area</div>
-    <div class="item"><label>FM Radio</label>
-      <select class="goodbad" onchange="toggleNote(this)">
-        <option value="✅ GOOD">✅ GOOD</option><option value="❌ BAD">❌ BAD</option>
-      </select>
-      <div class="note-hint">Tambahkan temuan jika ada</div>
-      <textarea class="note"></textarea>
-    </div>
-    <div class="item"><label>Fatigue Warning</label>
-      <select class="goodbad" onchange="toggleNote(this)">
-        <option value="✅ GOOD">✅ GOOD</option><option value="❌ BAD">❌ BAD</option>
-      </select>
-      <div class="note-hint">Tambahkan temuan jika ada</div>
-      <textarea class="note"></textarea>
-    </div>
-    <div class="item"><label>Power Window</label>
-      <select class="goodbad" onchange="toggleNote(this)">
-        <option value="✅ GOOD">✅ GOOD</option><option value="❌ BAD">❌ BAD</option>
-      </select>
-      <div class="note-hint">Tambahkan temuan jika ada</div>
-      <textarea class="note"></textarea>
-    </div>
-  </div>
-
-  <!-- Frame Area -->
-  <div class="card">
-    <div class="section-title">🛞 Frame Area</div>
-    <div class="item"><label>Operator seat</label>
-      <select class="goodbad" onchange="toggleNote(this)">
-        <option value="✅ GOOD">✅ GOOD</option><option value="❌ BAD">❌ BAD</option>
-      </select>
-      <div class="note-hint">Tambahkan temuan jika ada</div>
-      <textarea class="note"></textarea>
-    </div>
-    <div class="item"><label>Hand Rail</label>
-      <select class="goodbad" onchange="toggleNote(this)">
-        <option value="✅ GOOD">✅ GOOD</option><option value="❌ BAD">❌ BAD</option>
-      </select>
-      <div class="note-hint">Tambahkan temuan jika ada</div>
-      <textarea class="note"></textarea>
-    </div>
-  </div>
-
-  <!-- Tyre -->
-  <div class="card">
-    <div class="section-title">🛠️ Tyre Condition</div>
-    <select id="tyre" onchange="toggleTyre()">
-      <option value="✅ GOOD">✅ GOOD</option>
-      <option value="❌ BAD">❌ BAD</option>
-    </select>
-    <div class="note-hint">Tambahkan temuan jika ada</div>
-    <textarea id="tyreNote" placeholder="Tulis temuan di sini..." style="display:none;"></textarea>
-  </div>
-
-  <!-- Validasi -->
-  <div class="card">
-    <div class="section-title">📝 Validasi & Kelengkapan Checklist Service</div>
-    <div id="validationList"></div>
-  </div>
-
-  <div style="text-align:center;">
-    <button class="btn-preview" onclick="preview()">🧾 Preview</button>
-    <button class="btn-copy" onclick="copyText()">📋 Copy</button>
-    <button class="btn-wa" onclick="sendWA()">📤 WhatsApp</button>
-  </div>
-
-  <div id="preview"></div>
+<div class="card">
+  <label>📋 Jenis Inspection</label>
+  <select id="inspectionType">
+    <option value="QA-1">QA-1 (Pre-Inspection)</option>
+    <option value="QA-7">QA-7 (Final Inspection)</option>
+  </select><br>
+  <label>📅 Tanggal</label>
+  <input type="date" id="date"><br>
+  <label>👷 Mekanik</label>
+  <input type="text" id="mechanic"><br>
+  <label>🚗 CN</label>
+  <input type="text" id="cn"><br>
+  <label>⌛ HM</label>
+  <input type="text" id="hm">
 </div>
+
+<!-- Oil Level -->
+<div class="card">
+  <div class="section-title">🩸 Oil Level</div>
+  <div class="item"><label>Engine oil level</label>
+    <select class="goodbad"><option>✅ GOOD</option><option>❌ BAD</option></select>
+    <div class="note-hint">Tambahkan temuan jika ada</div>
+    <textarea class="note" placeholder="Tulis temuan inspeksi di sini..."></textarea>
+  </div>
+  <div class="item"><label>Transmission oil level</label>
+    <select class="goodbad"><option>✅ GOOD</option><option>❌ BAD</option></select>
+    <div class="note-hint">Tambahkan temuan jika ada</div>
+    <textarea class="note"></textarea>
+  </div>
+  <div class="item"><label>Hydraulic oil level</label>
+    <select class="goodbad"><option>✅ GOOD</option><option>❌ BAD</option></select>
+    <div class="note-hint">Tambahkan temuan jika ada</div>
+    <textarea class="note"></textarea>
+  </div>
+</div>
+
+<!-- Engine Area -->
+<div class="card">
+  <div class="section-title">⚙️ Engine Area</div>
+  <div class="item"><label>Belt tension</label>
+    <select class="goodbad"><option>✅ GOOD</option><option>❌ BAD</option></select>
+    <div class="note-hint">Tambahkan temuan jika ada</div>
+    <textarea class="note"></textarea>
+  </div>
+  <div class="item"><label>Engine oil leakage</label>
+    <select class="goodbad"><option>✅ GOOD</option><option>❌ BAD</option></select>
+    <div class="note-hint">Tambahkan temuan jika ada</div>
+    <textarea class="note"></textarea>
+  </div>
+  <div class="item"><label>Common Rail Connector</label>
+    <select class="goodbad"><option>✅ GOOD</option><option>❌ BAD</option></select>
+    <div class="note-hint">Tambahkan temuan jika ada</div>
+    <textarea class="note"></textarea>
+  </div>
+  <div class="item"><label>Injector Tube</label>
+    <select class="goodbad"><option>✅ GOOD</option><option>❌ BAD</option></select>
+    <div class="note-hint">Tambahkan temuan jika ada</div>
+    <textarea class="note"></textarea>
+  </div>
+</div>
+
+<!-- Cabin Area -->
+<div class="card">
+  <div class="section-title">🚗 Cabin Area</div>
+  <div class="item"><label>FM Radio</label>
+    <select class="goodbad"><option>✅ GOOD</option><option>❌ BAD</option></select>
+    <div class="note-hint">Tambahkan temuan jika ada</div>
+    <textarea class="note"></textarea>
+  </div>
+  <div class="item"><label>Fatigue Warning</label>
+    <select class="goodbad"><option>✅ GOOD</option><option>❌ BAD</option></select>
+    <div class="note-hint">Tambahkan temuan jika ada</div>
+    <textarea class="note"></textarea>
+  </div>
+  <div class="item"><label>Power Window</label>
+    <select class="goodbad"><option>✅ GOOD</option><option>❌ BAD</option></select>
+    <div class="note-hint">Tambahkan temuan jika ada</div>
+    <textarea class="note"></textarea>
+  </div>
+</div>
+
+<!-- Frame Area -->
+<div class="card">
+  <div class="section-title">🛞 Frame Area</div>
+  <div class="item"><label>Operator seat</label>
+    <select class="goodbad"><option>✅ GOOD</option><option>❌ BAD</option></select>
+    <div class="note-hint">Tambahkan temuan jika ada</div>
+    <textarea class="note"></textarea>
+  </div>
+  <div class="item"><label>Hand Rail</label>
+    <select class="goodbad"><option>✅ GOOD</option><option>❌ BAD</option></select>
+    <div class="note-hint">Tambahkan temuan jika ada</div>
+    <textarea class="note"></textarea>
+  </div>
+</div>
+
+<!-- Tyre -->
+<div class="card">
+  <div class="section-title">🛠️ Tyre Condition</div>
+  <select id="tyre"><option>✅ GOOD</option><option>❌ BAD</option></select>
+  <div class="note-hint">Tambahkan temuan jika ada</div>
+  <textarea id="tyreNote" placeholder="Tulis temuan inspeksi di sini..."></textarea>
+</div>
+
+<!-- Validasi -->
+<div class="card">
+  <div class="section-title">📝 Validasi & Kelengkapan Checklist Service</div>
+  <div id="validationList"></div>
+</div>
+
+<!-- Deviation -->
+<div class="card">
+  <div class="section-title">⚠️ Deviation</div>
+  <textarea id="deviation" placeholder="Tulis setiap temuan di baris baru..."></textarea>
+</div>
+
+<div style="text-align:center;">
+  <button class="btn-preview" onclick="preview()">🧾 Preview</button>
+  <button class="btn-copy" onclick="copyText()">📋 Copy</button>
+  <button class="btn-wa" onclick="sendWA()">📤 WhatsApp</button>
+</div>
+
+<div id="preview"></div>
 
 <script>
 const validationItems=["Job Card & Cover Checklist","Form Observasi Redo PS","Form QA 1 & QA 7","Form PPM","Form Check List A","Form Check List B","Form Check List C","Form Backlog","Form FUI","Form Repair Order","Form Combine Maintenance","Form Service Activity Report"];
@@ -284,25 +246,39 @@ validationItems.forEach(item=>{
   vContainer.appendChild(row);
 });
 function toggleCheck(btn){
-  if(btn.textContent==="✅"){btn.textContent="❌";btn.classList.remove("checked");btn.classList.add("unchecked");}
-  else{btn.textContent="✅";btn.classList.remove("unchecked");btn.classList.add("checked");}
-}
-function toggleNote(sel){
-  const note=sel.parentElement.querySelector(".note");
-  note.style.display=sel.value.includes("BAD")?"block":"none";
-}
-function toggleTyre(){
-  const tyre=document.getElementById("tyre");
-  const note=document.getElementById("tyreNote");
-  note.style.display=tyre.value.includes("BAD")?"block":"none";
+  if(btn.textContent==="✅"){btn.textContent="❌";btn.classList.replace("checked","unchecked");}
+  else{btn.textContent="✅";btn.classList.replace("unchecked","checked");}
 }
 function preview(){
-  const validText=[...vContainer.querySelectorAll(".input-row")].map(r=>`${r.querySelector("span").textContent} ${r.querySelector(".status").textContent}`).join("\n");
-  document.getElementById("preview").textContent=`🧾 Inspection QA Form berhasil dibuat. 
-Periksa format sebelum dikirim ke WhatsApp.\n\n📝 Validasi:\n${validText}`;
+  const date=document.getElementById("date").value;
+  const mech=document.getElementById("mechanic").value;
+  const cn=document.getElementById("cn").value;
+  const hm=document.getElementById("hm").value;
+  const insp=document.getElementById("inspectionType").value;
+  const validations=[...vContainer.querySelectorAll(".input-row")].map(r=>`${r.querySelector("span").textContent} ${r.querySelector(".status").textContent}`).join("\n");
+  const sections=[...document.querySelectorAll(".section-title")].filter(t=>t.textContent!=="📝 Validasi & Kelengkapan Checklist Service"&&t.textContent!=="⚠️ Deviation");
+  let msg=`*${insp} Inspection*\n\n📅 Tgl : ${date}\n👷 Mekanik : ${mech}\n🚗 CN : ${cn}\n⌛ HM : ${hm}\n\n---`;
+  sections.forEach(sec=>{
+    msg+=`\n\n${sec.textContent}`;
+    sec.parentElement.querySelectorAll(".item").forEach(it=>{
+      const label=it.querySelector("label").textContent;
+      const val=it.querySelector("select").value;
+      const note=it.querySelector(".note").value;
+      msg+=`\n${label} : ${val}`;
+      if(note.trim()!=="") msg+=`\n📝 ${note}`;
+    });
+  });
+  msg+=`\n\n🛠️ Tyre Condition : ${document.getElementById("tyre").value}`;
+  const tyreNote=document.getElementById("tyreNote").value;
+  if(tyreNote.trim()!=="") msg+=`\n📝 ${tyreNote}`;
+  msg+=`\n\n📝 Validasi & Kelengkapan Checklist Service\n${validations}\n\n---\n⚠️ Deviation :\n`;
+  const devs=document.getElementById("deviation").value.split("\n").filter(x=>x.trim()!=="");
+  devs.forEach(d=>msg+=`⚠️ ${d}\n`);
+  document.getElementById("preview").textContent=msg.trim();
 }
 function copyText(){navigator.clipboard.writeText(document.getElementById("preview").textContent);alert("✅ Format WA disalin!");}
 function sendWA(){const msg=encodeURIComponent(document.getElementById("preview").textContent);window.open(`https://wa.me/?text=${msg}`);}
 </script>
+
 </body>
 </html>
