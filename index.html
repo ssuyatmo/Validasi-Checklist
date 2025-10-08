@@ -8,97 +8,92 @@
   body {
     font-family: 'Segoe UI', sans-serif;
     margin: 0;
-    background: linear-gradient(180deg, #f8f9fa, #d4f1d0);
+    background: linear-gradient(180deg,#f8f9fa,#d4f1d0);
     color: #222;
   }
   header {
-    background: linear-gradient(90deg, #d4af37, #1e8449);
-    color: white;
+    background: linear-gradient(90deg,#d4af37,#1e8449);
+    color: #fff;
     text-align: center;
     padding: 15px;
-    font-weight: bold;
     font-size: 20px;
     border-radius: 0 0 15px 15px;
-    box-shadow: 0 4px 6px rgba(0,0,0,0.2);
+    box-shadow: 0 4px 6px rgba(0,0,0,.2);
   }
   .card {
-    background: #fff;
-    margin: 15px;
-    padding: 15px;
-    border-radius: 15px;
-    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    background:#fff;
+    margin:15px;
+    padding:15px;
+    border-radius:15px;
+    box-shadow:0 4px 6px rgba(0,0,0,.1);
   }
   .section-title {
-    font-weight: bold;
-    margin-bottom: 8px;
-    border-bottom: 2px solid #1e8449;
-    color: #1e8449;
+    font-weight:bold;
+    margin-bottom:8px;
+    border-bottom:2px solid #1e8449;
+    color:#1e8449;
   }
   .item {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    margin: 8px 0;
-    flex-wrap: wrap;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    margin:8px 0;
+    flex-wrap:wrap;
   }
-  .item label {
-    flex: 1;
-    min-width: 150px;
-  }
+  .item label {flex:1;min-width:150px;}
   .btn {
-    border: 1px solid #ccc;
-    border-radius: 8px;
-    padding: 4px 10px;
-    margin: 0 2px;
-    cursor: pointer;
-    transition: 0.2s;
+    border:1px solid #ccc;
+    border-radius:8px;
+    padding:4px 10px;
+    margin:0 2px;
+    cursor:pointer;
+    transition:.2s;
   }
-  .good.active {
-    background: #2ecc71;
-    color: white;
-  }
-  .bad.active {
-    background: #e74c3c;
-    color: white;
-  }
-  .check.active {
-    background: #2ecc71;
-    color: white;
-  }
-  .cross.active {
-    background: #e74c3c;
-    color: white;
-  }
+  .good.active {background:#2ecc71;color:#fff;}
+  .bad.active {background:#e74c3c;color:#fff;}
+  .check.active {background:#2ecc71;color:#fff;}
+  .cross.active {background:#e74c3c;color:#fff;}
   .temuan {
-    width: 100%;
-    margin-top: 5px;
-    border-radius: 8px;
-    padding: 6px;
-    border: 1px solid #ccc;
+    width:100%;
+    margin-top:5px;
+    border-radius:8px;
+    padding:6px;
+    border:1px solid #ccc;
+  }
+  .pressure {
+    display:flex;
+    justify-content:space-between;
+    gap:5px;
+  }
+  .pressure input {
+    width:23%;
+    border:1px solid #ccc;
+    border-radius:8px;
+    padding:5px;
   }
   .buttons {
-    display: flex;
-    justify-content: space-around;
-    margin: 15px;
+    display:flex;
+    justify-content:space-around;
+    margin:15px;
   }
   button {
-    padding: 10px 15px;
-    border: none;
-    border-radius: 10px;
-    cursor: pointer;
-    font-weight: bold;
-    color: white;
+    padding:10px 15px;
+    border:none;
+    border-radius:10px;
+    cursor:pointer;
+    font-weight:bold;
+    color:#fff;
   }
-  #preview { background: #3498db; }
-  #copy { background: #2ecc71; }
-  #send { background: #27ae60; }
+  #preview {background:#3498db;}
+  #copy {background:#2ecc71;}
+  #send {background:#27ae60;}
   #result {
-    white-space: pre-wrap;
-    background: #fff;
-    margin: 15px;
-    padding: 15px;
-    border-radius: 12px;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    white-space:pre-wrap;
+    background:#fff;
+    margin:15px;
+    padding:15px;
+    border-radius:12px;
+    box-shadow:0 2px 5px rgba(0,0,0,.1);
   }
 </style>
 </head>
@@ -107,60 +102,60 @@
 
 <div class="card">
   <div class="section-title">🩸 Oil Level</div>
-  <div class="item">
-    <label>Engine oil level</label>
-    <div>
-      <span class="btn good">GOOD</span>
-      <span class="btn bad">BAD</span>
-    </div>
-    <input type="text" class="temuan" placeholder="Tulis temuan jika BAD">
-  </div>
-  <div class="item">
-    <label>Transmission oil level</label>
-    <div>
-      <span class="btn good">GOOD</span>
-      <span class="btn bad">BAD</span>
-    </div>
-    <input type="text" class="temuan" placeholder="Tulis temuan jika BAD">
-  </div>
+  <div class="item"><label>Engine oil level</label><div><span class="btn good">GOOD</span><span class="btn bad">BAD</span></div><input type="text" class="temuan" placeholder="Tulis temuan jika BAD"></div>
+  <div class="item"><label>Transmission oil level</label><div><span class="btn good">GOOD</span><span class="btn bad">BAD</span></div><input type="text" class="temuan" placeholder="Tulis temuan jika BAD"></div>
+  <div class="item"><label>Hydraulic oil level</label><div><span class="btn good">GOOD</span><span class="btn bad">BAD</span></div><input type="text" class="temuan" placeholder="Tulis temuan jika BAD"></div>
 </div>
 
 <div class="card">
   <div class="section-title">⚙️ Engine Area</div>
-  <div class="item">
-    <label>Belt tension</label>
-    <div><span class="btn good">GOOD</span><span class="btn bad">BAD</span></div>
-    <input type="text" class="temuan" placeholder="Tulis temuan jika BAD">
-  </div>
-  <div class="item">
-    <label>Engine oil leakage</label>
-    <div><span class="btn good">GOOD</span><span class="btn bad">BAD</span></div>
-    <input type="text" class="temuan" placeholder="Tulis temuan jika BAD">
-  </div>
+  <div class="item"><label>Belt tension</label><div><span class="btn good">GOOD</span><span class="btn bad">BAD</span></div><input type="text" class="temuan" placeholder="Tulis temuan jika BAD"></div>
+  <div class="item"><label>Engine oil leakage</label><div><span class="btn good">GOOD</span><span class="btn bad">BAD</span></div><input type="text" class="temuan" placeholder="Tulis temuan jika BAD"></div>
+  <div class="item"><label>Common Rail Connector</label><div><span class="btn good">GOOD</span><span class="btn bad">BAD</span></div><input type="text" class="temuan" placeholder="Tulis temuan jika BAD"></div>
+  <div class="item"><label>Injector Tube</label><div><span class="btn good">GOOD</span><span class="btn bad">BAD</span></div><input type="text" class="temuan" placeholder="Tulis temuan jika BAD"></div>
 </div>
 
 <div class="card">
   <div class="section-title">🚗 Cabin Area</div>
-  <div class="item">
-    <label>FM Radio</label>
-    <div><span class="btn good">GOOD</span><span class="btn bad">BAD</span></div>
-    <input type="text" class="temuan" placeholder="Tulis temuan jika BAD">
+  <div class="item"><label>FM Radio</label><div><span class="btn good">GOOD</span><span class="btn bad">BAD</span></div><input type="text" class="temuan" placeholder="Tulis temuan jika BAD"></div>
+  <div class="item"><label>Fatigue Warning</label><div><span class="btn good">GOOD</span><span class="btn bad">BAD</span></div><input type="text" class="temuan" placeholder="Tulis temuan jika BAD"></div>
+  <div class="item"><label>Power Window</label><div><span class="btn good">GOOD</span><span class="btn bad">BAD</span></div><input type="text" class="temuan" placeholder="Tulis temuan jika BAD"></div>
+</div>
+
+<div class="card">
+  <div class="section-title">🛞 Frame Area</div>
+  <div class="item"><label>Operator seat</label><div><span class="btn good">GOOD</span><span class="btn bad">BAD</span></div><input type="text" class="temuan" placeholder="Tulis temuan jika BAD"></div>
+  <div class="item"><label>Hand Rail</label><div><span class="btn good">GOOD</span><span class="btn bad">BAD</span></div><input type="text" class="temuan" placeholder="Tulis temuan jika BAD"></div>
+</div>
+
+<div class="card">
+  <div class="section-title">💧 Pressure Suspension (Panel)</div>
+  <div class="pressure">
+    <input type="text" id="fl" placeholder="FL">
+    <input type="text" id="fr" placeholder="FR">
+    <input type="text" id="rl" placeholder="RL">
+    <input type="text" id="rr" placeholder="RR">
   </div>
 </div>
 
 <div class="card">
-  <div class="section-title">🛞 Tyre Condition</div>
-  <div class="item">
-    <label>Tyre</label>
-    <div><span class="btn good">GOOD</span><span class="btn bad">BAD</span></div>
-    <input type="text" class="temuan" placeholder="Tulis temuan jika BAD">
-  </div>
+  <div class="section-title">🛠️ Tyre Condition</div>
+  <div class="item"><label>Tyre</label><div><span class="btn good">GOOD</span><span class="btn bad">BAD</span></div><input type="text" class="temuan" placeholder="Tulis temuan jika BAD"></div>
 </div>
 
 <div class="card">
   <div class="section-title">📝 Validasi & Kelengkapan Checklist Service</div>
   <div class="item"><label>Job Card & Cover Checklist</label><div><span class="btn check">✅</span><span class="btn cross">❌</span></div></div>
+  <div class="item"><label>Form Observasi Redo PS</label><div><span class="btn check">✅</span><span class="btn cross">❌</span></div></div>
   <div class="item"><label>Form QA 1 & QA 7</label><div><span class="btn check">✅</span><span class="btn cross">❌</span></div></div>
+  <div class="item"><label>Form PPM</label><div><span class="btn check">✅</span><span class="btn cross">❌</span></div></div>
+  <div class="item"><label>Form Check List A</label><div><span class="btn check">✅</span><span class="btn cross">❌</span></div></div>
+  <div class="item"><label>Form Check List B</label><div><span class="btn check">✅</span><span class="btn cross">❌</span></div></div>
+  <div class="item"><label>Form Check List C</label><div><span class="btn check">✅</span><span class="btn cross">❌</span></div></div>
+  <div class="item"><label>Form Backlog</label><div><span class="btn check">✅</span><span class="btn cross">❌</span></div></div>
+  <div class="item"><label>Form FUI</label><div><span class="btn check">✅</span><span class="btn cross">❌</span></div></div>
+  <div class="item"><label>Form Repair Order</label><div><span class="btn check">✅</span><span class="btn cross">❌</span></div></div>
+  <div class="item"><label>Form Combine Maintenance</label><div><span class="btn check">✅</span><span class="btn cross">❌</span></div></div>
   <div class="item"><label>Form Service Activity Report</label><div><span class="btn check">✅</span><span class="btn cross">❌</span></div></div>
 </div>
 
@@ -173,60 +168,62 @@
 <div id="result"></div>
 
 <script>
-const btns = document.querySelectorAll('.btn');
+const btns=document.querySelectorAll('.btn');
 btns.forEach(b=>{
   b.addEventListener('click',()=>{
-    const group = b.parentElement.querySelectorAll('.btn');
+    const group=b.parentElement.querySelectorAll('.btn');
     group.forEach(g=>g.classList.remove('active'));
     b.classList.add('active');
   });
 });
 
-document.getElementById('preview').onclick = function(){
-  let text = "📅 Tgl : "+new Date().toLocaleDateString('en-GB')+
+document.getElementById('preview').onclick=()=>{
+  let t="📅 Tgl : "+new Date().toLocaleDateString('en-GB')+
   "\n👷 Mekanik :\n🚗 CN :\n⌛ HM :\n\n---\n";
-  const sections = document.querySelectorAll('.card');
-  let deviations = [];
-  sections.forEach(sec=>{
-    let title = sec.querySelector('.section-title').textContent;
-    text += title+"\n";
-    const items = sec.querySelectorAll('.item');
+  const sections=document.querySelectorAll('.card');
+  let dev=[];
+  sections.forEach(s=>{
+    let title=s.querySelector('.section-title').textContent;
+    t+=title+"\n";
+    const items=s.querySelectorAll('.item');
     items.forEach(it=>{
-      const label = it.querySelector('label').textContent;
-      const good = it.querySelector('.good');
-      const bad = it.querySelector('.bad');
-      const check = it.querySelector('.check');
-      const cross = it.querySelector('.cross');
-      const temuan = it.querySelector('.temuan');
-      if(good || bad){
-        if(good?.classList.contains('active')) text += label+" : ✅ GOOD\n";
+      const label=it.querySelector('label').textContent;
+      const good=it.querySelector('.good');
+      const bad=it.querySelector('.bad');
+      const check=it.querySelector('.check');
+      const cross=it.querySelector('.cross');
+      const temuan=it.querySelector('.temuan');
+      if(good||bad){
+        if(good?.classList.contains('active'))t+=label+" : ✅ GOOD\n";
         else if(bad?.classList.contains('active')){
-          text += label+" : ❌ BAD\n";
-          if(temuan.value.trim()!=="") deviations.push("⚠️ "+temuan.value.trim());
-        }
-        else text += label+" : ⬜\n";
-      } else if(check || cross){
-        if(check?.classList.contains('active')) text += label+" ✅\n";
-        else if(cross?.classList.contains('active')) text += label+" ❌\n";
-        else text += label+" ⬜\n";
+          t+=label+" : ❌ BAD\n";
+          if(temuan.value.trim()!=="")dev.push("⚠️ "+temuan.value.trim());
+        }else t+=label+" : ⬜\n";
+      }else if(check||cross){
+        if(check?.classList.contains('active'))t+=label+" ✅\n";
+        else if(cross?.classList.contains('active'))t+=label+" ❌\n";
+        else t+=label+" ⬜\n";
       }
     });
-    text += "\n---\n";
+    if(s.querySelector('.pressure')){
+      const fl=document.getElementById('fl').value;
+      const fr=document.getElementById('fr').value;
+      const rl=document.getElementById('rl').value;
+      const rr=document.getElementById('rr').value;
+      t+="FL: "+fl+" | FR: "+fr+" | RL: "+rl+" | RR: "+rr+"\n";
+    }
+    t+="\n---\n";
   });
-  if(deviations.length>0){
-    text += "⚠️ Deviation :\n"+deviations.join("\n");
-  }
-  document.getElementById('result').textContent = text;
+  if(dev.length>0){t+="⚠️ Deviation :\n"+dev.join("\n");}
+  document.getElementById('result').textContent=t;
 };
-
-document.getElementById('copy').onclick = ()=>{
+document.getElementById('copy').onclick=()=>{
   navigator.clipboard.writeText(document.getElementById('result').textContent);
   alert("✅ Teks disalin!");
 };
-
-document.getElementById('send').onclick = ()=>{
-  let msg = encodeURIComponent(document.getElementById('result').textContent);
-  window.open("https://wa.me/?text="+msg, "_blank");
+document.getElementById('send').onclick=()=>{
+  let msg=encodeURIComponent(document.getElementById('result').textContent);
+  window.open("https://wa.me/?text="+msg,"_blank");
 };
 </script>
 </body>
