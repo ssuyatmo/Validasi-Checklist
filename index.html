@@ -7,96 +7,99 @@
 <style>
 body {
   font-family: 'Segoe UI', sans-serif;
-  background: linear-gradient(180deg, #e8f5e9, #f7fff9);
-  margin: 0;
-  padding: 0;
+  background: linear-gradient(180deg,#f8fff4,#e8f5e9);
+  margin:0;
+  padding:0;
 }
 header {
-  background: linear-gradient(90deg, #d4af37, #c2a05f);
-  color: white;
-  text-align: center;
-  padding: 15px;
-  font-size: 20px;
-  font-weight: bold;
-  border-bottom-left-radius: 20px;
-  border-bottom-right-radius: 20px;
-  box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+  background: linear-gradient(90deg,#d4af37,#c2a05f);
+  color:#fff;
+  text-align:center;
+  padding:15px;
+  font-size:20px;
+  font-weight:bold;
+  border-bottom-left-radius:20px;
+  border-bottom-right-radius:20px;
+  box-shadow:0 4px 10px rgba(0,0,0,0.2);
 }
 .container {
-  max-width: 800px;
-  margin: 20px auto;
-  background: white;
-  border-radius: 16px;
-  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-  padding: 20px;
+  max-width:850px;
+  margin:20px auto;
+  background:#fff;
+  border-radius:16px;
+  box-shadow:0 4px 10px rgba(0,0,0,0.1);
+  padding:20px;
 }
 .section {
-  margin-bottom: 20px;
+  margin-bottom:20px;
 }
 .section h3 {
-  background: #388e3c;
-  color: white;
-  padding: 8px;
-  border-radius: 10px;
-  font-size: 16px;
+  background:#4caf50;
+  color:white;
+  padding:8px;
+  border-radius:10px;
+  font-size:16px;
 }
 .item {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  margin: 8px 0;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  margin:8px 0;
 }
 .item label {
-  flex: 1;
+  flex:1;
+  font-size:15px;
 }
 .toggle {
-  display: flex;
-  gap: 5px;
+  display:flex;
+  gap:5px;
 }
 .toggle button {
-  width: 40px;
-  height: 35px;
-  border: none;
-  border-radius: 8px;
-  font-size: 18px;
-  cursor: pointer;
+  width:40px;
+  height:35px;
+  border:none;
+  border-radius:8px;
+  font-size:18px;
+  cursor:pointer;
 }
-.good { background: #a5d6a7; }
-.bad { background: #ef9a9a; }
+.good {background:#a5d6a7;}
+.bad {background:#ef9a9a;}
 textarea {
-  width: 100%;
-  border-radius: 8px;
-  border: 1px solid #ccc;
-  padding: 6px;
-  margin-top: 5px;
-  font-size: 14px;
+  width:100%;
+  border-radius:8px;
+  border:1px solid #ccc;
+  padding:6px;
+  margin-top:5px;
+  font-size:14px;
+  display:none;
 }
 .buttons {
-  display: flex;
-  justify-content: space-around;
-  margin-top: 20px;
+  display:flex;
+  justify-content:space-around;
+  margin-top:20px;
 }
 .buttons button {
-  border: none;
-  border-radius: 10px;
-  padding: 10px 15px;
-  cursor: pointer;
-  font-size: 16px;
+  border:none;
+  border-radius:10px;
+  padding:10px 15px;
+  cursor:pointer;
+  font-size:16px;
+  color:#fff;
 }
+.preview {background:#66bb6a;}
+.copy {background:#fbc02d;}
+.send {background:#42a5f5;}
 .preview-area {
-  background: #f0f4c3;
-  padding: 10px;
-  border-radius: 10px;
-  margin-top: 20px;
-  white-space: pre-wrap;
+  background:#f0f4c3;
+  padding:10px;
+  border-radius:10px;
+  margin-top:20px;
+  white-space:pre-wrap;
 }
-.copy { background: #fdd835; }
-.preview { background: #81c784; }
-.send { background: #64b5f6; }
 .pressure input {
-  width: 60px;
-  margin-right: 5px;
-  text-align: center;
+  width:60px;
+  margin-right:5px;
+  text-align:center;
 }
 </style>
 </head>
@@ -112,41 +115,26 @@ textarea {
     <label>⌛ HM: <input type="text" id="hm"></label>
   </div>
 
-  <div class="section" id="oil-level">
-    <h3>🩸 Oil Level 🩸</h3>
-  </div>
-
-  <div class="section" id="engine-area">
-    <h3>⚙️ Engine Area ⚙️</h3>
-  </div>
-
-  <div class="section" id="cabin-area">
-    <h3>🚗 Cabin Area 🚗</h3>
-  </div>
-
-  <div class="section" id="frame-area">
-    <h3>🛞 Frame Area 🛞</h3>
-  </div>
+  <div class="section" id="oil-level"><h3>🩸 Oil Level 🩸</h3></div>
+  <div class="section" id="engine-area"><h3>⚙️ Engine Area ⚙️</h3></div>
+  <div class="section" id="cabin-area"><h3>🚗 Cabin Area 🚗</h3></div>
+  <div class="section" id="frame-area"><h3>🛞 Frame Area 🛞</h3></div>
 
   <div class="section pressure">
     <h3>💧 Pressure Suspension (Panel) 💧</h3>
-    FL: <input type="text" id="fl"> 
-    FR: <input type="text" id="fr"> 
-    RL: <input type="text" id="rl"> 
+    FL: <input type="text" id="fl">
+    FR: <input type="text" id="fr">
+    RL: <input type="text" id="rl">
     RR: <input type="text" id="rr">
   </div>
 
-  <div class="section" id="tyre">
-    <h3>🛠️ Tyre Condition 🛠️</h3>
-  </div>
+  <div class="section" id="tyre"><h3>🛠️ Tyre Condition 🛠️</h3></div>
 
-  <div class="section" id="validasi">
-    <h3>📝 Validasi & Kelengkapan Checklist Service</h3>
-  </div>
+  <div class="section" id="validasi"><h3>📝 Validasi & Kelengkapan Checklist Service</h3></div>
 
   <div class="section">
-    <h3>⚠️ Deviation (Tambahan Manual) ⚠️</h3>
-    <textarea id="manualDeviation" rows="4" placeholder="Tulis deviasi tambahan di sini..."></textarea>
+    <h3>⚠️ Deviation (Tambahan Manual)</h3>
+    <textarea id="manualDeviation" rows="4" placeholder="Tambahkan deviasi manual di sini..."></textarea>
   </div>
 
   <div class="buttons">
@@ -159,23 +147,23 @@ textarea {
 </div>
 
 <script>
-const oilItems = ["Engine oil level", "Transmission oil level", "Hydraulic oil level"];
-const engineItems = ["Belt tension", "Engine oil leakage", "Common Rail Connector", "Injector Tube"];
-const cabinItems = ["FM Radio", "Fatigue Warning", "Power Window"];
-const frameItems = ["Operator seat", "Hand Rail"];
-const tyreItems = ["Tyre"];
-const validasiItems = [
-"Job Card & Cover Checklist", "Form Observasi Redo PS", "Form QA 1 & QA 7", "Form PPM",
-"Form Check List A", "Form Check List B", "Form Check List C", "Form Backlog",
-"Form FUI", "Form Repair Order", "Form Combine Maintenance", "Form Service Activity Report"
+const oilItems=["Engine oil level","Transmission oil level","Hydraulic oil level"];
+const engineItems=["Belt tension","Engine oil leakage","Common Rail Connector","Injector Tube"];
+const cabinItems=["FM Radio","Fatigue Warning","Power Window"];
+const frameItems=["Operator seat","Hand Rail"];
+const tyreItems=["Tyre"];
+const validasiItems=[
+  "Job Card & Cover Checklist","Form Observasi Redo PS","Form QA 1 & QA 7","Form PPM",
+  "Form Check List A","Form Check List B","Form Check List C","Form Backlog",
+  "Form FUI","Form Repair Order","Form Combine Maintenance","Form Service Activity Report"
 ];
 
-function createSection(id, items) {
-  const section = document.getElementById(id);
-  items.forEach(item => {
-    const div = document.createElement("div");
-    div.className = "item";
-    div.innerHTML = `
+function createSection(id, items, withTemuan=true){
+  const section=document.getElementById(id);
+  items.forEach(item=>{
+    const div=document.createElement("div");
+    div.className="item";
+    div.innerHTML=`
       <label>${item}</label>
       <div class="toggle">
         <button class="good" onclick="setStatus(this,'GOOD')">✅</button>
@@ -183,86 +171,89 @@ function createSection(id, items) {
       </div>
     `;
     section.appendChild(div);
-    const textarea = document.createElement("textarea");
-    textarea.placeholder = `Temuan jika ${item} BAD...`;
-    textarea.style.display = "none";
-    section.appendChild(textarea);
+    if(withTemuan){
+      const textarea=document.createElement("textarea");
+      textarea.placeholder=`Temuan jika ${item} BAD...`;
+      textarea.style.display="none";
+      section.appendChild(textarea);
+    }
   });
 }
+createSection("oil-level",oilItems);
+createSection("engine-area",engineItems);
+createSection("cabin-area",cabinItems);
+createSection("frame-area",frameItems);
+createSection("tyre",tyreItems);
+createSection("validasi",validasiItems,false);
 
-function setStatus(btn, status) {
-  const parent = btn.closest(".item");
-  const text = parent.nextElementSibling;
-  text.style.display = (status === "BAD") ? "block" : "none";
-  parent.setAttribute("data-status", status);
+function setStatus(btn,status){
+  const parent=btn.closest(".item");
+  const txt=parent.nextElementSibling;
+  parent.setAttribute("data-status",status);
+  if(txt && txt.tagName==="TEXTAREA"){
+    txt.style.display=(status==="BAD")?"block":"none";
+  }
 }
 
-createSection("oil-level", oilItems);
-createSection("engine-area", engineItems);
-createSection("cabin-area", cabinItems);
-createSection("frame-area", frameItems);
-createSection("tyre", tyreItems);
-createSection("validasi", validasiItems);
+function previewResult(){
+  const tgl=document.getElementById("tanggal").value;
+  const mekanik=document.getElementById("mekanik").value;
+  const cn=document.getElementById("cn").value;
+  const hm=document.getElementById("hm").value;
+  const fl=document.getElementById("fl").value;
+  const fr=document.getElementById("fr").value;
+  const rl=document.getElementById("rl").value;
+  const rr=document.getElementById("rr").value;
+  const manual=document.getElementById("manualDeviation").value.trim();
 
-function previewResult() {
-  const date = document.getElementById("tanggal").value;
-  const mekanik = document.getElementById("mekanik").value;
-  const cn = document.getElementById("cn").value;
-  const hm = document.getElementById("hm").value;
-  const fl = document.getElementById("fl").value;
-  const fr = document.getElementById("fr").value;
-  const rl = document.getElementById("rl").value;
-  const rr = document.getElementById("rr").value;
-  const manual = document.getElementById("manualDeviation").value.trim();
+  let deviation="";
+  let result=`📅 Tgl : ${tgl}\n👷 Mekanik : ${mekanik}\n🚗 CN : ${cn}\n⌛ HM : ${hm}\n\n---\n`;
 
-  let deviation = "";
-  let result = `📅 Tgl : ${date}\n👷 Mekanik : ${mekanik}\n🚗 CN : ${cn}\n⌛ HM : ${hm}\n\n---\n`;
-
-  function buildSection(title, id) {
-    result += `${title}\n`;
-    const section = document.getElementById(id);
-    section.querySelectorAll(".item").forEach(item => {
-      const label = item.querySelector("label").innerText;
-      const status = item.getAttribute("data-status") || "GOOD";
-      result += `${label} : ${status === "GOOD" ? "✅ GOOD" : "❌ BAD"}\n`;
-      if (status === "BAD") {
-        const txt = item.nextElementSibling.value.trim();
-        if (txt) deviation += `⚠️ ${txt}\n`;
+  function buildSection(title,id,withTemuan=true){
+    result+=`${title}\n`;
+    const section=document.getElementById(id);
+    section.querySelectorAll(".item").forEach(item=>{
+      const label=item.querySelector("label").innerText;
+      const status=item.getAttribute("data-status")||"GOOD";
+      result+=`${label} : ${status==="GOOD"?"✅ GOOD":"❌ BAD"}\n`;
+      if(withTemuan && status==="BAD"){
+        const txt=item.nextElementSibling.value.trim();
+        if(txt) deviation+=`⚠️ ${txt}\n`;
       }
     });
-    result += `\n---\n`;
+    result+=`\n---\n`;
   }
 
-  buildSection("🩸 Oil Level 🩸", "oil-level");
-  buildSection("⚙️ Engine Area ⚙️", "engine-area");
-  buildSection("🚗 Cabin Area 🚗", "cabin-area");
-  buildSection("🛞 Frame Area 🛞", "frame-area");
-  result += `💧 Pressure Suspension (Panel) 💧\nFL : ${fl} | FR : ${fr} | RL : ${rl} | RR : ${rr}\n\n---\n`;
-  buildSection("🛠️ Tyre Condition 🛠️", "tyre");
-  buildSection("📝 Validasi & Kelengkapan Checklist Service", "validasi");
+  buildSection("🩸 Oil Level 🩸","oil-level");
+  buildSection("⚙️ Engine Area ⚙️","engine-area");
+  buildSection("🚗 Cabin Area 🚗","cabin-area");
+  buildSection("🛞 Frame Area 🛞","frame-area");
 
-  if (manual) {
-    manual.split("\n").forEach(line => {
-      if (line.trim() !== "") deviation += `⚠️ ${line.trim()}\n`;
+  result+=`💧 Pressure Suspension (Panel) 💧\nFL : ${fl} | FR : ${fr} | RL : ${rl} | RR : ${rr}\n\n---\n`;
+  buildSection("🛠️ Tyre Condition 🛠️","tyre");
+  buildSection("📝 Validasi & Kelengkapan Checklist Service","validasi",false);
+
+  if(manual){
+    manual.split("\n").forEach(line=>{
+      if(line.trim()!=="") deviation+=`⚠️ ${line.trim()}\n`;
     });
   }
 
-  if (deviation) {
-    result += `⚠️ Deviation :\n${deviation}`;
+  if(deviation){
+    result+=`⚠️ Deviation :\n${deviation}`;
   }
 
-  document.getElementById("preview").innerText = result;
+  document.getElementById("preview").innerText=result;
 }
 
-function copyResult() {
-  const text = document.getElementById("preview").innerText;
-  navigator.clipboard.writeText(text);
-  alert("✅ Hasil disalin ke clipboard");
+function copyResult(){
+  navigator.clipboard.writeText(document.getElementById("preview").innerText);
+  alert("✅ Hasil disalin ke clipboard!");
 }
 
-function sendWA() {
-  const text = encodeURIComponent(document.getElementById("preview").innerText);
-  window.open(`https://wa.me/?text=${text}`, '_blank');
+function sendWA(){
+  const text=encodeURIComponent(document.getElementById("preview").innerText);
+  window.open(`https://wa.me/?text=${text}`,'_blank');
 }
 </script>
 </body>
