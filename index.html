@@ -56,6 +56,10 @@ textarea {
 .pressure input {
   width:60px; margin-right:5px; text-align:center;
 }
+select, input[type="text"], input[type="date"] {
+  border-radius:8px; border:1px solid #ccc;
+  padding:5px 8px; margin:5px 0; width:100%;
+}
 </style>
 </head>
 <body>
@@ -64,9 +68,15 @@ textarea {
 
 <div class="container">
   <div class="section">
-    <label>📅 Tanggal: <input type="date" id="tanggal"></label><br>
-    <label>👷 Mekanik: <input type="text" id="mekanik"></label><br>
-    <label>🚗 CN: <input type="text" id="cn"></label><br>
+    <label>🧩 Jenis Inspeksi:</label>
+    <select id="jenis">
+      <option value="QA-1 Pre Inspection">QA-1 Pre Inspection</option>
+      <option value="QA-7 Final Inspection">QA-7 Final Inspection</option>
+    </select>
+
+    <label>📅 Tanggal: <input type="date" id="tanggal"></label>
+    <label>👷 Mekanik: <input type="text" id="mekanik"></label>
+    <label>🚗 CN: <input type="text" id="cn"></label>
     <label>⌛ HM: <input type="text" id="hm"></label>
   </div>
 
@@ -151,6 +161,7 @@ function setStatus(btn,status){
 }
 
 function previewResult(){
+  const jenis=document.getElementById("jenis").value;
   const tgl=document.getElementById("tanggal").value;
   const mekanik=document.getElementById("mekanik").value;
   const cn=document.getElementById("cn").value;
@@ -162,7 +173,7 @@ function previewResult(){
   const manual=document.getElementById("manualDeviation").value.trim();
 
   let deviation="";
-  let result=`📅 Tgl : ${tgl}\n👷 Mekanik : ${mekanik}\n🚗 CN : ${cn}\n⌛ HM : ${hm}\n\n---\n`;
+  let result=`*${jenis}*\n\n📅 Tgl : ${tgl}\n👷 Mekanik : ${mekanik}\n🚗 CN : ${cn}\n⌛ HM : ${hm}\n\n---\n`;
 
   function buildSection(title,id,withTemuan=true,validasi=false){
     result+=`${title}\n`;
