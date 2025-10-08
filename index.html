@@ -3,282 +3,350 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>QA-1 / QA-7 Pre-Inspection</title>
+<title>Form QA Inspection</title>
 <style>
   body {
     font-family: "Segoe UI", sans-serif;
+    background: linear-gradient(180deg, #e9f7ef, #fdfaf6);
     margin: 0;
-    padding: 0;
-    background: linear-gradient(to bottom, #eae4c9, #d6f5d6);
-  }
-  .header {
-    background: linear-gradient(90deg, #d4af37, #7ec67f);
-    color: white;
-    text-align: center;
-    padding: 10px;
-    border-radius: 0 0 15px 15px;
-    font-weight: bold;
-    letter-spacing: 1px;
-    box-shadow: 0 3px 5px rgba(0,0,0,0.2);
+    padding: 15px;
   }
   .container {
-    max-width: 480px;
-    margin: 15px auto;
+    max-width: 430px;
+    margin: auto;
     background: white;
-    padding: 12px;
     border-radius: 15px;
-    box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    padding: 15px;
+  }
+  header {
+    text-align: center;
+    background: linear-gradient(90deg, #e6d19c, #a8d5a2);
+    color: #333;
+    padding: 10px;
+    font-weight: bold;
+    border-radius: 10px;
+    margin-bottom: 10px;
+  }
+  label { font-size: 14px; font-weight: 500; }
+  input[type="text"], select, textarea {
+    width: 100%;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    padding: 6px;
+    margin-top: 3px;
+    font-size: 14px;
   }
   .section {
-    margin-top: 10px;
-    border: 1px solid #ddd;
+    background: #f9f9f9;
+    border-radius: 12px;
     padding: 10px;
-    border-radius: 10px;
-  }
-  .section h3 {
-    margin-top: 0;
-    background: #7ec67f;
-    color: white;
-    text-align: center;
-    border-radius: 6px;
-    padding: 5px 0;
-    font-size: 15px;
+    margin-top: 10px;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.05);
   }
   .item {
     display: flex;
-    justify-content: space-between;
     align-items: center;
-    margin: 4px 0;
+    justify-content: space-between;
+    margin-top: 6px;
   }
-  .buttons button {
+  .buttons {
+    display: flex;
+    gap: 4px;
+  }
+  button.toggle {
     border: none;
     border-radius: 6px;
-    padding: 4px 8px;
+    padding: 3px 6px;
     font-size: 13px;
     cursor: pointer;
-    margin-left: 2px;
+    transition: 0.2s;
   }
-  .good, .bad { background: #e5e5e5; color: #333; }
-  .good.active { background: #7ec67f; color: white; }
-  .bad.active { background: #ff6b6b; color: white; }
-  textarea {
+  .good.active { background: #b5e7a0; }
+  .bad.active { background: #f5a3a3; }
+  .check.active { background: #b5e7a0; }
+  .cross.active { background: #f5a3a3; }
+  textarea.temuan {
     width: 100%;
-    height: 40px;
-    margin-top: 5px;
-    border-radius: 6px;
-    border: 1px solid #ccc;
-    padding: 4px;
-    font-size: 13px;
-    resize: vertical;
+    margin-top: 4px;
+    display: none;
   }
-  .btn-row {
+  .footer-btns {
     display: flex;
     justify-content: space-around;
     margin-top: 12px;
   }
-  .btn-row button {
+  .footer-btns button {
     border: none;
+    border-radius: 10px;
     padding: 8px 10px;
-    border-radius: 8px;
-    font-size: 14px;
+    background: linear-gradient(90deg,#d6c37a,#9fd59c);
+    color: #333;
+    font-weight: bold;
     cursor: pointer;
-    box-shadow: 0 3px 5px rgba(0,0,0,0.2);
   }
-  .preview-btn { background: #4caf50; color: white; }
-  .copy-btn { background: #2196f3; color: white; }
-  .wa-btn { background: #25d366; color: white; }
   #preview {
     white-space: pre-wrap;
-    background: #fafafa;
+    font-size: 13px;
+    background: #fff;
     border-radius: 10px;
     padding: 10px;
-    margin-top: 12px;
-    border: 1px solid #ddd;
-  }
-  .small-input {
-    width: calc(100% - 10px);
-    margin-top: 4px;
-    border-radius: 6px;
-    padding: 5px;
-    border: 1px solid #ccc;
-  }
-  select {
-    width: 100%;
-    padding: 5px;
-    border-radius: 6px;
-    border: 1px solid #ccc;
+    margin-top: 10px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.05);
   }
 </style>
 </head>
 <body>
 
-<div class="header">🧰 QA-1 / QA-7 PRE-INSPECTION</div>
 <div class="container">
+  <header>🛠️ QA Inspection Form</header>
 
-  <label>Pilih Form:</label>
-  <select id="formType">
-    <option value="QA1">QA-1 Pre-Inspection</option>
-    <option value="QA7">QA-7 Pre-Inspection</option>
+  <label>📋 Jenis Checklist</label>
+  <select id="checklistType" onchange="updateValidationTitle()">
+    <option value="QA1">QA1</option>
+    <option value="QA7">QA7</option>
   </select>
 
-  <div class="section">
-    <input class="small-input" id="tgl" placeholder="📅 Tgl (ex: 07-Oct-2025)">
-    <input class="small-input" id="mekanik" placeholder="👷 Mekanik">
-    <input class="small-input" id="cn" placeholder="🚗 CN Unit">
-    <input class="small-input" id="hm" placeholder="⌛ HM">
+  <label>📅 Tanggal</label>
+  <input type="text" id="tanggal" placeholder="07-Oct-2025">
+  <label>👷 Mekanik</label>
+  <input type="text" id="mekanik">
+  <label>🚗 CN Unit</label>
+  <input type="text" id="cn">
+  <label>⌛ HM</label>
+  <input type="text" id="hm">
+
+  <!-- Oil Level -->
+  <div class="section" id="oil">
+    <b>🩸 Oil Level</b>
+    <div id="oilItems"></div>
   </div>
 
-  <div id="sections"></div>
+  <!-- Engine Area -->
+  <div class="section" id="engine">
+    <b>⚙️ Engine Area</b>
+    <div id="engineItems"></div>
+  </div>
 
-  <div class="btn-row">
-    <button class="preview-btn" onclick="preview()">🧾 Preview</button>
-    <button class="copy-btn" onclick="copyText()">📋 Copy</button>
-    <button class="wa-btn" onclick="sendWA()">📤 WA</button>
+  <!-- Cabin -->
+  <div class="section" id="cabin">
+    <b>🚗 Cabin Area</b>
+    <div id="cabinItems"></div>
+  </div>
+
+  <!-- Frame -->
+  <div class="section" id="frame">
+    <b>🛞 Frame Area</b>
+    <div id="frameItems"></div>
+  </div>
+
+  <!-- Tyre -->
+  <div class="section" id="tyre">
+    <b>🛠️ Tyre Condition</b>
+    <div id="tyreItems"></div>
+  </div>
+
+  <!-- Pressure Suspension -->
+  <div class="section">
+    <b>💧 Pressure Suspension (Panel)</b>
+    <input type="text" id="FL" placeholder="FL">
+    <input type="text" id="FR" placeholder="FR">
+    <input type="text" id="RL" placeholder="RL">
+    <input type="text" id="RR" placeholder="RR">
+  </div>
+
+  <!-- Validation -->
+  <div class="section">
+    <b id="validationTitle">📝 Validasi & Kelengkapan Checklist Service</b>
+    <div id="validationItems"></div>
+  </div>
+
+  <!-- Deviation -->
+  <div class="section">
+    <b>⚠️ Deviation :</b>
+    <div id="deviationList"></div>
+  </div>
+
+  <div class="footer-btns">
+    <button onclick="preview()">🧾 Preview</button>
+    <button onclick="copyWA()">📋 Copy</button>
+    <button onclick="sendWA()">📤 Send WA</button>
   </div>
 
   <div id="preview"></div>
 </div>
 
 <script>
-const sectionsData = {
-  "Oil Level": ["Engine Oil Level", "Transmission Oil Level", "Hydraulic Oil Level"],
-  "Engine Area": ["Belt Tension", "Engine Oil Leakage", "Common Rail Connector", "Injector Tube"],
-  "Cabin Area": ["FM Radio", "Fatigue Warning", "Power Window"],
-  "Frame Area": ["Operator Seat", "Hand Rail"],
-  "Tyre Condition": ["Tyre Condition"]
-};
-
-const validasiData = [
-  "Job Card & Cover Checklist","Form Observasi Redo PS","Form QA 1 & QA 7","Form PPM",
-  "Form Check List A","Form Check List B","Form Check List C","Form Backlog",
-  "Form FUI","Form Repair Order","Form Combine Maintenance","Form Service Activity Report"
+const oilItems = ["Engine oil level", "Transmission oil level", "Hydraulic oil level"];
+const engineItems = ["Belt tension", "Engine oil leakage", "Common Rail Connector", "Injector Tube"];
+const cabinItems = ["FM Radio", "Fatigue Warning", "Power Window"];
+const frameItems = ["Operator seat", "Hand Rail"];
+const tyreItems = ["Tyre"];
+const validationItems = [
+  "Job Card & Cover Checklist","Form Observasi Redo PS","Form QA 1 & QA 7",
+  "Form PPM","Form Check List A","Form Check List B","Form Check List C",
+  "Form Backlog","Form FUI","Form Repair Order","Form Combine Maintenance",
+  "Form Service Activity Report"
 ];
-
-function renderSections() {
-  const container = document.getElementById("sections");
-  container.innerHTML = "";
-  for (const [title, items] of Object.entries(sectionsData)) {
-    const div = document.createElement("div");
-    div.className = "section";
-    div.innerHTML = `<h3>${title}</h3>`;
-    items.forEach(item => {
-      div.innerHTML += `
-        <div class="item">${item}
-          <div class="buttons">
-            <button class="good">✅</button><button class="bad">❌</button>
-          </div>
-        </div>
-        <textarea placeholder="Tuliskan temuan jika ada..."></textarea>
-      `;
-    });
+function createItem(containerId, list, type) {
+  const container = document.getElementById(containerId);
+  list.forEach(name=>{
+    const div=document.createElement("div");
+    div.className="item";
+    div.innerHTML=`
+      <span>${name}</span>
+      <div class="buttons">
+        <button class="toggle good" onclick="toggleButton(this,'good')">GOOD</button>
+        <button class="toggle bad" onclick="toggleButton(this,'bad')">BAD</button>
+      </div>
+    `;
+    const temuan=document.createElement("textarea");
+    temuan.className="temuan";
+    temuan.placeholder="Tulis temuan jika BAD...";
     container.appendChild(div);
-  }
-
-  const pressure = document.createElement("div");
-  pressure.className = "section";
-  pressure.innerHTML = `
-    <h3>💧 Pressure Suspension (Panel)</h3>
-    <input class="small-input" id="fl" placeholder="FL">
-    <input class="small-input" id="fr" placeholder="FR">
-    <input class="small-input" id="rl" placeholder="RL">
-    <input class="small-input" id="rr" placeholder="RR">
-  `;
-  container.appendChild(pressure);
-
-  const valid = document.createElement("div");
-  valid.className = "section";
-  valid.id = "validasi";
-  valid.innerHTML = `
-    <h3>📝 Validasi & Kelengkapan Checklist Service</h3>
-    ${validasiData.map(v=>`
-      <div class="item">${v}<div class="buttons"><button class="good">✅</button><button class="bad">❌</button></div></div>
-    `).join("")}
-  `;
-  container.appendChild(valid);
-
-  const dev = document.createElement("div");
-  dev.className = "section";
-  dev.innerHTML = `<h3>⚠️ Deviation</h3><div id="deviation"></div>`;
-  container.appendChild(dev);
-
-  activateButtons();
-}
-
-function activateButtons(){
-  document.querySelectorAll('.buttons button').forEach(btn=>{
-    btn.onclick = ()=>{
-      const sibs = btn.parentElement.querySelectorAll('button');
-      sibs.forEach(b=>b.classList.remove('active'));
-      btn.classList.add('active');
-    };
+    container.appendChild(temuan);
   });
 }
-
-document.getElementById("formType").addEventListener("change",()=>{
-  const title = document.querySelector("#validasi h3");
-  if(document.getElementById("formType").value==="QA7") 
-    title.textContent = "📝 Kelengkapan Pengisian Checklist Service";
-  else 
-    title.textContent = "📝 Validasi & Kelengkapan Checklist Service";
-});
-
+function createValidationItems(){
+  const v=document.getElementById("validationItems");
+  v.innerHTML="";
+  validationItems.forEach(name=>{
+    const div=document.createElement("div");
+    div.className="item";
+    div.innerHTML=`
+      <span>${name}</span>
+      <div class="buttons">
+        <button class="toggle check" onclick="toggleButton(this,'check')">✅</button>
+        <button class="toggle cross" onclick="toggleButton(this,'cross')">❌</button>
+      </div>`;
+    v.appendChild(div);
+  });
+}
+function toggleButton(btn,type){
+  const group=btn.parentElement.querySelectorAll(".toggle");
+  group.forEach(b=>b.classList.remove("active"));
+  btn.classList.add("active");
+  const temuan=btn.parentElement.parentElement.nextElementSibling;
+  if(type==="bad" && temuan){temuan.style.display="block";}
+  else if(temuan){temuan.style.display="none";}
+}
 function collectDeviation(){
-  const devs=[];
-  document.querySelectorAll("textarea").forEach(t=>{
-    if(t.value.trim()!=="") devs.push("⚠️ "+t.value.trim());
+  let devs=[];
+  document.querySelectorAll(".temuan").forEach(t=>{
+    if(t.value.trim()!==""){devs.push("⚠️ "+t.value.trim());}
   });
   return devs.join("\n");
 }
-
+function updateValidationTitle(){
+  const type=document.getElementById("checklistType").value;
+  document.getElementById("validationTitle").textContent=
+    type==="QA7"?"📝 Kelengkapan Pengisian Checklist Service":"📝 Validasi & Kelengkapan Checklist Service";
+}
 function preview(){
-  const tgl=document.getElementById("tgl").value;
-  const mekanik=document.getElementById("mekanik").value;
+  const tgl=document.getElementById("tanggal").value;
+  const m=document.getElementById("mekanik").value;
   const cn=document.getElementById("cn").value;
   const hm=document.getElementById("hm").value;
-  const fl=document.getElementById("fl").value;
-  const fr=document.getElementById("fr").value;
-  const rl=document.getElementById("rl").value;
-  const rr=document.getElementById("rr").value;
-  const formType=document.getElementById("formType").value;
-  const deviation=collectDeviation();
+  const dev=collectDeviation();
+  const format=`📅 Tgl : ${tgl}
+👷 Mekanik : ${m}
+🚗 CN : ${cn}
+⌛ HM : ${hm}
 
-  let text=`📅 Tgl : ${tgl}\n👷 Mekanik : ${mekanik}\n🚗 CN : ${cn}\n⌛ HM : ${hm}\n\n---\n`;
+---
 
-  for(const [title, items] of Object.entries(sectionsData)){
-    text+=`🩸 ${title} 🩸\n`;
-    items.forEach((item,i)=>{
-      const buttons=document.querySelectorAll(".section")[Object.keys(sectionsData).indexOf(title)].querySelectorAll(".buttons");
-      const state=buttons[i].querySelector(".good.active")?"✅ GOOD":buttons[i].querySelector(".bad.active")?"❌ BAD":"-";
-      text+=`${item} : ${state}\n`;
-    });
-    text+="\n---\n";
+🩸 Oil Level 🩸
+${oilItems.map(i=>formatItem(i,"oilItems")).join("")}
+
+---
+
+⚙️ Engine Area ⚙️
+${engineItems.map(i=>formatItem(i,"engineItems")).join("")}
+
+---
+
+🚗 Cabin Area 🚗
+${cabinItems.map(i=>formatItem(i,"cabinItems")).join("")}
+
+---
+
+🛞 Frame Area 🛞
+${frameItems.map(i=>formatItem(i,"frameItems")).join("")}
+
+---
+
+🛠️ Tyre Condition 🛠️
+${tyreItems.map(i=>formatItem(i,"tyreItems")).join("")}
+
+---
+
+💧 Pressure Suspension (Panel) 💧
+FL : ${FL.value} | FR : ${FR.value} | RL : ${RL.value} | RR : ${RR.value}
+
+---
+
+${document.getElementById("validationTitle").textContent}
+${validationItems.map(i=>formatValidation(i)).join("")}
+
+---
+
+⚠️ Deviation :
+${dev}`;
+  document.getElementById("preview").textContent=format;
+}
+function formatItem(name,section){
+  const sectionDivs=document.querySelectorAll(`#${section.replace("Items","")} .item span`);
+  for(const s of sectionDivs){
+    if(s.textContent===name){
+      const btns=s.parentElement.querySelectorAll(".toggle");
+      let res=": ";
+      btns.forEach(b=>{
+        if(b.classList.contains("active")){
+          res+=b.textContent;
+        }
+      });
+      if(!res.includes("GOOD") && !res.includes("BAD")) res+="✅ GOOD";
+      return `${name} ${res}\n`;
+    }
   }
-
-  text+=`💧 Pressure Suspension 💧\nFL : ${fl} | FR : ${fr} | RL : ${rl} | RR : ${rr}\n\n---\n`;
-
-  text+=`${formType==="QA1"?"📝 Validasi & Kelengkapan Checklist Service":"📝 Kelengkapan Pengisian Checklist Service"}\n`;
-  validasiData.forEach((v,i)=>{
-    const valSec=document.getElementById("validasi").querySelectorAll(".buttons");
-    const state=valSec[i].querySelector(".good.active")?"✅":"❌";
-    text+=`${v} ${state}\n`;
-  });
-
-  text+=`\n---\n⚠️ Deviation:\n${deviation||"Tidak ada temuan"}`;
-
-  document.getElementById("preview").textContent=text;
+  return `${name} : ✅ GOOD\n`;
 }
-
-function copyText(){
-  navigator.clipboard.writeText(document.getElementById("preview").textContent);
-  alert("✅ Hasil sudah disalin ke clipboard!");
+function formatValidation(name){
+  const items=document.querySelectorAll("#validationItems .item span");
+  for(const i of items){
+    if(i.textContent===name){
+      const btns=i.parentElement.querySelectorAll(".toggle");
+      let res=": ";
+      btns.forEach(b=>{
+        if(b.classList.contains("active")){
+          res+=b.textContent;
+        }
+      });
+      if(!res.includes("✅") && !res.includes("❌")) res+="✅";
+      return `${name} ${res}\n`;
+    }
+  }
+  return `${name} ✅\n`;
 }
-
+function copyWA(){
+  preview();
+  const text=document.getElementById("preview").textContent;
+  navigator.clipboard.writeText(text);
+  alert("✅ Teks berhasil disalin!");
+}
 function sendWA(){
+  preview();
   const text=encodeURIComponent(document.getElementById("preview").textContent);
-  window.open(`https://wa.me/?text=${text}`,"_blank");
+  window.open(`https://wa.me/?text=${text}`);
 }
 
-renderSections();
+// init
+createItem("oilItems",oilItems);
+createItem("engineItems",engineItems);
+createItem("cabinItems",cabinItems);
+createItem("frameItems",frameItems);
+createItem("tyreItems",tyreItems);
+createValidationItems();
 </script>
 </body>
 </html>
