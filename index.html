@@ -35,6 +35,8 @@ header {
 }
 .good {background:#66bb6a;}
 .bad {background:#ef5350;}
+.check {background:#4caf50;}
+.cross {background:#ef5350;}
 textarea {
   width:100%; border-radius:8px; border:1px solid #ccc;
   padding:6px; margin-top:5px; font-size:14px;
@@ -111,7 +113,7 @@ const validasiItems=[
   "Form FUI","Form Repair Order","Form Combine Maintenance","Form Service Activity Report"
 ];
 
-function createSection(id, items, withTemuan=true){
+function createSection(id, items, withTemuan=true, validasi=false){
   const section=document.getElementById(id);
   items.forEach(item=>{
     const div=document.createElement("div");
@@ -119,24 +121,29 @@ function createSection(id, items, withTemuan=true){
     div.innerHTML=`
       <label>${item}</label>
       <div class="toggle">
-        <button class="good" onclick="setStatus(this,'GOOD')">✅</button>
-        <button class="bad" onclick="setStatus(this,'BAD')">❌</button>
+        ${validasi
+          ? `<button class="check" onclick="setStatus(this,'✅')">✅</button>
+             <button class="cross" onclick="setStatus(this,'❌')">❌</button>`
+          : `<button class="good" onclick="setStatus(this,'GOOD')">✅</button>
+             <button class="bad" onclick="setStatus(this,'BAD')">❌</button>`
+        }
       </div>
     `;
     section.appendChild(div);
-    if(withTemuan){
+    if(withTemuan && !validasi){
       const textarea=document.createElement("textarea");
       textarea.placeholder=`Tuliskan temuan untuk ${item} (jika ada)...`;
       section.appendChild(textarea);
     }
   });
 }
+
 createSection("oil-level",oilItems);
 createSection("engine-area",engineItems);
 createSection("cabin-area",cabinItems);
 createSection("frame-area",frameItems);
 createSection("tyre",tyreItems);
-createSection("validasi",validasiItems,false);
+createSection("validasi",validasiItems,false,true);
 
 function setStatus(btn,status){
   const parent=btn.closest(".item");
@@ -157,16 +164,16 @@ function previewResult(){
   let deviation="";
   let result=`📅 Tgl : ${tgl}\n👷 Mekanik : ${mekanik}\n🚗 CN : ${cn}\n⌛ HM : ${hm}\n\n---\n`;
 
-  function buildSection(title,id,withTemuan=true){
+  function buildSection(title,id,withTemuan=true,validasi=false){
     result+=`${title}\n`;
     const section=document.getElementById(id);
     const textareas=section.querySelectorAll("textarea");
     let i=0;
     section.querySelectorAll(".item").forEach(item=>{
       const label=item.querySelector("label").innerText;
-      const status=item.getAttribute("data-status")||"GOOD";
-      const temuan=withTemuan ? textareas[i++].value.trim() : "";
-      result+=`${label} : ${status==="GOOD"?"✅ GOOD":"❌ BAD"}\n`;
+      const status=item.getAttribute("data-status")|| (validasi?"❌":"GOOD");
+      const temuan=withTemuan && !validasi ? textareas[i++].value.trim() : "";
+      result+=`${label} : ${status}\n`;
       if(temuan) deviation+=`⚠️ ${temuan}\n`;
     });
     result+=`\n---\n`;
@@ -180,7 +187,7 @@ function previewResult(){
   result+=`💧 Pressure Suspension (Panel) 💧\nFL : ${fl} | FR : ${fr} | RL : ${rl} | RR : ${rr}\n\n---\n`;
 
   buildSection("🛠️ Tyre Condition 🛠️","tyre");
-  buildSection("📝 Validasi & Kelengkapan Checklist Service","validasi",false);
+  buildSection("📝 Validasi & Kelengkapan Checklist Service","validasi",false,true);
 
   if(manual){
     manual.split("\n").forEach(line=>{
