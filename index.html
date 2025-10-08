@@ -3,252 +3,282 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>QA Inspection Form</title>
+<title>QA Inspection App</title>
 <style>
-  body {
-    font-family: "Segoe UI", sans-serif;
-    background: linear-gradient(to bottom right, #dcefcf, #f8f3d4);
-    margin: 0;
-    padding: 10px;
-  }
-  .card {
-    background: #fff;
-    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-    border-radius: 16px;
-    padding: 15px;
-    margin: 12px 0;
-  }
-  header {
-    background: linear-gradient(90deg, #e6c871, #d3b65c);
-    color: #333;
-    padding: 14px;
-    border-radius: 16px;
-    text-align: center;
-    font-weight: bold;
-    box-shadow: 0 3px 8px rgba(0,0,0,0.2);
-  }
-  label {
-    display: block;
-    margin-top: 10px;
-    font-weight: 600;
-  }
-  input[type="text"], input[type="date"], textarea {
-    width: 100%;
-    border: 1px solid #ccc;
-    border-radius: 10px;
-    padding: 8px;
-    margin-top: 5px;
-    font-size: 14px;
-  }
-  textarea { height: 60px; resize: vertical; }
-
-  .toggle-btn {
-    padding: 5px 14px;
-    border-radius: 8px;
-    border: none;
-    margin-right: 5px;
-    cursor: pointer;
-    font-size: 15px;
-  }
-  .good { background: #c7f5c4; color: #1b5e20; }
-  .bad { background: #ffcdd2; color: #b71c1c; }
-  .neutral { background: #f1f1f1; color: #333; }
-
-  .section-title {
-    font-weight: bold;
-    font-size: 16px;
-    margin-top: 8px;
-  }
-
-  .flex-row { display: flex; justify-content: space-between; align-items: center; gap: 6px; }
-  .btn-row { text-align: center; margin-top: 15px; }
-  .btn {
-    border: none;
-    padding: 10px 15px;
-    border-radius: 10px;
-    margin: 5px;
-    font-size: 15px;
-    cursor: pointer;
-    box-shadow: 0 2px 6px rgba(0,0,0,0.15);
-  }
-  .preview { background: #a5d6a7; }
-  .copy { background: #fff59d; }
-  .send { background: #81d4fa; }
-  #previewArea {
-    white-space: pre-wrap;
-    background: #fafafa;
-    border-radius: 12px;
-    padding: 10px;
-    margin-top: 10px;
-    font-family: monospace;
-  }
+body {
+  font-family: "Segoe UI", sans-serif;
+  background: linear-gradient(to bottom, #e6f5e6, #f9f9f9);
+  margin: 0; padding: 0;
+}
+header {
+  background: linear-gradient(90deg, #d4af37, #e6c76f);
+  color: #003300;
+  text-align: center;
+  padding: 10px;
+  font-weight: bold;
+  border-bottom: 2px solid #caa74a;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+}
+header img {
+  width: 30px; height: 30px;
+}
+.container {
+  max-width: 600px;
+  margin: 8px auto;
+  background: white;
+  padding: 10px;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+.section {
+  margin-bottom: 8px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  padding: 8px;
+  background: #fcfcfc;
+}
+.section h3 {
+  font-size: 15px;
+  background: #e0f4e0;
+  padding: 4px;
+  border-radius: 5px;
+  color: #003300;
+}
+.item-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 3px 0;
+}
+.item-row label {
+  flex: 1;
+  font-size: 13px;
+}
+.item-buttons button {
+  font-size: 13px;
+  padding: 2px 8px;
+  margin-left: 3px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: 0.2s;
+}
+.good { background: #d4edda; color: #155724; }
+.bad { background: #f8d7da; color: #721c24; }
+.temuan {
+  width: 100%;
+  margin-top: 3px;
+  font-size: 12px;
+  padding: 4px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+}
+textarea {
+  width: 100%;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  padding: 5px;
+  font-size: 12px;
+  resize: vertical;
+}
+button.action {
+  font-size: 13px;
+  padding: 6px 12px;
+  margin: 4px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  color: white;
+}
+#preview { background: #17a2b8; }
+#copy { background: #28a745; }
+#send { background: #007bff; }
+button.action:hover { opacity: 0.85; }
+#previewBox {
+  background: #fff;
+  padding: 8px;
+  border-radius: 8px;
+  margin-top: 10px;
+  font-size: 13px;
+  white-space: pre-wrap;
+  box-shadow: inset 0 0 5px rgba(0,0,0,0.1);
+}
 </style>
 </head>
 <body>
-<header>🛠️ QA Inspection Form</header>
 
-<div class="card">
-  <label>Pilih Jenis QA</label>
-  <select id="qaType" onchange="updateQAType()" style="width:100%; padding:8px; border-radius:10px;">
-    <option value="QA1">QA-1 Pre Inspection</option>
-    <option value="QA7">QA-7 Final Inspection</option>
-  </select>
-  <label>Tanggal</label><input type="date" id="tgl">
-  <label>Nama Mekanik</label><input type="text" id="mekanik">
-  <label>CN Unit</label><input type="text" id="cn">
-  <label>HM</label><input type="text" id="hm">
+<header>
+  <img src="https://cdn-icons-png.flaticon.com/512/3177/3177440.png" alt="HD785-7">
+  <span>QA Inspection (HD785-7)</span>
+</header>
+
+<div class="container">
+  <div class="section">
+    <label>Inspection Type:</label>
+    <select id="inspectionType">
+      <option value="QA-1">QA-1 Pre Inspection</option>
+      <option value="QA-7">QA-7 Final Inspection</option>
+    </select>
+    <label>Tanggal:</label><input id="tgl" type="date" style="width:100%">
+    <label>Mekanik:</label><input id="mekanik" type="text" style="width:100%">
+    <label>CN Unit:</label><input id="cn" type="text" style="width:100%">
+    <label>HM:</label><input id="hm" type="text" style="width:100%">
+  </div>
+
+  <div id="inspectionSections"></div>
+
+  <div class="section">
+    <h3>⚠️ Deviation</h3>
+    <textarea id="manualDeviation" rows="3" placeholder="Tambahkan deviasi manual jika ada..."></textarea>
+  </div>
+
+  <div style="text-align:center;">
+    <button class="action" id="preview">🧾 Preview</button>
+    <button class="action" id="copy">📋 Copy</button>
+    <button class="action" id="send">📤 Send WhatsApp</button>
+  </div>
+
+  <div id="previewBox" placeholder="Preview akan muncul di sini..."></div>
 </div>
-
-<div id="inspectionArea"></div>
-
-<div class="btn-row">
-  <button class="btn preview" onclick="generatePreview()">🧾 Preview</button>
-  <button class="btn copy" onclick="copyText()">📋 Copy</button>
-  <button class="btn send" onclick="sendWA()">📤 Send to WA</button>
-</div>
-
-<div id="previewArea"></div>
 
 <script>
 const sections = {
-  "Oil Level": ["Engine oil level","Transmission oil level","Hydraulic oil level"],
-  "Engine Area": ["Belt tension","Engine oil leakage","Common Rail Connector","Injector Tube"],
-  "Cabin Area": ["FM Radio","Fatigue Warning","Power Window"],
-  "Frame Area": ["Operator seat","Hand Rail"],
+  "Oil Level": ["Engine oil level", "Transmission oil level", "Hydraulic oil level"],
+  "Engine Area": ["Belt tension", "Engine oil leakage", "Common Rail Connector", "Injector Tube"],
+  "Cabin Area": ["FM Radio", "Fatigue Warning", "Power Window"],
+  "Frame Area": ["Operator seat", "Hand Rail"],
+  "Pressure Suspension (Panel)": ["FL", "FR", "RL", "RR"],
   "Tyre Condition": ["Tyre"]
 };
 
-const validationItems = [
-  "Job Card & Cover Checklist","Form Observasi Redo PS","Form QA 1 & QA 7","Form PPM",
-  "Form Check List A","Form Check List B","Form Check List C","Form Backlog","Form FUI",
-  "Form Repair Order","Form Combine Maintenance","Form Service Activity Report"
+const validationQA1 = [
+  "Job Card & Cover Checklist", "Form Observasi Redo PS", "Form QA 1 & QA 7",
+  "Form PPM", "Form Check List A", "Form Check List B", "Form Check List C",
+  "Form Backlog", "Form FUI", "Form Repair Order", "Form Combine Maintenance", "Form Service Activity Report"
 ];
 
-function createSection(title, items) {
-  let html = `<div class='card'><div class='section-title'>${title}</div>`;
-  items.forEach(item=>{
-    html += `
-      <div class="flex-row">
-        <span>${item}</span>
-        <div>
-          <button class="toggle-btn neutral" onclick="toggleStatus(this, '${title}', '${item}', 'GOOD')">✅</button>
-          <button class="toggle-btn neutral" onclick="toggleStatus(this, '${title}', '${item}', 'BAD')">❌</button>
-        </div>
-      </div>
-      <textarea placeholder="Tulis temuan jika ada..." id="${title}_${item.replace(/\s/g,'')}"></textarea>
-    `;
-  });
-  html += `</div>`;
-  return html;
-}
+function createInspectionSections() {
+  const container = document.getElementById("inspectionSections");
+  container.innerHTML = "";
 
-function createValidationSection(title, items){
-  let html = `<div class='card'><div class='section-title'>${title}</div>`;
-  items.forEach(item=>{
-    html += `
-      <div class="flex-row">
-        <span>${item}</span>
-        <div>
-          <button class="toggle-btn neutral" onclick="toggleStatus(this, '${title}', '${item}', '✅')">✅</button>
-          <button class="toggle-btn neutral" onclick="toggleStatus(this, '${title}', '${item}', '❌')">❌</button>
-        </div>
-      </div>
-    `;
-  });
-  html += `</div>`;
-  return html;
-}
-
-function updateQAType(){
-  const area = document.getElementById('inspectionArea');
-  const qaType = document.getElementById('qaType').value;
-  let html = "";
-  for(let s in sections) html += createSection(s, sections[s]);
-  html += `
-  <div class='card'>
-    <div class='section-title'>💧 Pressure Suspension (Panel)</div>
-    <div class="flex-row">
-      <span>FL:</span><input type="text" id="fl" style="width:50px;">
-      <span>FR:</span><input type="text" id="fr" style="width:50px;">
-      <span>RL:</span><input type="text" id="rl" style="width:50px;">
-      <span>RR:</span><input type="text" id="rr" style="width:50px;">
-    </div>
-  </div>
-  `;
-  const valTitle = qaType === "QA7" ? "Kelengkapan Pengisian Checklist Service" : "Validasi & Kelengkapan Checklist Service";
-  html += createValidationSection(valTitle, validationItems);
-  html += `<div class='card'><div class='section-title'>⚠️ Deviation</div><div id='deviationList'></div></div>`;
-  area.innerHTML = html;
-}
-updateQAType();
-
-const deviations = [];
-
-function toggleStatus(btn, section, item, status){
-  const group = btn.parentElement.querySelectorAll(".toggle-btn");
-  group.forEach(b=>b.className="toggle-btn neutral");
-  btn.className = status==='GOOD'||status==='✅' ? "toggle-btn good" : (status==='BAD'||status==='❌') ? "toggle-btn bad" : "toggle-btn neutral";
-}
-
-function collectDeviations(){
-  const dev = [];
-  document.querySelectorAll("textarea").forEach(t=>{
-    if(t.value.trim()!=="") dev.push("⚠️ " + t.value.trim());
-  });
-  return dev.join("\n");
-}
-
-function generatePreview(){
-  const qaType = document.getElementById('qaType').value;
-  const tgl = document.getElementById('tgl').value;
-  const mek = document.getElementById('mekanik').value;
-  const cn = document.getElementById('cn').value;
-  const hm = document.getElementById('hm').value;
-  let result = `📅 Tgl : ${tgl}\n👷 Mekanik : ${mek}\n🚗 CN : ${cn}\n⌛ HM : ${hm}\n\n---\n`;
-
-  for(let s in sections){
-    result += `🩸 ${s} 🩸\n`;
-    sections[s].forEach(i=>{
-      const textarea = document.getElementById(`${s}_${i.replace(/\s/g,'')}`);
-      const dev = textarea.value.trim();
-      const good = textarea.previousElementSibling.querySelector(".good");
-      const bad = textarea.previousElementSibling.querySelector(".bad");
-      let status = good ? "✅ GOOD" : bad ? "❌ BAD" : "";
-      result += `${i} : ${status}\n`;
-      if(dev) result += `Temuan : ${dev}\n`;
+  for (let [title, items] of Object.entries(sections)) {
+    const sec = document.createElement("div");
+    sec.className = "section";
+    sec.innerHTML = `<h3>${title}</h3>`;
+    items.forEach(it => {
+      const row = document.createElement("div");
+      row.className = "item-row";
+      row.innerHTML = `
+        <label>${it}</label>
+        <div class="item-buttons">
+          <button onclick="toggleBtn(this,'good')">✅</button>
+          <button onclick="toggleBtn(this,'bad')">❌</button>
+        </div>`;
+      sec.appendChild(row);
+      const t = document.createElement("input");
+      t.placeholder = "Tambahkan temuan jika ada...";
+      t.className = "temuan";
+      sec.appendChild(t);
     });
-    result += `\n---\n`;
+    container.appendChild(sec);
   }
 
-  result += `💧 Pressure Suspension (Panel)\nFL : ${fl.value} | FR : ${fr.value} | RL : ${rl.value} | RR : ${rr.value}\n\n---\n`;
+  // Validation section
+  const vsec = document.createElement("div");
+  vsec.className = "section";
+  vsec.innerHTML = `<h3 id="validTitle">📝 Validasi & Kelengkapan Checklist Service</h3>`;
+  validationQA1.forEach(v => {
+    const row = document.createElement("div");
+    row.className = "item-row";
+    row.innerHTML = `
+      <label>${v}</label>
+      <div class="item-buttons">
+        <button onclick="toggleBtn(this,'good')">✅</button>
+        <button onclick="toggleBtn(this,'bad')">❌</button>
+      </div>`;
+    vsec.appendChild(row);
+  });
+  container.appendChild(vsec);
+}
+createInspectionSections();
 
-  const valTitle = qaType === "QA7" ? "📝 Kelengkapan Pengisian Checklist Service" : "📝 Validasi & Kelengkapan Checklist Service";
-  result += valTitle + "\n\n";
-  validationItems.forEach(v=>{
-    const div = [...document.querySelectorAll(".flex-row")].find(el => el.innerText.includes(v));
-    if(div){
-      const good = div.querySelector(".good");
-      const bad = div.querySelector(".bad");
-      result += `${v} ${good?"✅":bad?"❌":""}\n`;
-    }
+function toggleBtn(btn, type) {
+  const siblings = btn.parentElement.querySelectorAll("button");
+  siblings.forEach(b => b.classList.remove("good","bad"));
+  if (type === "good") btn.classList.add("good");
+  else btn.classList.add("bad");
+}
+
+function generateFormat() {
+  const type = document.getElementById("inspectionType").value;
+  document.getElementById("validTitle").textContent =
+    type === "QA-1" ? "📝 Validasi & Kelengkapan Checklist Service" : "📝 Kelengkapan Pengisian Checklist Service";
+
+  let text = `📅 Tgl : ${document.getElementById("tgl").value}
+👷 Mekanik : ${document.getElementById("mekanik").value}
+🚗 CN : ${document.getElementById("cn").value}
+⌛ HM : ${document.getElementById("hm").value}
+
+---
+
+`;
+
+  const deviations = [];
+
+  for (let [title, items] of Object.entries(sections)) {
+    text += `🧩 ${title}\n`;
+    const section = Array.from(document.querySelectorAll(".section")).find(s => s.querySelector("h3").textContent === title);
+    const rows = section.querySelectorAll(".item-row");
+    const inputs = section.querySelectorAll(".temuan");
+    rows.forEach((r,i)=>{
+      const label = r.querySelector("label").textContent;
+      const good = r.querySelector("button.good");
+      const bad = r.querySelector("button.bad");
+      const value = good ? "GOOD" : bad ? "BAD" : "";
+      text += `${label} : ${value ? (value==="GOOD"?"✅ GOOD":"❌ BAD"):""}\n`;
+      const temuan = inputs[i].value.trim();
+      if (temuan) deviations.push(temuan);
+    });
+    text += "\n---\n\n";
+  }
+
+  // Validasi Section
+  text += document.getElementById("validTitle").textContent + "\n";
+  const valSec = Array.from(document.querySelectorAll(".section")).find(s => s.querySelector("h3").id === "validTitle");
+  const valRows = valSec.querySelectorAll(".item-row");
+  valRows.forEach(r=>{
+    const label = r.querySelector("label").textContent;
+    const good = r.querySelector("button.good");
+    const bad = r.querySelector("button.bad");
+    const value = good?"✅":bad?"❌":"";
+    text += `${label} ${value}\n`;
   });
 
-  const devText = collectDeviations();
-  if(devText) result += `\n---\n⚠️ Deviation:\n${devText}\n`;
+  // Deviation
+  const manualDev = document.getElementById("manualDeviation").value.trim();
+  if (manualDev) manualDev.split("\n").forEach(d=>deviations.push(d));
 
-  document.getElementById('previewArea').innerText = result;
+  text += `\n---\n\n⚠️ Deviation :\n`;
+  deviations.forEach(d=> text += `⚠️ ${d}\n`);
+
+  return text;
 }
 
-function copyText(){
-  const txt = document.getElementById('previewArea').innerText;
-  navigator.clipboard.writeText(txt);
-  alert("✅ Teks hasil sudah disalin!");
-}
-
-function sendWA(){
-  const txt = encodeURIComponent(document.getElementById('previewArea').innerText);
-  window.open(`https://wa.me/?text=${txt}`,'_blank');
-}
+document.getElementById("preview").onclick = ()=>{
+  document.getElementById("previewBox").textContent = generateFormat();
+};
+document.getElementById("copy").onclick = ()=>{
+  navigator.clipboard.writeText(generateFormat());
+  alert("Teks disalin!");
+};
+document.getElementById("send").onclick = ()=>{
+  const msg = encodeURIComponent(generateFormat());
+  window.open(`https://wa.me/?text=${msg}`);
+};
 </script>
+
 </body>
 </html>
