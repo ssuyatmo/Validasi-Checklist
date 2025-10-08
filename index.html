@@ -3,305 +3,276 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Checklist QA Unit HD785-7</title>
+<title>QA Inspection HD785-7</title>
 <style>
 body {
-  font-family: 'Poppins', sans-serif;
-  margin: 0; padding: 0;
-  background: linear-gradient(to bottom right, #d7ffd9, #e6ffe6);
-  color: #333;
+  font-family: "Poppins", sans-serif;
+  margin: 0;
+  background: linear-gradient(to bottom right, #d8e9a8, #9cdba6);
+  color: #222;
 }
 header {
-  background: linear-gradient(to right, #e4d4a1, #d0f0b0);
+  background: linear-gradient(to right, #f1d28a, #f5e4a2);
+  color: #1a1a1a;
   text-align: center;
-  padding: 12px;
+  padding: 10px 0;
   font-weight: bold;
-  color: #3a3a3a;
-  border-radius: 0 0 20px 20px;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+  font-size: 18px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.2);
 }
 .container {
-  padding: 12px;
+  padding: 10px;
+  max-width: 600px;
+  margin: auto;
 }
 .card {
   background: #fff;
-  border-radius: 14px;
+  border-radius: 10px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.2);
   padding: 10px;
   margin-bottom: 10px;
-  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
 }
-.section-title {
-  font-weight: bold;
-  margin-bottom: 6px;
-  color: #2f4f2f;
-  border-left: 4px solid #a2c46d;
-  padding-left: 6px;
-}
-.item {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  margin-bottom: 6px;
-  flex-wrap: wrap;
-}
-.item input[type="text"] {
-  width: 100%;
-  margin-top: 4px;
+h3 {
+  background: #cfe8cf;
   padding: 6px;
   border-radius: 6px;
+  font-size: 15px;
+}
+.label {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 4px 0;
+}
+.label span { flex: 1; font-size: 14px; }
+.label button {
+  margin-left: 5px;
+  padding: 4px 10px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: bold;
+}
+.good { background: #e0e0e0; }
+.good.active { background: #a4f5a4; }
+.bad.active { background: #f5a4a4; }
+.bad { background: #e0e0e0; }
+
+textarea {
+  width: 100%;
+  border-radius: 6px;
   border: 1px solid #ccc;
+  resize: none;
+  margin-top: 4px;
+  padding: 4px;
+  font-size: 13px;
+}
+input[type="text"], input[type="number"], input[type="date"] {
+  width: 100%;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  padding: 5px;
+  font-size: 13px;
 }
 .buttons {
   display: flex;
-  gap: 6px;
+  justify-content: space-around;
+  margin-top: 10px;
 }
-button {
+button.main {
+  padding: 8px 14px;
   border: none;
   border-radius: 8px;
-  padding: 6px 10px;
-  cursor: pointer;
-  font-size: 14px;
-  transition: 0.3s;
-}
-.btn-yes { background: #e0e0e0; }
-.btn-no { background: #e0e0e0; }
-.active-yes { background: #8bc34a; color: #fff; }
-.active-no { background: #f44336; color: #fff; }
-.bottom-buttons {
-  display: flex;
-  justify-content: space-around;
-  margin-top: 10px;
-}
-.bottom-buttons button {
-  flex: 1;
-  margin: 4px;
   font-weight: bold;
-  box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+  cursor: pointer;
+  background: #f1d28a;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.2);
 }
 #previewPopup {
+  display: none;
   position: fixed;
-  top: 50%; left: 50%;
+  top: 50%;
+  left: 50%;
   transform: translate(-50%, -50%);
-  background: #fff;
+  background: white;
+  border-radius: 10px;
+  box-shadow: 0 0 20px rgba(0,0,0,0.3);
   width: 90%;
   max-width: 400px;
-  padding: 16px;
-  border-radius: 14px;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.3);
-  display: none;
-  z-index: 1000;
+  z-index: 100;
+  padding: 15px;
 }
-.popup-buttons {
+#previewPopup pre {
+  max-height: 60vh;
+  overflow-y: auto;
+  white-space: pre-wrap;
+  font-size: 13px;
+  margin-bottom: 10px;
+}
+#popupButtons {
   display: flex;
   justify-content: space-around;
-  margin-top: 10px;
-}
-.overlay {
-  position: fixed;
-  top: 0; left: 0; width: 100%; height: 100%;
-  background: rgba(0,0,0,0.4);
-  display: none;
-  z-index: 999;
-}
-#deviationBox {
-  background: #fff7e6;
-  border-left: 5px solid #ff9800;
-  border-radius: 10px;
-  padding: 10px;
-  margin-top: 10px;
-  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
 }
 </style>
 </head>
 <body>
 
-<header>🌿 QA Checklist Unit HD785-7 🌿</header>
-
+<header>🌿 QA Inspection Komatsu HD785-7</header>
 <div class="container">
   <div class="card">
-    <label>Tanggal: <input type="date" id="tgl"></label><br>
-    <label>Mekanik: <input type="text" id="mekanik" placeholder="Nama Mekanik"></label><br>
-    <label>CN Unit: <input type="text" id="cn" placeholder="CN Unit"></label><br>
-    <label>HM: <input type="number" id="hm" placeholder="Hour Meter"></label><br>
-    <label>Pilih QA:
-      <select id="qaSelect">
-        <option value="QA1">QA1</option>
-        <option value="QA7">QA7</option>
+    <label>Pilih Jenis QA:
+      <select id="qaType">
+        <option value="QA1">QA-1 (Pre Inspection)</option>
+        <option value="QA7">QA-7 (Final Inspection)</option>
       </select>
     </label>
   </div>
 
-  <div id="sections"></div>
-
-  <div id="deviationBox">
-    <b>⚠️ Deviation :</b>
-    <pre id="deviationList" style="white-space: pre-wrap; margin-top: 5px;"></pre>
+  <div class="card">
+    <label>📅 Tanggal:</label><input type="date" id="tgl">
+    <label>👷 Mekanik:</label><input type="text" id="mekanik">
+    <label>🚗 CN Unit:</label><input type="text" id="cn">
+    <label>⌛ HM:</label><input type="number" id="hm">
   </div>
 
-  <div class="bottom-buttons">
-    <button onclick="showPreview()">🧾 Preview</button>
-    <button onclick="sendWA()">📤 Send WA</button>
+  <div id="sections"></div>
+
+  <div class="buttons">
+    <button class="main" onclick="showPreview()">🧾 Preview</button>
+    <button class="main" onclick="sendToWhatsApp()">📤 Send WA</button>
   </div>
 </div>
 
-<div class="overlay" id="overlay"></div>
 <div id="previewPopup">
-  <pre id="previewText" style="white-space: pre-wrap;"></pre>
-  <div class="popup-buttons">
-    <button onclick="copyWA()">📋 Copy</button>
-    <button onclick="closePreview()">❌ Close</button>
+  <pre id="previewText"></pre>
+  <div id="popupButtons">
+    <button onclick="copyText()">📋 Copy</button>
+    <button onclick="sendToWhatsApp()">📤 Send WA</button>
+    <button onclick="closePopup()">❌ Close</button>
   </div>
 </div>
 
 <script>
-const dataQA = {
+const sectionsData = {
   QA1: {
-    sections: {
-      "🩸 Oil Level": ["Engine oil level", "Transmission oil level", "Hydraulic oil level"],
-      "⚙️ Engine Area": ["Belt tension", "Engine oil leakage", "Common Rail Connector", "Injector Tube"],
-      "🚗 Cabin Area": ["FM Radio", "Fatigue Warning", "Power Window"],
-      "🛞 Frame Area": ["Operator seat", "Hand Rail"],
-      "🛠️ Tyre Condition": ["Tyre"],
-      "📝 Validasi & Kelengkapan Checklist Service": [
-        "Job Card & Cover Checklist", "Form Observasi Redo PS", "Form QA 1 & QA 7", 
-        "Form PPM", "Form Check List A", "Form Check List B", "Form Check List C", 
-        "Form Backlog", "Form FUI", "Form Repair Order", "Form Combine Maintenance", "Form Service Activity Report"
-      ]
-    }
+    title: "Validasi & Kelengkapan Checklist Service",
+    items: ["Job Card & Cover Checklist","Form Observasi Redo PS","Form QA 1 & QA 7","Form PPM","Form Check List A","Form Check List B","Form Check List C","Form Backlog","Form FUI","Form Repair Order","Form Combine Maintenance","Form Service Activity Report"]
   },
   QA7: {
-    sections: {
-      "🩸 Oil Level": ["Engine oil level", "Transmission oil level", "Hydraulic oil level"],
-      "⚙️ Engine Area": ["Belt tension", "Engine oil leakage", "Common Rail Connector", "Injector Tube"],
-      "🚗 Cabin Area": ["FM Radio", "Fatigue Warning", "Power Window"],
-      "🛞 Frame Area": ["Operator seat", "Hand Rail"],
-      "🛠️ Tyre Condition": ["Tyre"],
-      "📝 Kelengkapan Pengisian Checklist Service": [
-        "Job Card & Cover Checklist", "Form QA 1 & QA 7", "Form PPM",
-        "Form Backlog", "Form FUI", "Form Repair Order", 
-        "Form Combine Maintenance", "Form Service Activity Report"
-      ]
-    }
+    title: "Kelengkapan Pengisian Checklist Service",
+    items: ["Job Card & Cover Checklist","Form Observasi Redo PS","Form QA 1 & QA 7","Form PPM","Form Check List A","Form Check List B","Form Check List C","Form Backlog","Form FUI","Form Repair Order","Form Combine Maintenance","Form Service Activity Report"]
   }
 };
 
-// Render form sesuai QA
-function renderQA() {
-  const qa = document.getElementById('qaSelect').value;
-  const container = document.getElementById('sections');
-  container.innerHTML = '';
+const inspectionSections = [
+  { name: "Oil Level", items: ["Engine oil level","Transmission oil level","Hydraulic oil level"] },
+  { name: "Engine Area", items: ["Belt tension","Engine oil leakage","Common Rail Connector","Injector Tube"] },
+  { name: "Cabin Area", items: ["FM Radio","Fatigue Warning","Power Window"] },
+  { name: "Frame Area", items: ["Operator seat","Hand Rail"] },
+  { name: "Tyre Condition", items: ["Tyre Condition"] }
+];
 
-  for (let section in dataQA[qa].sections) {
-    const card = document.createElement('div');
-    card.className = 'card';
-    const title = document.createElement('div');
-    title.className = 'section-title';
-    title.innerText = section;
-    card.appendChild(title);
+function renderSections() {
+  const qaType = document.getElementById('qaType').value;
+  let html = "";
 
-    dataQA[qa].sections[section].forEach(item => {
-      const div = document.createElement('div');
-      div.className = 'item';
-      div.innerHTML = `
-        <span>${item}</span>
-        <div class="buttons">
-          <button class="btn-yes" onclick="toggleBtn(this, true)">✅</button>
-          <button class="btn-no" onclick="toggleBtn(this, false)">❌</button>
+  inspectionSections.forEach(sec => {
+    html += `<div class="card"><h3>${sec.name}</h3>`;
+    sec.items.forEach((item, idx) => {
+      const id = sec.name.replace(/\s+/g,'') + idx;
+      html += `
+        <div class="label">
+          <span>${item}</span>
+          <div>
+            <button class="good" onclick="toggleButton(this, 'GOOD', '${id}')">✅</button>
+            <button class="bad" onclick="toggleButton(this, 'BAD', '${id}')">❌</button>
+          </div>
         </div>
-      `;
-      const txt = document.createElement('input');
-      txt.type = 'text';
-      txt.placeholder = 'Tulis temuan (jika ada)...';
-      txt.oninput = updateDeviation;
-      div.appendChild(txt);
-      card.appendChild(div);
+        <textarea id="note_${id}" placeholder="Tulis temuan jika ada..."></textarea>`;
     });
-
-    container.appendChild(card);
-  }
-  updateDeviation();
-}
-renderQA();
-document.getElementById('qaSelect').addEventListener('change', renderQA);
-
-// Tombol centang/silang
-function toggleBtn(btn, isYes) {
-  const parent = btn.parentElement;
-  const yesBtn = parent.querySelector('.btn-yes');
-  const noBtn = parent.querySelector('.btn-no');
-  yesBtn.classList.remove('active-yes');
-  noBtn.classList.remove('active-no');
-  if (isYes) yesBtn.classList.add('active-yes');
-  else noBtn.classList.add('active-no');
-  updateDeviation();
-}
-
-// Update deviation otomatis
-function updateDeviation() {
-  const inputs = document.querySelectorAll('.item');
-  const deviations = [];
-  inputs.forEach(div => {
-    const text = div.querySelector('input[type="text"]').value.trim();
-    if (text !== '') deviations.push(`⚠️ ${text}`);
+    html += `</div>`;
   });
-  document.getElementById('deviationList').innerText = deviations.join('\n');
+
+  const validasi = sectionsData[qaType];
+  html += `<div class="card"><h3>${validasi.title}</h3>`;
+  validasi.items.forEach((v,i)=>{
+    const id = "val"+i;
+    html += `
+      <div class="label">
+        <span>${v}</span>
+        <div>
+          <button class="good" onclick="toggleButton(this,'✅','${id}')">✅</button>
+          <button class="bad" onclick="toggleButton(this,'❌','${id}')">❌</button>
+        </div>
+      </div>`;
+  });
+  html += `</div><div class="card"><h3>⚠️ Deviation (Tambahkan jika ada)</h3><textarea id="manualDeviation" rows="3" placeholder="Tambahkan deviation manual..."></textarea></div>`;
+  
+  document.getElementById('sections').innerHTML = html;
+}
+renderSections();
+document.getElementById('qaType').addEventListener('change', renderSections);
+
+function toggleButton(el, val, id) {
+  const parent = el.parentElement;
+  parent.querySelectorAll('button').forEach(btn=>btn.classList.remove('active'));
+  el.classList.add('active');
+  el.dataset.value = val;
 }
 
-// Format tanggal ke 07-Oct-2025
-function formatTanggal(tgl) {
-  if (!tgl) return '';
-  const date = new Date(tgl);
-  const day = String(date.getDate()).padStart(2, '0');
-  const monthNames = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
-  return `${day}-${monthNames[date.getMonth()]}-${date.getFullYear()}`;
-}
-
-// Preview hasil
 function showPreview() {
-  const tgl = formatTanggal(document.getElementById('tgl').value);
-  const mekanik = document.getElementById('mekanik').value;
-  const cn = document.getElementById('cn').value;
-  const hm = document.getElementById('hm').value;
-  const qa = document.getElementById('qaSelect').value;
-  let hasil = `📅 Tanggal : ${tgl}\n👷 Mekanik : ${mekanik}\n🚗 CN : ${cn}\n⌛ HM : ${hm}\n📋 QA : ${qa}\n\n`;
+  const qaType = document.getElementById('qaType').value;
+  let text = `*${qaType === 'QA1' ? 'QA-1 Pre Inspection' : 'QA-7 Final Inspection'}*\n\n`;
+  text += `📅 Tanggal : ${document.getElementById('tgl').value}\n👷 Mekanik : ${document.getElementById('mekanik').value}\n🚗 CN : ${document.getElementById('cn').value}\n⌛ HM : ${document.getElementById('hm').value}\n\n---\n`;
 
-  const cards = document.querySelectorAll('.card');
-  cards.forEach(card => {
-    const section = card.querySelector('.section-title')?.innerText;
-    if (!section) return;
-    hasil += `${section}\n`;
-    card.querySelectorAll('.item').forEach(div => {
-      const item = div.querySelector('span').innerText;
-      const yesActive = div.querySelector('.active-yes');
-      const noActive = div.querySelector('.active-no');
-      const status = yesActive ? '✅ OK' : noActive ? '❌ NOK' : '⏺️';
-      hasil += `${item} : ${status}\n`;
+  let deviations = [];
+
+  inspectionSections.forEach(sec=>{
+    text += `🧩 *${sec.name}*\n`;
+    sec.items.forEach((item, idx)=>{
+      const id = sec.name.replace(/\s+/g,'')+idx;
+      const goodBtn = document.querySelector(`#note_${id}`).previousElementSibling.querySelector('.good.active');
+      const badBtn = document.querySelector(`#note_${id}`).previousElementSibling.querySelector('.bad.active');
+      let status = goodBtn ? '✅ GOOD' : badBtn ? '❌ BAD' : '❔';
+      text += `${item} : ${status}\n`;
+      const note = document.getElementById(`note_${id}`).value.trim();
+      if(note) deviations.push(`⚠️ ${note}`);
     });
-    hasil += `\n`;
+    text += `\n`;
   });
 
-  hasil += `---\n⚠️ Deviation :\n${document.getElementById('deviationList').innerText}`;
-  document.getElementById('previewText').innerText = hasil;
-  document.getElementById('previewPopup').style.display = 'block';
-  document.getElementById('overlay').style.display = 'block';
+  const qaSection = sectionsData[qaType];
+  text += `📝 *${qaSection.title}*\n`;
+  qaSection.items.forEach((v,i)=>{
+    const id="val"+i;
+    const good=document.querySelector(`[onclick*="${id}"].good.active`);
+    const bad=document.querySelector(`[onclick*="${id}"].bad.active`);
+    text += `${v} : ${good ? '✅' : bad ? '❌' : '❔'}\n`;
+  });
+
+  const manualDev=document.getElementById('manualDeviation').value.trim();
+  if(manualDev) manualDev.split('\n').forEach(d=>deviations.push(`⚠️ ${d.trim()}`));
+  
+  text += `\n⚠️ *Deviation:*\n` + (deviations.length ? deviations.join('\n') : 'Tidak ada') + '\n';
+
+  document.getElementById('previewText').textContent = text;
+  document.getElementById('previewPopup').style.display='block';
 }
 
-// Popup control
-function closePreview() {
-  document.getElementById('previewPopup').style.display = 'none';
-  document.getElementById('overlay').style.display = 'none';
+function copyText(){
+  navigator.clipboard.writeText(document.getElementById('previewText').textContent);
+  alert('✅ Teks disalin!');
 }
 
-function copyWA() {
-  const text = document.getElementById('previewText').innerText;
-  navigator.clipboard.writeText(text);
-  alert('✅ Teks berhasil disalin!');
+function sendToWhatsApp(){
+  const msg = encodeURIComponent(document.getElementById('previewText').textContent);
+  window.open(`https://wa.me/?text=${msg}`,'_blank');
 }
 
-function sendWA() {
-  const text = encodeURIComponent(document.getElementById('previewText').innerText);
-  window.open(`https://wa.me/?text=${text}`, '_blank');
+function closePopup(){
+  document.getElementById('previewPopup').style.display='none';
 }
 </script>
+
 </body>
 </html>
