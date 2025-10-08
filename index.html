@@ -163,16 +163,16 @@ const inspectionSections = [
   { name: "Oil Level", items: ["Engine oil level","Transmission oil level","Hydraulic oil level"] },
   { name: "Engine Area", items: [
     "Belt tension","Engine oil leakage","Common Rail Connector","Injector Tube",
-    {label:"Common rail pressure (ON) MPa", type:"number"},
-    {label:"Power Supply (ON) V", type:"number"}
+    {label:"Common rail pressure (ON)", type:"number", unit:"MPa"},
+    {label:"Power Supply (ON)", type:"number", unit:"V"}
   ]},
   { name: "Cabin Area", items: ["FM Radio","Fatigue Warning","Power Window"] },
   { name: "Frame Area", items: ["Operator seat","Hand Rail"] },
   { name: "Suspension Pressure (on monitor panel)", items: [
-    {label:"FL MPa", type:"number"},
-    {label:"FR MPa", type:"number"},
-    {label:"RL MPa", type:"number"},
-    {label:"RR MPa", type:"number"}
+    {label:"FL", type:"number", unit:"MPa"},
+    {label:"FR", type:"number", unit:"MPa"},
+    {label:"RL", type:"number", unit:"MPa"},
+    {label:"RR", type:"number", unit:"MPa"}
   ]},
   { name: "Tyre Condition", items: ["Tyre Condition"] }
 ];
@@ -242,7 +242,7 @@ function showPreview(){
       const id=sec.name.replace(/\s+/g,'')+idx;
       if(typeof item==='object' && item.type==='number'){
         const val=document.getElementById(`num_${id}`).value;
-        text+=`${item.label} : ${val?val:'-'}\n`;
+        text+=`${item.label} : ${val?val+' '+item.unit:'-'}\n`;
       } else {
         const good=document.querySelector(`#note_${id}`).previousElementSibling.querySelector('.good.active');
         const bad=document.querySelector(`#note_${id}`).previousElementSibling.querySelector('.bad.active');
