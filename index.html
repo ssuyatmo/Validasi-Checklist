@@ -42,6 +42,7 @@ header {
   align-items: center;
   justify-content: space-between;
   margin-bottom: 6px;
+  flex-wrap: wrap;
 }
 .item input[type="text"] {
   width: 100%;
@@ -91,6 +92,14 @@ button {
   display: none;
   z-index: 999;
 }
+#deviationBox {
+  background: #fff7e6;
+  border-left: 5px solid #ff9800;
+  border-radius: 10px;
+  padding: 10px;
+  margin-top: 10px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+}
 </style>
 </head>
 <body>
@@ -112,6 +121,11 @@ button {
   </div>
 
   <div id="sections"></div>
+
+  <div id="deviationBox">
+    <b>⚠️ Deviation :</b>
+    <pre id="deviationList" style="white-space: pre-wrap; margin-top: 5px;"></pre>
+  </div>
 
   <button onclick="showPreview()">🧾 Preview</button>
 </div>
@@ -169,25 +183,26 @@ function renderQA() {
       div.innerHTML = `
         <span>${item}</span>
         <div class="buttons">
-          <button class="btn-yes" onclick="toggleBtn(this, '${item}', true)">✅</button>
-          <button class="btn-no" onclick="toggleBtn(this, '${item}', false)">❌</button>
+          <button class="btn-yes" onclick="toggleBtn(this, true)">✅</button>
+          <button class="btn-no" onclick="toggleBtn(this, false)">❌</button>
         </div>
       `;
       const txt = document.createElement('input');
       txt.type = 'text';
       txt.placeholder = 'Tulis temuan (jika ada)...';
-      txt.oninput = () => updateDeviation();
+      txt.oninput = updateDeviation;
       div.appendChild(txt);
       card.appendChild(div);
     });
 
     container.appendChild(card);
   }
+  updateDeviation();
 }
 renderQA();
 document.getElementById('qaSelect').addEventListener('change', renderQA);
 
-function toggleBtn(btn, item, isYes) {
+function toggleBtn(btn, isYes) {
   const parent = btn.parentElement;
   const yesBtn = parent.querySelector('.btn-yes');
   const noBtn = parent.querySelector('.btn-no');
@@ -203,12 +218,9 @@ function updateDeviation() {
   const deviations = [];
   inputs.forEach(div => {
     const text = div.querySelector('input[type="text"]').value.trim();
-    const noBtn = div.querySelector('.active-no');
-    if (text !== '' || noBtn) {
-      if (text) deviations.push(`⚠️ ${text}`);
-    }
+    if (text !== '') deviations.push(`⚠️ ${text}`);
   });
-  return deviations.join('\n');
+  document.getElementById('deviationList').innerText = deviations.join('\n');
 }
 
 function showPreview() {
@@ -220,7 +232,7 @@ function showPreview() {
   let hasil = `📅 Tgl : ${tgl}\n👷 Mekanik : ${mekanik}\n🚗 CN : ${cn}\n⌛ HM : ${hm}\n\n---\n`;
 
   const cards = document.querySelectorAll('.card');
-  cards.forEach((card, idx) => {
+  cards.forEach(card => {
     const section = card.querySelector('.section-title')?.innerText;
     if (!section) return;
     hasil += `${section}\n`;
@@ -234,7 +246,7 @@ function showPreview() {
     hasil += `\n`;
   });
 
-  hasil += `---\n⚠️ Deviation :\n${updateDeviation()}`;
+  hasil += `---\n⚠️ Deviation :\n${document.getElementById('deviationList').innerText}`;
   document.getElementById('previewText').innerText = hasil;
   document.getElementById('previewPopup').style.display = 'block';
   document.getElementById('overlay').style.display = 'block';
