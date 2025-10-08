@@ -31,6 +31,7 @@ header {
   box-shadow: 0 2px 6px rgba(0,0,0,0.2);
   padding: 10px;
   margin-bottom: 10px;
+  transition: background 0.3s;
 }
 h3 {
   background: #cfe8cf;
@@ -53,10 +54,10 @@ h3 {
   cursor: pointer;
   font-weight: bold;
 }
-.ok { background: #a4f5a4; } /* default aktif */
+.ok { background: #a4f5a4; }
 .ok.active { background: #4caf50; color:white; }
-.notok.active { background: #f44336; color:white; }
 .notok { background: #f5a4a4; }
+.notok.active { background: #f44336; color:white; }
 textarea, input[type="text"], input[type="number"], input[type="date"] {
   width: 100%;
   border-radius: 6px;
@@ -217,15 +218,28 @@ function renderSections(){
   html += `</div><div class="card"><h3>⚠️ Deviation (Tambahkan jika ada)</h3><textarea id="manualDeviation" rows="3" placeholder="Tambahkan deviation manual..."></textarea></div>`;
   
   document.getElementById('sections').innerHTML = html;
+  updateCardColors(); // set warna kartu awal
 }
 renderSections();
 document.getElementById('qaType').addEventListener('change', renderSections);
 
 function toggleButton(el,val,id){
   const parent = el.parentElement;
-  parent.querySelectorAll('button').forEach(btn=>btn.classList.remove('active'));
+  parent.querySelectorAll('button').forEach(btn => btn.classList.remove('active'));
   el.classList.add('active');
   el.dataset.value = val;
+  updateCardColors();
+}
+
+function updateCardColors() {
+  document.querySelectorAll('.card').forEach(card => {
+    const notOkBtn = card.querySelector('.notok.active');
+    if (notOkBtn) {
+      card.style.background = '#f8d7da'; // merah lembut
+    } else {
+      card.style.background = '#fff'; // default putih
+    }
+  });
 }
 
 function showPreview(){
