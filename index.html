@@ -3,11 +3,11 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>QA-1 & QA-7 Inspection Form</title>
+<title>QA1 & QA7 Inspection Form</title>
 <style>
 body {
   font-family: "Segoe UI", sans-serif;
-  background: linear-gradient(180deg, #e8f5e9, #d0f0c0);
+  background: linear-gradient(180deg, #e9fbe9, #d0f0c0);
   margin: 0;
   padding: 12px;
 }
@@ -20,7 +20,6 @@ header {
   border-radius: 14px;
   font-size: 18px;
   box-shadow: 0 3px 8px rgba(0,0,0,0.25);
-  letter-spacing: 0.5px;
 }
 select, input, textarea {
   width: 100%;
@@ -53,8 +52,8 @@ select, input, textarea {
   margin: 5px 0;
 }
 .status {
-  width: 85px;
-  height: 38px;
+  width: 80px;
+  height: 36px;
   text-align: center;
   border-radius: 10px;
   font-weight: bold;
@@ -118,33 +117,33 @@ button {
   <!-- OIL LEVEL -->
   <div class="card">
     <div class="section-title">🩸 Oil Level</div>
-    <div class="input-row"><div class="status good" onclick="toggle(this,'engineOil')">GOOD</div><input id="engineOil" placeholder="Engine oil level :"></div>
-    <div class="input-row"><div class="status good" onclick="toggle(this,'transOil')">GOOD</div><input id="transOil" placeholder="Transmission oil level :"></div>
-    <div class="input-row"><div class="status good" onclick="toggle(this,'hydOil')">GOOD</div><input id="hydOil" placeholder="Hydraulic oil level :"></div>
+    <div class="input-row"><div class="status good" onclick="toggle(this)">✅ GOOD</div><span>Engine oil level</span></div>
+    <div class="input-row"><div class="status good" onclick="toggle(this)">✅ GOOD</div><span>Transmission oil level</span></div>
+    <div class="input-row"><div class="status good" onclick="toggle(this)">✅ GOOD</div><span>Hydraulic oil level</span></div>
   </div>
 
   <!-- ENGINE -->
   <div class="card">
     <div class="section-title">⚙️ Engine Area</div>
-    <div class="input-row"><div class="status good" onclick="toggle(this,'belt')">GOOD</div><input id="belt" placeholder="Belt tension :"></div>
-    <div class="input-row"><div class="status good" onclick="toggle(this,'oilLeak')">GOOD</div><input id="oilLeak" placeholder="Engine oil leakage :"></div>
-    <div class="input-row"><div class="status good" onclick="toggle(this,'rail')">GOOD</div><input id="rail" placeholder="Common Rail Connector :"></div>
-    <div class="input-row"><div class="status good" onclick="toggle(this,'injector')">GOOD</div><input id="injector" placeholder="Injector Tube :"></div>
+    <div class="input-row"><div class="status good" onclick="toggle(this)">✅ GOOD</div><span>Belt tension</span></div>
+    <div class="input-row"><div class="status good" onclick="toggle(this)">✅ GOOD</div><span>Engine oil leakage</span></div>
+    <div class="input-row"><div class="status good" onclick="toggle(this)">✅ GOOD</div><span>Common Rail Connector</span></div>
+    <div class="input-row"><div class="status good" onclick="toggle(this)">✅ GOOD</div><span>Injector Tube</span></div>
   </div>
 
   <!-- CABIN -->
   <div class="card">
     <div class="section-title">🚗 Cabin Area</div>
-    <div class="input-row"><div class="status good" onclick="toggle(this,'fm')">GOOD</div><input id="fm" placeholder="FM Radio :"></div>
-    <div class="input-row"><div class="status good" onclick="toggle(this,'fatigue')">GOOD</div><input id="fatigue" placeholder="Fatigue Warning :"></div>
-    <div class="input-row"><div class="status good" onclick="toggle(this,'window')">GOOD</div><input id="window" placeholder="Power Window :"></div>
+    <div class="input-row"><div class="status good" onclick="toggle(this)">✅ GOOD</div><span>FM Radio</span></div>
+    <div class="input-row"><div class="status good" onclick="toggle(this)">✅ GOOD</div><span>Fatigue Warning</span></div>
+    <div class="input-row"><div class="status good" onclick="toggle(this)">✅ GOOD</div><span>Power Window</span></div>
   </div>
 
   <!-- FRAME -->
   <div class="card">
     <div class="section-title">🛞 Frame Area</div>
-    <div class="input-row"><div class="status good" onclick="toggle(this,'seat')">GOOD</div><input id="seat" placeholder="Operator seat :"></div>
-    <div class="input-row"><div class="status good" onclick="toggle(this,'handrail')">GOOD</div><input id="handrail" placeholder="Hand Rail :"></div>
+    <div class="input-row"><div class="status good" onclick="toggle(this)">✅ GOOD</div><span>Operator seat</span></div>
+    <div class="input-row"><div class="status good" onclick="toggle(this)">✅ GOOD</div><span>Hand Rail</span></div>
   </div>
 
   <!-- PRESSURE -->
@@ -205,88 +204,76 @@ const validationItems = [
   "Form Service Activity Report"
 ];
 
+// generate validation buttons
 const container = document.getElementById("validationList");
 validationItems.forEach(item=>{
   const row=document.createElement("div");
   row.className="input-row";
   const btn=document.createElement("div");
   btn.className="status good";
-  btn.textContent="GOOD";
-  const field=document.createElement("input");
-  field.value=item+" : ✅ GOOD";
-  btn.onclick=()=>toggle(btn,field.id);
-  field.id=item.replace(/\s+/g,"_");
+  btn.textContent="✅ GOOD";
+  const label=document.createElement("span");
+  label.textContent=item;
+  btn.onclick=()=>toggle(btn);
   row.appendChild(btn);
-  row.appendChild(field);
+  row.appendChild(label);
   container.appendChild(row);
 });
 
-function toggle(btn,id){
-  const field=document.getElementById(id);
+function toggle(btn){
   if(btn.classList.contains("good")){
     btn.classList.remove("good");
     btn.classList.add("bad");
-    btn.textContent="BAD";
-    field.value=field.value.split(":")[0]+" : ❌ BAD";
+    btn.textContent="❌ BAD";
   }else{
     btn.classList.remove("bad");
     btn.classList.add("good");
-    btn.textContent="GOOD";
-    field.value=field.value.split(":")[0]+" : ✅ GOOD";
+    btn.textContent="✅ GOOD";
   }
 }
 
-function formatDate(d){
-  if(!d)return"";
-  const date=new Date(d);
-  const options={day:"2-digit",month:"short",year:"numeric"};
-  return date.toLocaleDateString("en-GB",options).replace(",","");
-}
-
 function preview(){
-  const date=formatDate(dateInput.value);
-  const deviationLines=deviation.value.split("\n").filter(l=>l.trim()!=="").map(l=>"⚠️ "+l.trim()).join("\n");
-  const validText=[...container.querySelectorAll("input")].map(v=>v.value).join("\n");
-  const result=
-`📋 Inspection Type : ${inspectionType.value}
+  const date=new Date(document.getElementById("date").value);
+  const formattedDate=isNaN(date)?"":date.toLocaleDateString("en-GB",{day:"2-digit",month:"short",year:"numeric"}).replace(",","");
+  const deviationLines=document.getElementById("deviation").value.split("\n").filter(l=>l.trim()!=="").map(l=>"⚠️ "+l.trim()).join("\n");
+  const getSection=(title,selector)=>`${title}\n${[...document.querySelectorAll(selector)].map(r=>{
+    const btn=r.querySelector(".status");const label=r.querySelector("span");
+    return `${label.textContent} : ${btn.textContent}`;
+  }).join("\n")}\n`;
 
-📅 Tgl : ${date}
-👷 Mekanik : ${mechanic.value}
-🚗 CN : ${cn.value}
-⌛ HM : ${hm.value}
+  const validText=[...container.querySelectorAll(".input-row")].map(r=>{
+    const btn=r.querySelector(".status");const label=r.querySelector("span");
+    return `${label.textContent} ${btn.textContent}`;
+  }).join("\n");
+
+  const result=
+`📋 Inspection Type : ${document.getElementById("inspectionType").value}
+
+📅 Tgl : ${formattedDate}
+👷 Mekanik : ${document.getElementById("mechanic").value}
+🚗 CN : ${document.getElementById("cn").value}
+⌛ HM : ${document.getElementById("hm").value}
 
 
 ---
 
 🩸 Oil Level 🩸
-${engineOil.value}
-${transOil.value}
-${hydOil.value}
-
+${getSection("",".card:nth-of-type(2) .input-row")}
 
 ---
 
 ⚙️ Engine Area ⚙️
-${belt.value}
-${oilLeak.value}
-${rail.value}
-${injector.value}
-
+${getSection("",".card:nth-of-type(3) .input-row")}
 
 ---
 
 🚗 Cabin Area 🚗
-${fm.value}
-${fatigue.value}
-${window.value}
-
+${getSection("",".card:nth-of-type(4) .input-row")}
 
 ---
 
 🛞 Frame Area 🛞
-${seat.value}
-${handrail.value}
-
+${getSection("",".card:nth-of-type(5) .input-row")}
 
 ---
 
@@ -311,6 +298,7 @@ ${validText}
 
 ⚠️ Deviation :
 ${deviationLines}`;
+
   document.getElementById("preview").textContent=result;
 }
 
