@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Form QA1 & QA7 - Pre & Final Inspection</title>
+<title>Form QA-1 & QA-7 Inspection</title>
 <style>
   body {
     font-family: 'Segoe UI', sans-serif;
@@ -18,8 +18,25 @@
     padding: 15px;
     font-size: 20px;
     border-radius: 0 0 15px 15px;
-    box-shadow: 0 4px 6px rgba(0,0,0,.2);
+    box-shadow: 0 4px 6px rgba(0,0,0,.3);
   }
+  .mode-select {
+    display: flex;
+    justify-content: center;
+    margin-top: 10px;
+    gap: 10px;
+  }
+  .mode-btn {
+    padding: 8px 14px;
+    border-radius: 10px;
+    border: none;
+    background: #ccc;
+    color: #000;
+    cursor: pointer;
+    transition: .2s;
+    font-weight: bold;
+  }
+  .mode-btn.active { background:#1e8449; color:#fff; }
   .card {
     background:#fff;
     margin:15px;
@@ -95,10 +112,22 @@
     border-radius:12px;
     box-shadow:0 2px 5px rgba(0,0,0,.1);
   }
+  textarea#manualDeviation {
+    width:100%;
+    border-radius:10px;
+    padding:10px;
+    border:1px solid #ccc;
+    margin-top:8px;
+  }
 </style>
 </head>
 <body>
-<header>📋 Form QA1 & QA7 - Pre & Final Inspection</header>
+<header>📋 QA Inspection Form</header>
+
+<div class="mode-select">
+  <button class="mode-btn active" id="qa1">QA-1 Pre Inspection</button>
+  <button class="mode-btn" id="qa7">QA-7 Final Inspection</button>
+</div>
 
 <div class="card">
   <div class="section-title">🩸 Oil Level</div>
@@ -159,6 +188,11 @@
   <div class="item"><label>Form Service Activity Report</label><div><span class="btn check">✅</span><span class="btn cross">❌</span></div></div>
 </div>
 
+<div class="card">
+  <div class="section-title">⚠️ Deviation (Manual Input)</div>
+  <textarea id="manualDeviation" rows="4" placeholder="Tambahkan deviation tambahan di sini..."></textarea>
+</div>
+
 <div class="buttons">
   <button id="preview">🧾 Preview</button>
   <button id="copy">📋 Copy</button>
@@ -168,26 +202,34 @@
 <div id="result"></div>
 
 <script>
-const btns=document.querySelectorAll('.btn');
-btns.forEach(b=>{
-  b.addEventListener('click',()=>{
-    const group=b.parentElement.querySelectorAll('.btn');
-    group.forEach(g=>g.classList.remove('active'));
-    b.classList.add('active');
+let mode="QA-1 Pre Inspection";
+document.getElementById("qa1").onclick=()=>{mode="QA-1 Pre Inspection";toggleMode("qa1");};
+document.getElementById("qa7").onclick=()=>{mode="QA-7 Final Inspection";toggleMode("qa7");};
+function toggleMode(id){
+  document.querySelectorAll(".mode-btn").forEach(b=>b.classList.remove("active"));
+  document.getElementById(id).classList.add("active");
+}
+
+document.querySelectorAll('.btn').forEach(btn=>{
+  btn.addEventListener('click',()=>{
+    const group=btn.parentElement.querySelectorAll('.btn');
+    group.forEach(b=>b.classList.remove('active'));
+    btn.classList.add('active');
   });
 });
 
 document.getElementById('preview').onclick=()=>{
-  let t="📅 Tgl : "+new Date().toLocaleDateString('en-GB')+
+  let t="*"+mode+"*\n\n📅 Tgl : "+new Date().toLocaleDateString('en-GB')+
   "\n👷 Mekanik :\n🚗 CN :\n⌛ HM :\n\n---\n";
-  const sections=document.querySelectorAll('.card');
+  const cards=document.querySelectorAll('.card');
   let dev=[];
-  sections.forEach(s=>{
-    let title=s.querySelector('.section-title').textContent;
+  cards.forEach(c=>{
+    const title=c.querySelector('.section-title')?.textContent;
+    if(!title)return;
+    if(title.includes('Deviation'))return;
     t+=title+"\n";
-    const items=s.querySelectorAll('.item');
-    items.forEach(it=>{
-      const label=it.querySelector('label').textContent;
+    c.querySelectorAll('.item').forEach(it=>{
+      const label=it.querySelector('label')?.textContent||"";
       const good=it.querySelector('.good');
       const bad=it.querySelector('.bad');
       const check=it.querySelector('.check');
@@ -199,13 +241,13 @@ document.getElementById('preview').onclick=()=>{
           t+=label+" : ❌ BAD\n";
           if(temuan.value.trim()!=="")dev.push("⚠️ "+temuan.value.trim());
         }else t+=label+" : ⬜\n";
-      }else if(check||cross){
+      } else if(check||cross){
         if(check?.classList.contains('active'))t+=label+" ✅\n";
         else if(cross?.classList.contains('active'))t+=label+" ❌\n";
         else t+=label+" ⬜\n";
       }
     });
-    if(s.querySelector('.pressure')){
+    if(c.querySelector('.pressure')){
       const fl=document.getElementById('fl').value;
       const fr=document.getElementById('fr').value;
       const rl=document.getElementById('rl').value;
@@ -214,7 +256,12 @@ document.getElementById('preview').onclick=()=>{
     }
     t+="\n---\n";
   });
-  if(dev.length>0){t+="⚠️ Deviation :\n"+dev.join("\n");}
+  let manual=document.getElementById('manualDeviation').value.trim();
+  if(dev.length>0 || manual!==""){
+    t+="⚠️ *Deviation :*\n";
+    if(dev.length>0)t+=dev.join("\n")+"\n";
+    if(manual!=="")manual.split("\n").forEach(line=>{if(line.trim()!=="")t+="⚠️ "+line.trim()+"\n";});
+  }
   document.getElementById('result').textContent=t;
 };
 document.getElementById('copy').onclick=()=>{
