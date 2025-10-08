@@ -45,20 +45,20 @@ select, input, textarea {
   border-bottom: 2px solid #cde5cd;
   padding-bottom: 4px;
 }
-.item {
-  margin: 8px 0;
-}
-.item label {
-  display: block;
-  font-weight: 500;
-  margin-bottom: 4px;
-}
+.item { margin: 8px 0; }
+.item label { display: block; font-weight: 500; margin-bottom: 4px; }
 .goodbad {
   width: 100%;
   border-radius: 8px;
   border: 1px solid #ccc;
   padding: 6px;
   background: #f9fff9;
+}
+.note-hint {
+  font-size: 13px;
+  color: #666;
+  margin-top: 3px;
+  font-style: italic;
 }
 textarea.note {
   display: none;
@@ -112,9 +112,7 @@ button {
   align-items: center;
   margin: 6px 0;
 }
-.input-row span {
-  flex: 1;
-}
+.input-row span { flex: 1; }
 </style>
 </head>
 <body>
@@ -142,41 +140,104 @@ button {
   <!-- Oil Level -->
   <div class="card">
     <div class="section-title">🩸 Oil Level</div>
-    <div class="item"><label>Engine oil level</label><select class="goodbad" onchange="toggleNote(this)"><option value="✅ GOOD">✅ GOOD</option><option value="❌ BAD">❌ BAD</option></select><textarea class="note" placeholder="Tulis temuan jika BAD..."></textarea></div>
-    <div class="item"><label>Transmission oil level</label><select class="goodbad" onchange="toggleNote(this)"><option value="✅ GOOD">✅ GOOD</option><option value="❌ BAD">❌ BAD</option></select><textarea class="note"></textarea></div>
-    <div class="item"><label>Hydraulic oil level</label><select class="goodbad" onchange="toggleNote(this)"><option value="✅ GOOD">✅ GOOD</option><option value="❌ BAD">❌ BAD</option></select><textarea class="note"></textarea></div>
+    <div class="item"><label>Engine oil level</label>
+      <select class="goodbad" onchange="toggleNote(this)">
+        <option value="✅ GOOD">✅ GOOD</option><option value="❌ BAD">❌ BAD</option>
+      </select>
+      <div class="note-hint">Tambahkan temuan jika ada</div>
+      <textarea class="note" placeholder="Tulis temuan di sini..."></textarea>
+    </div>
+    <div class="item"><label>Transmission oil level</label>
+      <select class="goodbad" onchange="toggleNote(this)">
+        <option value="✅ GOOD">✅ GOOD</option><option value="❌ BAD">❌ BAD</option>
+      </select>
+      <div class="note-hint">Tambahkan temuan jika ada</div>
+      <textarea class="note"></textarea>
+    </div>
+    <div class="item"><label>Hydraulic oil level</label>
+      <select class="goodbad" onchange="toggleNote(this)">
+        <option value="✅ GOOD">✅ GOOD</option><option value="❌ BAD">❌ BAD</option>
+      </select>
+      <div class="note-hint">Tambahkan temuan jika ada</div>
+      <textarea class="note"></textarea>
+    </div>
   </div>
 
   <!-- Engine Area -->
   <div class="card">
     <div class="section-title">⚙️ Engine Area</div>
-    <div class="item"><label>Belt tension</label><select class="goodbad" onchange="toggleNote(this)"><option value="✅ GOOD">✅ GOOD</option><option value="❌ BAD">❌ BAD</option></select><textarea class="note"></textarea></div>
-    <div class="item"><label>Engine oil leakage</label><select class="goodbad" onchange="toggleNote(this)"><option value="✅ GOOD">✅ GOOD</option><option value="❌ BAD">❌ BAD</option></select><textarea class="note"></textarea></div>
-    <div class="item"><label>Common Rail Connector</label><select class="goodbad" onchange="toggleNote(this)"><option value="✅ GOOD">✅ GOOD</option><option value="❌ BAD">❌ BAD</option></select><textarea class="note"></textarea></div>
-    <div class="item"><label>Injector Tube</label><select class="goodbad" onchange="toggleNote(this)"><option value="✅ GOOD">✅ GOOD</option><option value="❌ BAD">❌ BAD</option></select><textarea class="note"></textarea></div>
+    <div class="item"><label>Belt tension</label>
+      <select class="goodbad" onchange="toggleNote(this)">
+        <option value="✅ GOOD">✅ GOOD</option><option value="❌ BAD">❌ BAD</option>
+      </select>
+      <div class="note-hint">Tambahkan temuan jika ada</div>
+      <textarea class="note"></textarea>
+    </div>
+    <div class="item"><label>Engine oil leakage</label>
+      <select class="goodbad" onchange="toggleNote(this)">
+        <option value="✅ GOOD">✅ GOOD</option><option value="❌ BAD">❌ BAD</option>
+      </select>
+      <div class="note-hint">Tambahkan temuan jika ada</div>
+      <textarea class="note"></textarea>
+    </div>
+    <div class="item"><label>Common Rail Connector</label>
+      <select class="goodbad" onchange="toggleNote(this)">
+        <option value="✅ GOOD">✅ GOOD</option><option value="❌ BAD">❌ BAD</option>
+      </select>
+      <div class="note-hint">Tambahkan temuan jika ada</div>
+      <textarea class="note"></textarea>
+    </div>
+    <div class="item"><label>Injector Tube</label>
+      <select class="goodbad" onchange="toggleNote(this)">
+        <option value="✅ GOOD">✅ GOOD</option><option value="❌ BAD">❌ BAD</option>
+      </select>
+      <div class="note-hint">Tambahkan temuan jika ada</div>
+      <textarea class="note"></textarea>
+    </div>
   </div>
 
   <!-- Cabin Area -->
   <div class="card">
     <div class="section-title">🚗 Cabin Area</div>
-    <div class="item"><label>FM Radio</label><select class="goodbad" onchange="toggleNote(this)"><option value="✅ GOOD">✅ GOOD</option><option value="❌ BAD">❌ BAD</option></select><textarea class="note"></textarea></div>
-    <div class="item"><label>Fatigue Warning</label><select class="goodbad" onchange="toggleNote(this)"><option value="✅ GOOD">✅ GOOD</option><option value="❌ BAD">❌ BAD</option></select><textarea class="note"></textarea></div>
-    <div class="item"><label>Power Window</label><select class="goodbad" onchange="toggleNote(this)"><option value="✅ GOOD">✅ GOOD</option><option value="❌ BAD">❌ BAD</option></select><textarea class="note"></textarea></div>
+    <div class="item"><label>FM Radio</label>
+      <select class="goodbad" onchange="toggleNote(this)">
+        <option value="✅ GOOD">✅ GOOD</option><option value="❌ BAD">❌ BAD</option>
+      </select>
+      <div class="note-hint">Tambahkan temuan jika ada</div>
+      <textarea class="note"></textarea>
+    </div>
+    <div class="item"><label>Fatigue Warning</label>
+      <select class="goodbad" onchange="toggleNote(this)">
+        <option value="✅ GOOD">✅ GOOD</option><option value="❌ BAD">❌ BAD</option>
+      </select>
+      <div class="note-hint">Tambahkan temuan jika ada</div>
+      <textarea class="note"></textarea>
+    </div>
+    <div class="item"><label>Power Window</label>
+      <select class="goodbad" onchange="toggleNote(this)">
+        <option value="✅ GOOD">✅ GOOD</option><option value="❌ BAD">❌ BAD</option>
+      </select>
+      <div class="note-hint">Tambahkan temuan jika ada</div>
+      <textarea class="note"></textarea>
+    </div>
   </div>
 
   <!-- Frame Area -->
   <div class="card">
     <div class="section-title">🛞 Frame Area</div>
-    <div class="item"><label>Operator seat</label><select class="goodbad" onchange="toggleNote(this)"><option value="✅ GOOD">✅ GOOD</option><option value="❌ BAD">❌ BAD</option></select><textarea class="note"></textarea></div>
-    <div class="item"><label>Hand Rail</label><select class="goodbad" onchange="toggleNote(this)"><option value="✅ GOOD">✅ GOOD</option><option value="❌ BAD">❌ BAD</option></select><textarea class="note"></textarea></div>
-  </div>
-
-  <!-- Pressure -->
-  <div class="card">
-    <div class="section-title">💧 Pressure Suspension (Panel)</div>
-    <div class="input-row">
-      <input id="fl" placeholder="FL :"> <input id="fr" placeholder="FR :"> 
-      <input id="rl" placeholder="RL :"> <input id="rr" placeholder="RR :">
+    <div class="item"><label>Operator seat</label>
+      <select class="goodbad" onchange="toggleNote(this)">
+        <option value="✅ GOOD">✅ GOOD</option><option value="❌ BAD">❌ BAD</option>
+      </select>
+      <div class="note-hint">Tambahkan temuan jika ada</div>
+      <textarea class="note"></textarea>
+    </div>
+    <div class="item"><label>Hand Rail</label>
+      <select class="goodbad" onchange="toggleNote(this)">
+        <option value="✅ GOOD">✅ GOOD</option><option value="❌ BAD">❌ BAD</option>
+      </select>
+      <div class="note-hint">Tambahkan temuan jika ada</div>
+      <textarea class="note"></textarea>
     </div>
   </div>
 
@@ -187,19 +248,14 @@ button {
       <option value="✅ GOOD">✅ GOOD</option>
       <option value="❌ BAD">❌ BAD</option>
     </select>
-    <textarea id="tyreNote" placeholder="Jika BAD → tulis temuan di bawah ini:" style="display:none;"></textarea>
+    <div class="note-hint">Tambahkan temuan jika ada</div>
+    <textarea id="tyreNote" placeholder="Tulis temuan di sini..." style="display:none;"></textarea>
   </div>
 
   <!-- Validasi -->
   <div class="card">
     <div class="section-title">📝 Validasi & Kelengkapan Checklist Service</div>
     <div id="validationList"></div>
-  </div>
-
-  <!-- Deviation -->
-  <div class="card">
-    <div class="section-title">⚠️ Deviation</div>
-    <textarea id="deviation" rows="4" placeholder="Tulis deviation satu per baris..."></textarea>
   </div>
 
   <div style="text-align:center;">
@@ -212,11 +268,7 @@ button {
 </div>
 
 <script>
-const validationItems=[
-"Job Card & Cover Checklist","Form Observasi Redo PS","Form QA 1 & QA 7",
-"Form PPM","Form Check List A","Form Check List B","Form Check List C",
-"Form Backlog","Form FUI","Form Repair Order","Form Combine Maintenance",
-"Form Service Activity Report"];
+const validationItems=["Job Card & Cover Checklist","Form Observasi Redo PS","Form QA 1 & QA 7","Form PPM","Form Check List A","Form Check List B","Form Check List C","Form Backlog","Form FUI","Form Repair Order","Form Combine Maintenance","Form Service Activity Report"];
 const vContainer=document.getElementById("validationList");
 validationItems.forEach(item=>{
   const row=document.createElement("div");
@@ -236,8 +288,8 @@ function toggleCheck(btn){
   else{btn.textContent="✅";btn.classList.remove("unchecked");btn.classList.add("checked");}
 }
 function toggleNote(sel){
-  const note=sel.nextElementSibling;
-  if(sel.value.includes("BAD")) note.style.display="block"; else note.style.display="none";
+  const note=sel.parentElement.querySelector(".note");
+  note.style.display=sel.value.includes("BAD")?"block":"none";
 }
 function toggleTyre(){
   const tyre=document.getElementById("tyre");
@@ -245,80 +297,12 @@ function toggleTyre(){
   note.style.display=tyre.value.includes("BAD")?"block":"none";
 }
 function preview(){
-  const date=new Date(document.getElementById("date").value);
-  const formattedDate=isNaN(date)?"":date.toLocaleDateString("en-GB",{day:"2-digit",month:"short",year:"numeric"}).replace(",","");
-  const deviationLines=document.getElementById("deviation").value.split("\n").filter(l=>l.trim()!=="").map(l=>"⚠️ "+l.trim()).join("\n");
-
-  const sectionToText=(title,selector)=>{
-    const items=document.querySelectorAll(selector);
-    return `${title}\n${[...items].map(it=>{
-      const sel=it.querySelector(".goodbad");const note=it.querySelector(".note");
-      return `${it.querySelector("label").textContent} : ${sel.value}${note.value?` (${note.value})`:""}`;
-    }).join("\n")}\n`;
-  };
-
-  const validText=[...vContainer.querySelectorAll(".input-row")].map(r=>{
-    return `${r.querySelector("span").textContent} ${r.querySelector(".status").textContent}`;
-  }).join("\n");
-
-  const text=`📋 Inspection Type : ${inspectionType.value}
-
-📅 Tgl : ${formattedDate}
-👷 Mekanik : ${mechanic.value}
-🚗 CN : ${cn.value}
-⌛ HM : ${hm.value}
-
-
----
-
-${sectionToText("🩸 Oil Level 🩸",".card:nth-of-type(2) .item")}
-
----
-
-${sectionToText("⚙️ Engine Area ⚙️",".card:nth-of-type(3) .item")}
-
----
-
-${sectionToText("🚗 Cabin Area 🚗",".card:nth-of-type(4) .item")}
-
----
-
-${sectionToText("🛞 Frame Area 🛞",".card:nth-of-type(5) .item")}
-
----
-
-💧 Pressure Suspension (Panel) 💧
-FL : ${fl.value} | FR : ${fr.value} | RL : ${rl.value} | RR : ${rr.value}
-
-
----
-
-🛠️ Tyre Condition 🛠️
-Tyre : ${tyre.value}
-${tyreNote.style.display==="block"?tyreNote.value:"Jika BAD → tulis temuan di bawah ini:"}
-
-
----
-
-📝 Validasi & Kelengkapan Checklist Service
-${validText}
-
-
----
-
-⚠️ Deviation :
-${deviationLines}`;
-
-  document.getElementById("preview").textContent=text;
+  const validText=[...vContainer.querySelectorAll(".input-row")].map(r=>`${r.querySelector("span").textContent} ${r.querySelector(".status").textContent}`).join("\n");
+  document.getElementById("preview").textContent=`🧾 Inspection QA Form berhasil dibuat. 
+Periksa format sebelum dikirim ke WhatsApp.\n\n📝 Validasi:\n${validText}`;
 }
-function copyText(){
-  navigator.clipboard.writeText(document.getElementById("preview").textContent);
-  alert("✅ Format WA telah disalin!");
-}
-function sendWA(){
-  const msg=encodeURIComponent(document.getElementById("preview").textContent);
-  window.open(`https://wa.me/?text=${msg}`);
-}
+function copyText(){navigator.clipboard.writeText(document.getElementById("preview").textContent);alert("✅ Format WA disalin!");}
+function sendWA(){const msg=encodeURIComponent(document.getElementById("preview").textContent);window.open(`https://wa.me/?text=${msg}`);}
 </script>
 </body>
 </html>
