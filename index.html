@@ -53,11 +53,10 @@ h3 {
   cursor: pointer;
   font-weight: bold;
 }
-.good { background: #e0e0e0; }
-.good.active { background: #a4f5a4; }
-.bad.active { background: #f5a4a4; }
-.bad { background: #e0e0e0; }
-
+.ok { background: #a4f5a4; } /* default aktif */
+.ok.active { background: #4caf50; color:white; }
+.notok.active { background: #f44336; color:white; }
+.notok { background: #f5a4a4; }
 textarea, input[type="text"], input[type="number"], input[type="date"] {
   width: 100%;
   border-radius: 6px;
@@ -186,14 +185,14 @@ function renderSections(){
     sec.items.forEach((item, idx)=>{
       const id = sec.name.replace(/\s+/g,'')+idx;
       if(typeof item === 'object' && item.type === 'number'){
-        html += `<label>${item.label}:<input type="number" id="num_${id}" step="0.1" placeholder="Masukkan nilai..."></label>`;
+        html += `<label>${item.label}:<input type="number" id="num_${id}" step="0.1" placeholder="Masukkan nilai (${item.unit})..."></label>`;
       } else {
         html += `
         <div class="label">
           <span>${item}</span>
           <div>
-            <button class="good" onclick="toggleButton(this,'GOOD','${id}')">✅</button>
-            <button class="bad" onclick="toggleButton(this,'BAD','${id}')">❌</button>
+            <button class="ok active" onclick="toggleButton(this,'OK','${id}')">OK</button>
+            <button class="notok" onclick="toggleButton(this,'Not OK','${id}')">Not OK</button>
           </div>
         </div>
         <textarea id="note_${id}" placeholder="Tulis temuan jika ada..."></textarea>`;
@@ -210,8 +209,8 @@ function renderSections(){
       <div class="label">
         <span>${v}</span>
         <div>
-          <button class="good" onclick="toggleButton(this,'✅','${id}')">✅</button>
-          <button class="bad" onclick="toggleButton(this,'❌','${id}')">❌</button>
+          <button class="ok active" onclick="toggleButton(this,'OK','${id}')">OK</button>
+          <button class="notok" onclick="toggleButton(this,'Not OK','${id}')">Not OK</button>
         </div>
       </div>`;
   });
@@ -244,9 +243,9 @@ function showPreview(){
         const val=document.getElementById(`num_${id}`).value;
         text+=`${item.label} : ${val?val+' '+item.unit:'-'}\n`;
       } else {
-        const good=document.querySelector(`#note_${id}`).previousElementSibling.querySelector('.good.active');
-        const bad=document.querySelector(`#note_${id}`).previousElementSibling.querySelector('.bad.active');
-        const status=good?'✅ GOOD':bad?'❌ BAD':'❔';
+        const ok=document.querySelector(`#note_${id}`).previousElementSibling.querySelector('.ok.active');
+        const notok=document.querySelector(`#note_${id}`).previousElementSibling.querySelector('.notok.active');
+        const status=ok?'✅ OK':notok?'❌ Not OK':'❔';
         text+=`${item} : ${status}\n`;
         const note=document.getElementById(`note_${id}`).value.trim();
         if(note) deviations.push(`⚠️ ${note}`);
@@ -259,9 +258,9 @@ function showPreview(){
   text+=`📝 *${qaSection.title}*\n`;
   qaSection.items.forEach((v,i)=>{
     const id="val"+i;
-    const good=document.querySelector(`[onclick*="${id}"].good.active`);
-    const bad=document.querySelector(`[onclick*="${id}"].bad.active`);
-    text+=`${v} : ${good?'✅':bad?'❌':'❔'}\n`;
+    const ok=document.querySelector(`[onclick*="${id}"].ok.active`);
+    const notok=document.querySelector(`[onclick*="${id}"].notok.active`);
+    text+=`${v} : ${ok?'✅ OK':notok?'❌ Not OK':'❔'}\n`;
   });
 
   const manualDev=document.getElementById('manualDeviation').value.trim();
