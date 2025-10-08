@@ -243,6 +243,11 @@ function updateCardColors() {
 }
 
 function showPreview(){
+  document.getElementById('previewPopup').style.display='block';
+  document.getElementById('previewText').textContent = generateText();
+}
+
+function generateText(){
   const qaType=document.getElementById('qaType').value;
   let text=`*${qaType==='QA1'?'QA-1 Pre Inspection':'QA-7 Final Inspection'}*\n\n`;
   text+=`📅 Tanggal : ${tgl.value}\n👷 Mekanik : ${mekanik.value}\n🚗 CN : ${cn.value}\n⌛ HM : ${hm.value}\n\n---\n`;
@@ -281,19 +286,19 @@ function showPreview(){
   if(manualDev) manualDev.split('\n').forEach(d=>deviations.push(`⚠️ ${d.trim()}`));
   
   text+=`\n⚠️ *Deviation:*\n`+(deviations.length?deviations.join('\n'):'Tidak ada')+'\n';
-
-  document.getElementById('previewText').textContent=text;
-  document.getElementById('previewPopup').style.display='block';
+  return text;
 }
 
 function copyText(){
   navigator.clipboard.writeText(previewText.textContent);
   alert('✅ Teks disalin!');
 }
+
 function sendToWhatsApp(){
-  const msg=encodeURIComponent(previewText.textContent);
+  const msg=encodeURIComponent(generateText());
   window.open(`https://wa.me/?text=${msg}`,'_blank');
 }
+
 function closePopup(){
   previewPopup.style.display='none';
 }
