@@ -11,7 +11,13 @@ body {
   background: linear-gradient(to bottom right, #d8e9a8, #9cdba6);
   color: #222;
 }
+
+/* === HEADER UTAMA === */
 header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
   background: linear-gradient(to right, #f1d28a, #f5e4a2);
   color: #1a1a1a;
   text-align: center;
@@ -19,12 +25,43 @@ header {
   font-weight: bold;
   font-size: 18px;
   box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+  z-index: 100;
 }
+
+/* === FORM INPUT DI BAWAH HEADER (FIXED) === */
+.fixed-header {
+  position: fixed;
+  top: 60px; /* jarak di bawah header 🌿 */
+  left: 0;
+  width: 100%;
+  background: #d8e9a8;
+  z-index: 99;
+  padding: 8px 10px;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.15);
+}
+
+.fixed-header .card {
+  background: #fff;
+  border-radius: 10px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+  padding: 10px;
+  margin-bottom: 8px;
+}
+
+.fixed-header label {
+  display: block;
+  margin-bottom: 6px;
+  font-weight: 500;
+}
+
+/* === KONTEN SCROLL === */
 .container {
   padding: 10px;
   max-width: 600px;
   margin: auto;
+  margin-top: 250px; /* memberi jarak agar tidak tertutup oleh bagian fixed */
 }
+
 .card {
   background: #fff;
   border-radius: 10px;
@@ -33,18 +70,21 @@ header {
   margin-bottom: 10px;
   transition: background 0.3s;
 }
+
 h3 {
   background: #cfe8cf;
   padding: 6px;
   border-radius: 6px;
   font-size: 15px;
 }
+
 .label {
   display: flex;
   justify-content: space-between;
   align-items: center;
   margin: 4px 0;
 }
+
 .label span { flex: 1; font-size: 14px; }
 .label button {
   margin-left: 5px;
@@ -58,7 +98,8 @@ h3 {
 .ok.active { background: #4caf50; color:white; }
 .notok { background: #f5a4a4; }
 .notok.active { background: #f44336; color:white; }
-textarea, input[type="text"], input[type="number"], input[type="date"] {
+
+textarea, input[type="text"], input[type="number"], input[type="date"], select {
   width: 100%;
   border-radius: 6px;
   border: 1px solid #ccc;
@@ -67,6 +108,7 @@ textarea, input[type="text"], input[type="number"], input[type="date"] {
   padding: 5px;
   font-size: 13px;
 }
+
 .buttons {
   display: flex;
   justify-content: space-around;
@@ -81,6 +123,8 @@ button.main {
   background: #f1d28a;
   box-shadow: 0 2px 5px rgba(0,0,0,0.2);
 }
+
+/* === POPUP PREVIEW === */
 #previewPopup {
   display: none;
   position: fixed;
@@ -92,7 +136,7 @@ button.main {
   box-shadow: 0 0 20px rgba(0,0,0,0.3);
   width: 90%;
   max-width: 400px;
-  z-index: 100;
+  z-index: 200;
   padding: 15px;
 }
 #previewPopup pre {
@@ -106,12 +150,36 @@ button.main {
   display: flex;
   justify-content: space-around;
 }
+
+/* === RESPONSIVE UNTUK HP === */
+@media (max-width: 480px) {
+  header {
+    font-size: 16px;
+    padding: 8px 0;
+  }
+  .fixed-header {
+    top: 50px;
+    padding: 6px;
+  }
+  .container {
+    margin-top: 230px;
+    padding: 8px;
+  }
+  .fixed-header .card {
+    padding: 8px;
+  }
+  input, select, textarea {
+    font-size: 12px;
+  }
+}
 </style>
 </head>
 <body>
 
 <header>🌿 QA Inspection Komatsu HD785-7</header>
-<div class="container">
+
+<!-- BAGIAN INPUT FIXED -->
+<div class="fixed-header">
   <div class="card">
     <label>Pilih Jenis QA:
       <select id="qaType">
@@ -127,7 +195,10 @@ button.main {
     <label>🚗 CN Unit:</label><input type="text" id="cn">
     <label>⌛ HM:</label><input type="number" id="hm">
   </div>
+</div>
 
+<!-- ISI UTAMA YANG BISA DISCROLL -->
+<div class="container" id="mainContent">
   <div id="sections"></div>
 
   <div class="buttons">
@@ -136,6 +207,7 @@ button.main {
   </div>
 </div>
 
+<!-- POPUP PREVIEW -->
 <div id="previewPopup">
   <pre id="previewText"></pre>
   <div id="popupButtons">
@@ -146,6 +218,7 @@ button.main {
 </div>
 
 <script>
+/* === JAVASCRIPT SAMA SEPERTI SEBELUMNYA === */
 const sectionsData = {
   QA1: { title: "Validasi & Kelengkapan Checklist Service", items: [
       "Job Card & Cover Checklist","Form Observasi Redo PS","Form QA 1 & QA 7","Form PPM",
@@ -218,7 +291,7 @@ function renderSections(){
   html += `</div><div class="card"><h3>⚠️ Deviation (Tambahkan jika ada)</h3><textarea id="manualDeviation" rows="3" placeholder="Tambahkan deviation manual..."></textarea></div>`;
   
   document.getElementById('sections').innerHTML = html;
-  updateCardColors(); // set warna kartu awal
+  updateCardColors();
 }
 renderSections();
 document.getElementById('qaType').addEventListener('change', renderSections);
@@ -235,9 +308,9 @@ function updateCardColors() {
   document.querySelectorAll('.card').forEach(card => {
     const notOkBtn = card.querySelector('.notok.active');
     if (notOkBtn) {
-      card.style.background = '#f8d7da'; // merah lembut
+      card.style.background = '#f8d7da';
     } else {
-      card.style.background = '#fff'; // default putih
+      card.style.background = '#fff';
     }
   });
 }
